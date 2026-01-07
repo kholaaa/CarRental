@@ -26,19 +26,31 @@ public class DashboardController {
     @FXML
     public void initialize() {
         // Load background image programmatically (reliable method)
+        // Load background image with RELATIVE path (correct for subfolders)
+
+
         try {
-            Image img = new Image(getClass().getResourceAsStream("/com/example/carrental/pics/bg.jpg"));
+            System.out.println("Trying to load image from: pics/img.png");
+            Image img = new Image(getClass().getResourceAsStream("/com/example/carrental/pics/img.png"));
+
             if (img.isError()) {
-                throw new Exception("Image load failed");
+                System.err.println("Image is loaded but has error (corrupt file?)");
+                throw new Exception("Image has error");
             }
+
+            if (img.getWidth() <= 0 || img.getHeight() <= 0) {
+                throw new Exception("Image dimensions are zero - invalid");
+            }
+
             backgroundImage.setImage(img);
+            System.out.println("SUCCESS: new.png loaded! Width=" + img.getWidth() + ", Height=" + img.getHeight());
         } catch (Exception e) {
-            System.err.println("WARNING: Could not load bg.jpg!");
-            System.err.println("Checked path: /com/example/carrental/pics/bg.jpg");
-            System.err.println("Make sure the file exists in src/main/resources/com/example/carrental/pics/bg.jpg");
+            System.err.println("ERROR: Failed to load background.png");
+            System.err.println("Path tried: pics/bg.jpg (relative from DashboardController)");
+            System.err.println("Full expected location: src/main/resources/com/example/carrental/pics/img.png");
             e.printStackTrace();
-            // Fallback dark background
-            backgroundImage.setStyle("-fx-background-color: #16213e;");
+            // Fallback to solid color so you know something happened
+            backgroundImage.setStyle("-fx-background-color: #1e3a8a;"); // Deep blue fallback
         }
 
         // Button actions

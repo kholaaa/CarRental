@@ -22,13 +22,13 @@ public class loadingController {
     public void initialize() {
         // Load background image
         try {
-            Image img = new Image(getClass().getResourceAsStream("/pics/load1.jpg"));
+            Image img = new Image(getClass().getResourceAsStream("com/example/carrental/pics/load1.jpg"));
             if (!img.isError()) {
                 backgroundImage.setImage(img);
             }
         } catch (Exception e) {
             // Fallback to absolute path
-            backgroundImage.setImage(new Image("file:C:\\CarRentalImages\\loading page 1.jpg"));
+            backgroundImage.setImage(new Image("com/example/carrental/pics/load1.jpg"));
         }
 
         if (progressIndicator != null) {
