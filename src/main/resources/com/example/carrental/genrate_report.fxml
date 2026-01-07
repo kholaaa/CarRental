@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.carrental.GenerateReportController">
+    <children>
+        <VBox spacing="15" alignment="CENTER" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
+              AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" style="-fx-background-color: #E6E6FA;">
+
+            <Label text="GENERATE REPORT" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
+            <TableView fx:id="tableView" prefHeight="300" prefWidth="820">
+                <columns>
+                    <TableColumn fx:id="bookingIdCol" text="Booking ID" />
+                    <TableColumn fx:id="carIdCol" text="Car ID" />
+                    <TableColumn fx:id="customerIdCol" text="Customer ID" />
+                    <TableColumn fx:id="entryDateCol" text="Entry Date" />
+                    <TableColumn fx:id="returnDateCol" text="Return Date" />
+                    <TableColumn fx:id="rentPerDayCol" text="Rent/Day" />
+                    <TableColumn fx:id="totalAmountCol" text="Total Amount" />
+                    <TableColumn fx:id="statusCol" text="Status" />
+                </columns>
+            </TableView>
+
+            <Label fx:id="totalRevenueLabel" text="Total Revenue: " style="-fx-font-weight: bold;" />
+            <Label fx:id="pendingCountLabel" text="Pending Returns: " style="-fx-font-weight: bold;" />
+
+            <HBox spacing="20" alignment="CENTER">
+                <Button fx:id="backButton" text="Back" />
+                <Button fx:id="refreshButton" text="Refresh" />
+            </HBox>
+        </VBox>
+    </children>
+</AnchorPane>
