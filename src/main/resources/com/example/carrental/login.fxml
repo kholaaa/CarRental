@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.carrental.LoginController"
+            fx:controller="com.example.carrental.loading2Controller"
             prefWidth="1920" prefHeight="1080">
-
     <!-- Background Image -->
     <ImageView fx:id="backgroundImage"
                fitWidth="1920"
@@ -20,7 +19,7 @@
                AnchorPane.leftAnchor="0"
                AnchorPane.rightAnchor="0"/>
 
-    <!-- Login Panel (centered better) -->
+    <!-- Login Panel (centered) -->
     <Pane fx:id="loginPane"
           prefWidth="400"
           prefHeight="340"
@@ -28,7 +27,42 @@
           layoutY="370"
           style="-fx-background-color: rgba(255, 255, 255, 0.9); -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 5);">
 
-        <!-- All your labels, fields, checkbox, buttons remain exactly the same -->
+        <VBox spacing="15" alignment="CENTER">
+            <padding>
+                <Insets top="30" right="40" bottom="30" left="40"/>
+            </padding>
 
+            <!-- Title -->
+            <Label text="Welcome to Car Rental" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #333333;"/>
+
+            <!-- Username Field -->
+            <VBox spacing="5">
+                <Label text="Username" style="-fx-font-size: 14px; -fx-text-fill: #555555;"/>
+                <TextField fx:id="usernameField" promptText="Enter username" prefWidth="320"/>
+            </VBox>
+
+            <!-- Password Field -->
+            <VBox spacing="5">
+                <Label text="Password" style="-fx-font-size: 14px; -fx-text-fill: #555555;"/>
+                <PasswordField fx:id="passwordField" promptText="Enter password" prefWidth="320"/>
+            </VBox>
+
+            <!-- Remember Me & Forgot Password -->
+            <HBox alignment="CENTER_LEFT" spacing="100">
+                <CheckBox fx:id="rememberMeCheckBox" text="Remember me"/>
+                <Hyperlink text="Forgot password?"/>
+            </HBox>
+
+            <!-- Login Button -->
+            <Button fx:id="loginButton" text="Login" prefWidth="320" prefHeight="40"
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 5;"
+                    onAction="#handleLogin"/>
+
+            <!-- Sign Up Link -->
+            <HBox alignment="CENTER" spacing="5">
+                <Label text="Don't have an account?" style="-fx-text-fill: #666666;"/>
+                <Hyperlink text="Sign up"/>
+            </HBox>
+        </VBox>
     </Pane>
 </AnchorPane>

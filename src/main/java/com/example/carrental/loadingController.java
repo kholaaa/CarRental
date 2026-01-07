@@ -20,24 +20,22 @@ public class loadingController {
 
     @FXML
     public void initialize() {
-        // Try to load image from resources first (recommended)
+        // Load background image
         try {
             Image img = new Image(getClass().getResourceAsStream("/com/example/carrental/images/loading page 1.jpg"));
             if (!img.isError()) {
                 backgroundImage.setImage(img);
             }
         } catch (Exception e) {
-            // Fallback to absolute path if resource not found
-            Image img = new Image("file:C:\\CarRentalImages\\loading page 1.jpg");
-            backgroundImage.setImage(img);
+            // Fallback to absolute path
+            backgroundImage.setImage(new Image("file:C:\\CarRentalImages\\loading page 1.jpg"));
         }
 
-        // Optional: make progress indicator visible
         if (progressIndicator != null) {
             progressIndicator.setVisible(true);
         }
 
-        // Delay 2 seconds then go to loading2
+        // 2-second delay then open loading2
         PauseTransition delay = new PauseTransition(Duration.seconds(2));
         delay.setOnFinished(event -> openNextScreen());
         delay.play();
@@ -54,13 +52,13 @@ public class loadingController {
             stage.setTitle("Loading...");
             stage.show();
 
-            // Close current window
+            // Close current loading screen
             Stage currentStage = (Stage) backgroundImage.getScene().getWindow();
             currentStage.close();
 
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("ERROR: Could not load loading2.fxml. Check if file exists at /com/example/carrental/loading2.fxml");
+            System.err.println("ERROR: Could not load loading2.fxml");
         }
     }
 }

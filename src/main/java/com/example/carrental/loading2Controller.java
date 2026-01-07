@@ -25,37 +25,34 @@ public class loading2Controller {
             }
         } catch (Exception e) {
             System.out.println("loading2.jpg not found in resources.");
-            // Optional fallback to absolute path
-            // Image image = new Image("file:C:\\CarRentalImages\\loading2.jpg");
-            // logoImage.setImage(image);
+            // Optional fallback
+            // logoImage.setImage(new Image("file:C:\\CarRentalImages\\loading2.jpg"));
         }
 
-        // Wait 3 seconds then close this and open Login
+        // 3-second delay then open Dashboard
         PauseTransition delay = new PauseTransition(Duration.seconds(3));
-        delay.setOnFinished(e -> {
-            Stage currentStage = (Stage) logoImage.getScene().getWindow();
-            currentStage.close();
-
-            openLoginScreen();
-        });
+        delay.setOnFinished(e -> openDashboard());
         delay.play();
     }
 
-    private void openLoginScreen() {
+    private void openDashboard() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/carrental/login.fxml"));
-            Scene scene = new Scene(loader.load());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/carrental/Dashboard.fxml"));
+            Scene scene = new Scene(loader.load(), 1200, 700);
 
-            Stage loginStage = new Stage();
-            loginStage.setTitle("Car Rental System - Login");
-            loginStage.setScene(scene);
-            loginStage.setResizable(false);
-            loginStage.centerOnScreen();
-            loginStage.show();
+            Stage dashboardStage = new Stage();
+            dashboardStage.setTitle("Car Rental Dashboard");
+            dashboardStage.setScene(scene);
+            dashboardStage.setMaximized(true);
+            dashboardStage.show();
 
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            System.err.println("ERROR: Could not load login.fxml. Check path and file name.");
+            // Close loading2
+            Stage currentStage = (Stage) logoImage.getScene().getWindow();
+            currentStage.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("ERROR: Could not load Dashboard.fxml");
         }
     }
 }

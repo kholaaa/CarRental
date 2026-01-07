@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.carrental.GenerateReportController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.carrental.generate_reportController">
     <children>
         <VBox spacing="15" alignment="CENTER" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
               AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" style="-fx-background-color: #E6E6FA;">
