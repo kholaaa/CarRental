@@ -10,7 +10,7 @@ public class loading extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/carrental/loading.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/carrental/Loading.fxml"));
         Parent root = loader.load();
         primaryStage.setTitle("Loading");
         primaryStage.setScene(new Scene(root));

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.carrental.SignUpController"
+            prefWidth="800" prefHeight="600">
+
+    <!-- Background -->
+    <ImageView fx:id="backgroundImage"
+               fitWidth="800"
+               fitHeight="600"
+               preserveRatio="false"/>
+
+    <!-- Signup Panel -->
+    <VBox spacing="10"
+          layoutX="250"
+          layoutY="150"
+          prefWidth="300"
+          style="-fx-background-color: pink; -fx-padding: 20;">
+
+        <Label text="SIGN UP"
+               style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+        <TextField fx:id="nameField" promptText="Name"/>
+        <TextField fx:id="emailField" promptText="Email"/>
+        <PasswordField fx:id="passwordField" promptText="Password"/>
+        <TextField fx:id="numberField" promptText="Phone Number"/>
+
+        <CheckBox fx:id="showPasswordCheck" text="Show Password"/>
+
+        <Button text="SIGN UP NOW" onAction="#handleSignup"/>
+        <Button text="BACK TO LOGIN" onAction="#handleBackToLogin"/>
+
+    </VBox>
+
+</AnchorPane>
