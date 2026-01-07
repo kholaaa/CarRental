@@ -22,7 +22,7 @@ public class loadingController {
     public void initialize() {
         // Load background image
         try {
-            Image img = new Image(getClass().getResourceAsStream("/com/example/carrental/images/loading page 1.jpg"));
+            Image img = new Image(getClass().getResourceAsStream("/com/example/carrental/pics/load1.jpg"));
             if (!img.isError()) {
                 backgroundImage.setImage(img);
             }

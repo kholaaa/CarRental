@@ -25,7 +25,7 @@ public class loginController {
     public void initialize() {
         // Load background image from resources
         try {
-            backgroundImage.setImage(new Image(getClass().getResourceAsStream("/com/example/carrental/images/login.jpg")));
+            backgroundImage.setImage(new Image(getClass().getResourceAsStream("/com/example/carrental/pics/car2.jpg")));
         } catch (Exception e) {
             System.out.println("Login background image not found in resources.");
             // Optional fallback to absolute path
