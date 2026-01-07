@@ -128,11 +128,7 @@ Add JavaFX to your project
 If using IntelliJ/Eclipse: Add JavaFX library/modules
 Or run with VM options:Bash--module-path /path/to/javafx-sdk/lib --add-modules javafx.controls,javafx.fxml
 
-Run the Application
+**Run the Application**
 Main class: com.example.carrental.HelloApplication (or login depending on entry point)
 
 
-
-  f pending returns
-- **Responsive UI**
-  - JavaFX with custom styling and background images
