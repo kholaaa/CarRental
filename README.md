@@ -1,6 +1,6 @@
 # CarRental
 "CAR RENTAL SYSTEM" using JavaFAX for GUI.
-// insert ss
+
 ![Screenshot 2026-01-07 090450](https://github.com/user-attachments/assets/21010b6c-9abd-46a7-8787-14ff8fcc9de4)
 
 Login / Signup screens
