@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.carrental.customerController"
+            prefWidth="600" prefHeight="400">
+
+    <!-- Background -->
+    <ImageView fx:id="backgroundImage" fitWidth="600" fitHeight="400" pickOnBounds="true" preserveRatio="false"/>
+
+    <!-- Title -->
+    <Label text="CUSTOMER DETAILS" layoutX="150" layoutY="20" style="-fx-font-size:24px; -fx-font-weight:bold; -fx-text-fill:black;" />
+
+    <!-- Labels -->
+    <Label text="Customer ID:" layoutX="50" layoutY="100" style="-fx-font-size:16px; -fx-text-fill:white;"/>
+    <Label text="Customer Name:" layoutX="50" layoutY="150" style="-fx-font-size:16px; -fx-text-fill:white;"/>
+    <Label text="Customer Number:" layoutX="50" layoutY="200" style="-fx-font-size:16px; -fx-text-fill:white;"/>
+
+    <!-- TextFields -->
+    <TextField fx:id="idField" layoutX="220" layoutY="100" prefWidth="250"/>
+    <TextField fx:id="nameField" layoutX="220" layoutY="150" prefWidth="250"/>
+    <TextField fx:id="numberField" layoutX="220" layoutY="200" prefWidth="250"/>
+
+    <!-- Buttons -->
+    <Button fx:id="saveButton" text="Save" layoutX="60" layoutY="300" prefWidth="120" style="-fx-background-color:darkgray; -fx-text-fill:white;"/>
+    <Button fx:id="clearButton" text="Clear" layoutX="200" layoutY="300" prefWidth="120" style="-fx-background-color:darkgray; -fx-text-fill:white;"/>
+    <Button fx:id="backButton" text="Back" layoutX="340" layoutY="300" prefWidth="120" style="-fx-background-color:darkgray; -fx-text-fill:white;"/>
+</AnchorPane>
