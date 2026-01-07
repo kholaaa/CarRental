@@ -1,4 +1,4 @@
-package car.rental.system;
+package com.example.carrental;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

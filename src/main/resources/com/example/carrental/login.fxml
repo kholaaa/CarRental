@@ -1,14 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0" >
+<AnchorPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="car.rental.system.LoginController">
+
+    <!-- Background Image -->
+    <ImageView fx:id="backgroundImage"
+               fitWidth="1920"
+               fitHeight="1080"
+               AnchorPane.topAnchor="0"
+               AnchorPane.bottomAnchor="0"
+               AnchorPane.leftAnchor="0"
+               AnchorPane.rightAnchor="0"/>
+
+    <!-- Login Panel -->
+    <Pane fx:id="loginPane"
+          prefWidth="400"
+          prefHeight="340"
+          layoutX="760"
+          layoutY="370"
+          style="-fx-background-color: white; -fx-border-radius: 5;">
+
+        <Label text="LOGIN"
+               layoutX="160"
+               layoutY="15"
+               style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+        <Label text="EMAIL:"
+               layoutX="40"
+               layoutY="60"/>
+
+        <TextField fx:id="emailField"
+                   layoutX="130"
+                   layoutY="60"
+                   prefWidth="220"/>
+
+        <Label text="PASSWORD:"
+               layoutX="40"
+               layoutY="110"/>
+
+        <PasswordField fx:id="passwordField"
+                       layoutX="130"
+                       layoutY="110"
+                       prefWidth="220"/>
+
+        <TextField fx:id="visiblePasswordField"
+                   layoutX="130"
+                   layoutY="110"
+                   prefWidth="220"
+                   visible="false"/>
+
+        <CheckBox fx:id="showPassword"
+                  text="SHOW PASSWORD"
+                  layoutX="130"
+                  layoutY="145"
+                  onAction="#handleShowPassword"/>
+
+        <Button text="LOGIN"
+                layoutX="40"
+                layoutY="190"
+                prefWidth="100"
+                onAction="#handleLogin"/>
+
+        <Button text="SIGN UP"
+                layoutX="250"
+                layoutY="190"
+                prefWidth="100"
+                onAction="#handleSignup"/>
+
+        <Button text="FORGOT PASSWORD"
+                layoutX="100"
+                layoutY="240"
+                prefWidth="200"
+                onAction="#handleForgot"/>
+
+    </Pane>
 
 </AnchorPane>

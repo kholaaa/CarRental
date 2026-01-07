@@ -1,4 +1,4 @@
-package car.rental.system;
+package com.example.carrental;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

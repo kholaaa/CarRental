@@ -1,5 +1,6 @@
+package com.example.carrental;
+
 public class loadingController {
-    package com.example.carrental;
 
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
