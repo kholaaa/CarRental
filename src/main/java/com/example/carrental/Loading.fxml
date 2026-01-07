@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.ProgressIndicator?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.carrental.LoadingController"
+            prefWidth="800" prefHeight="600">
+
+    <!-- Fullscreen background image -->
+    <ImageView fx:id="backgroundImage" fitWidth="800" fitHeight="600" preserveRatio="false" />
+
+    <!-- Optional: Loading indicator -->
+    <ProgressIndicator fx:id="progressIndicator" layoutX="370" layoutY="280" prefWidth="60" prefHeight="60"/>
+
+</AnchorPane>
