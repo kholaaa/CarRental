@@ -6,7 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class bookCar extends Application {
+ class bookCar extends Application {
 
     @Override
     public void start(Stage primaryStage) {
