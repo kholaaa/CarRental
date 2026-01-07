@@ -1,6 +1,7 @@
 package com.example.carrental;
 
 import javafx.animation.PauseTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -55,4 +56,5 @@ public class loading2Controller {
             System.err.println("ERROR: Could not load Dashboard.fxml");
         }
     }
+
 }

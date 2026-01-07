@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.control.ProgressIndicator?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.carrental.loading2Controller"
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.carrental.loadingController"
             prefWidth="800" prefHeight="600">
 
     <!-- Fullscreen background image -->

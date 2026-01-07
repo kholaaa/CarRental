@@ -6,7 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example..DashboardController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.carrental.DashboardController">
 
     <!-- Background image -->
     <ImageView fx:id="backgroundImage" fitWidth="1200" fitHeight="700" pickOnBounds="true" preserveRatio="false">
