@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefWidth="650" prefHeight="500"
+            xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="car.rental.system.ReturnCar">
+
+    <!-- Background -->
+    <ImageView fitWidth="650" fitHeight="500">
+        <image>
+            <Image url="@return car.jpg"/>
+        </image>
+    </ImageView>
+
+    <!-- Title -->
+    <Label text="RETURN CAR"
+           layoutX="220" layoutY="20"
+           style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white;" />
+
+    <!-- Labels -->
+    <Label text="Car ID:" layoutX="40" layoutY="100" style="-fx-text-fill: white;" />
+    <Label text="Customer ID:" layoutX="40" layoutY="150" style="-fx-text-fill: white;" />
+    <Label text="Return Date (YYYY-MM-DD):" layoutX="40" layoutY="200" style="-fx-text-fill: white;" />
+    <Label text="Fuel Level (%):" layoutX="40" layoutY="250" style="-fx-text-fill: white;" />
+    <Label text="Condition:" layoutX="40" layoutY="300" style="-fx-text-fill: white;" />
+
+    <!-- TextFields -->
+    <TextField fx:id="carIdField" layoutX="260" layoutY="100" prefWidth="300"/>
+    <TextField fx:id="customerIdField" layoutX="260" layoutY="150" prefWidth="300"/>
+    <TextField fx:id="returnDateField" layoutX="260" layoutY="200" prefWidth="300"/>
+    <TextField fx:id="fuelLevelField" layoutX="260" layoutY="250" prefWidth="300"/>
+    <TextField fx:id="conditionField" layoutX="260" layoutY="300" prefWidth="300"/>
+
+    <!-- Buttons -->
+    <Button text="Submit" layoutX="80" layoutY="370" prefWidth="120"
+            onAction="#submitReturn"/>
+
+    <Button text="Clear" layoutX="250" layoutY="370" prefWidth="120"
+            onAction="#clearFields"/>
+
+    <Button text="Back" layoutX="420" layoutY="370" prefWidth="120"
+            onAction="#goBack"/>
+
+</AnchorPane>
