@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="car.rental.system.ViewAvailableCarsController"
+            prefWidth="610" prefHeight="470">
+
+    <!-- Background -->
+    <ImageView fx:id="backgroundImage"
+               fitWidth="610"
+               fitHeight="470"
+               preserveRatio="false"/>
+
+    <!-- Title -->
+    <Label text="VIEW AVAILABLE CARS"
+           layoutX="150"
+           layoutY="30"
+           style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+    <!-- Table -->
+    <TableView fx:id="carsTable"
+               layoutX="50"
+               layoutY="80"
+               prefWidth="500"
+               prefHeight="250">
+
+        <columns>
+            <TableColumn fx:id="carIdCol" text="Car ID"/>
+            <TableColumn fx:id="modelCol" text="Model"/>
+            <TableColumn fx:id="typeCol" text="Type"/>
+            <TableColumn fx:id="colorCol" text="Color"/>
+            <TableColumn fx:id="priceCol" text="Price/Day"/>
+            <TableColumn fx:id="availabilityCol" text="Availability"/>
+        </columns>
+
+    </TableView>
+
+    <!-- Back Button -->
+    <Button text="Back"
+            layoutX="250"
+            layoutY="370"
+            prefWidth="100"
+            onAction="#handleBack"
+            style="-fx-background-color: #333333; -fx-text-fill: white;"/>
+
+</AnchorPane>
