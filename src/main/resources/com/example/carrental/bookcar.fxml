@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.carrental.bookcarController" prefWidth="650" prefHeight="450">
+
+    <!-- Background Image -->
+    <ImageView fitWidth="650" fitHeight="450" pickOnBounds="true" preserveRatio="false">
+        <image>
+            <Image url="@../CarRentalImages/book car.jpg"/>
+        </image>
+    </ImageView>
+
+    <!-- Title -->
+    <Label text="BOOK CAR" layoutX="250" layoutY="20" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+
+    <!-- Form -->
+    <Label text="Customer ID:" layoutX="80" layoutY="100" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+    <TextField fx:id="customerIdField" layoutX="260" layoutY="100" prefWidth="220"/>
+
+    <Label text="Car Name:" layoutX="80" layoutY="150" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+    <ComboBox fx:id="carNameComboBox" layoutX="260" layoutY="150" prefWidth="220"/>
+
+    <Label text="Entry Date (YYYY-MM-DD):" layoutX="80" layoutY="200" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+    <TextField fx:id="entryDateField" layoutX="260" layoutY="200" prefWidth="220"/>
+
+    <Label text="Return Date (YYYY-MM-DD):" layoutX="80" layoutY="250" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+    <TextField fx:id="returnDateField" layoutX="260" layoutY="250" prefWidth="220"/>
+
+    <!-- Buttons -->
+    <Button fx:id="submitButton" text="Submit" layoutX="80" layoutY="320" prefWidth="100"/>
+    <Button fx:id="clearButton" text="Clear" layoutX="220" layoutY="320" prefWidth="100"/>
+    <Button fx:id="backButton" text="Back" layoutX="360" layoutY="320" prefWidth="100"/>
+    <Button fx:id="chalanButton" text="CHALAN" layoutX="500" layoutY="320" prefWidth="100"/>
+
+</AnchorPane>

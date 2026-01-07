@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.carrental.DashboardController">
+
+    <!-- Background image -->
+    <ImageView fx:id="backgroundImage" fitWidth="1200" fitHeight="700" pickOnBounds="true" preserveRatio="false">
+        <image>
+            <Image url="@../CarRentalImages/dashboard pic.jpg"/>
+        </image>
+    </ImageView>
+
+    <!-- Left side: Rental Rules -->
+    <VBox layoutX="50" layoutY="100" spacing="15">
+        <Label text="Rental Rules" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+        <Label text="1. Customer must provide valid ID." style="-fx-font-size: 18px;"/>
+        <Label text="2. All dues must be cleared before return." style="-fx-font-size: 18px;"/>
+        <Label text="3. Late return will incur additional fees." style="-fx-font-size: 18px;"/>
+        <Label text="4. Fuel must be refilled to at least 50%." style="-fx-font-size: 18px;"/>
+    </VBox>
+
+    <!-- Right side: Buttons -->
+    <VBox layoutX="900" layoutY="100" spacing="20">
+        <Button fx:id="addCarButton" text="Add Car" prefWidth="200" prefHeight="50"/>
+        <Button fx:id="viewCarButton" text="VIEW AVAILABLE CARS" prefWidth="200" prefHeight="50"/>
+        <Button fx:id="customerButton" text="CUSTOMER DETAILS" prefWidth="200" prefHeight="50"/>
+        <Button fx:id="bookCarButton" text="BOOK A CAR" prefWidth="200" prefHeight="50"/>
+        <Button fx:id="returnCarButton" text="RETURN A CAR" prefWidth="200" prefHeight="50"/>
+        <Button fx:id="reportButton" text="GENERATE REPORT" prefWidth="200" prefHeight="50"/>
+        <Button fx:id="logoutButton" text="Logout" prefWidth="200" prefHeight="50"/>
+    </VBox>
+
+</AnchorPane>
