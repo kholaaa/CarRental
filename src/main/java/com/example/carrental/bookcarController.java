@@ -2,10 +2,10 @@ package com.example.carrental;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-        import javafx.event.ActionEvent;
+import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import java.sql.*;
-        import java.util.HashMap;
+import java.util.HashMap;
 
 public class bookcarController {
 
@@ -24,7 +24,6 @@ public class bookcarController {
     @FXML
     public void initialize() {
         loadAvailableCarNames();
-
         clearButton.setOnAction(this::handleClear);
         backButton.setOnAction(this::handleBack);
         submitButton.setOnAction(this::handleSubmit);
@@ -37,146 +36,92 @@ public class bookcarController {
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement("SELECT carID, carType FROM cars WHERE Availability = 'yes'");
              ResultSet rs = stmt.executeQuery()) {
-
             while (rs.next()) {
                 String name = rs.getString("carType");
                 int id = rs.getInt("carID");
                 carNameComboBox.getItems().add(name);
                 carNameToId.put(name, id);
             }
-            if (carNameComboBox.getItems().isEmpty()) {
-                carNameComboBox.getItems().add("No cars available");
-            }
-
         } catch (Exception e) {
-            showAlert(Alert.AlertType.ERROR, "Database Error", "Error loading cars: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    private void handleClear(ActionEvent e) {
-        customerIdField.clear();
-        entryDateField.clear();
-        returnDateField.clear();
-        if (!carNameComboBox.getItems().isEmpty()) carNameComboBox.getSelectionModel().selectFirst();
-    }
+    private void handleSubmit(ActionEvent event) {
+        String customerId = customerIdField.getText();
+        String carName = carNameComboBox.getValue();
+        String entryDate = entryDateField.getText();
+        String returnDate = returnDateField.getText();
 
-    private void handleBack(ActionEvent e) {
-        // Close current window and open dashboard
-        Stage stage = (Stage) backButton.getScene().getWindow();
-        stage.close();
-        new dashboard(); // convert dashboard to JavaFX
-    }
-
-    private void handleSubmit(ActionEvent e) {
-        String cidText = customerIdField.getText().trim();
-        String carName = carNameComboBox.getSelectionModel().getSelectedItem();
-        String entry = entryDateField.getText().trim();
-        String ret = returnDateField.getText().trim();
-
-        if (cidText.isEmpty() || carName == null || entry.isEmpty() || ret.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Please fill in all fields.");
+        if (customerId.isEmpty() || carName == null || entryDate.isEmpty() || returnDate.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Error", "All fields required.");
             return;
         }
 
-        Integer carIdObj = carNameToId.get(carName);
-        if (carIdObj == null) {
+        Integer carId = carNameToId.get(carName);
+        if (carId == null) {
             showAlert(Alert.AlertType.ERROR, "Error", "Invalid car selected.");
             return;
         }
-        int carID = carIdObj;
 
-        int customerID;
-        try { customerID = Integer.parseInt(cidText); }
-        catch (NumberFormatException ex) { showAlert(Alert.AlertType.ERROR, "Invalid Input", "Customer ID must be a number."); return; }
+        try (Connection conn = DBConnection.getConnection()) {
+            String insertSQL = "INSERT INTO bookcar (customerID, carID, entrydate, returndate) VALUES (?, ?, ?, ?)";
+            PreparedStatement ps = conn.prepareStatement(insertSQL);
+            ps.setInt(1, Integer.parseInt(customerId));
+            ps.setInt(2, carId);
+            ps.setDate(3, Date.valueOf(entryDate));
+            ps.setDate(4, Date.valueOf(returnDate));
+            ps.executeUpdate();
 
-        java.sql.Date newEntryDate, newReturnDate;
-        try {
-            newEntryDate = java.sql.Date.valueOf(entry);
-            newReturnDate = java.sql.Date.valueOf(ret);
-            if (!newReturnDate.after(newEntryDate)) {
-                showAlert(Alert.AlertType.ERROR, "Invalid Date", "Return date must be after entry date.");
-                return;
-            }
-        } catch (IllegalArgumentException ex) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Invalid date format. Use YYYY-MM-DD.");
-            return;
-        }
+            String updateSQL = "UPDATE cars SET availability = 'No' WHERE carID = ?";
+            ps = conn.prepareStatement(updateSQL);
+            ps.setInt(1, carId);
+            ps.executeUpdate();
 
-        // Check overlap
-        boolean hasOverlap = false;
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("SELECT entrydate, returndate FROM bookcar WHERE carID = ?")) {
-            stmt.setInt(1, carID);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                java.sql.Date existingEntry = rs.getDate("entrydate");
-                java.sql.Date existingReturn = rs.getDate("returndate");
-                if (newEntryDate.compareTo(existingReturn) <= 0 && newReturnDate.compareTo(existingEntry) >= 0) {
-                    hasOverlap = true;
-                    break;
-                }
-            }
-        } catch (Exception ex) {
-            showAlert(Alert.AlertType.ERROR, "Database Error", "Error checking availability: " + ex.getMessage());
-            return;
-        }
-
-        if (hasOverlap) {
-            showAlert(Alert.AlertType.WARNING, "Booking Conflict", "This car is already booked for the selected dates.");
-            return;
-        }
-
-        // Insert booking
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("INSERT INTO bookcar (carID, customerID, entrydate, returndate) VALUES (?, ?, ?, ?)")) {
-
-            stmt.setInt(1, carID);
-            stmt.setInt(2, customerID);
-            stmt.setDate(3, newEntryDate);
-            stmt.setDate(4, newReturnDate);
-
-            int result = stmt.executeUpdate();
-            if (result > 0) {
-                PreparedStatement update = conn.prepareStatement("UPDATE cars SET Availability = 'No' WHERE carID = ?");
-                update.setInt(1, carID);
-                update.executeUpdate();
-                showAlert(Alert.AlertType.INFORMATION, "Success", "Booking Successful!");
-                handleClear(null);
-                loadAvailableCarNames();
-            } else {
-                showAlert(Alert.AlertType.ERROR, "Error", "Booking Failed!");
-            }
-        } catch (Exception ex) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Error saving booking: " + ex.getMessage());
+            showAlert(Alert.AlertType.INFORMATION, "Success", "Car booked successfully!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());
         }
     }
 
-    private void handleChalan(ActionEvent e) {
-        String cidText = customerIdField.getText().trim();
-        String carName = carNameComboBox.getSelectionModel().getSelectedItem();
-        String entry = entryDateField.getText().trim();
-        String ret = returnDateField.getText().trim();
+    private void handleClear(ActionEvent event) {
+        customerIdField.clear();
+        carNameComboBox.setValue(null);
+        entryDateField.clear();
+        returnDateField.clear();
+    }
+
+    private void handleBack(ActionEvent event) {
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        stage.close();
+    }
+
+    private void handleChalan(ActionEvent event) {
+        String cidText = customerIdField.getText();
+        String carName = carNameComboBox.getValue();
+        String entry = entryDateField.getText();
+        String ret = returnDateField.getText();
 
         if (cidText.isEmpty() || carName == null || entry.isEmpty() || ret.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Fill all fields before generating chalan.");
+            showAlert(Alert.AlertType.ERROR, "Error", "All fields required.");
             return;
         }
 
-        Integer carID = carNameToId.get(carName);
-        if (carID == null) { showAlert(Alert.AlertType.ERROR, "Error", "Invalid car."); return; }
-
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("SELECT price_per_day FROM cars WHERE carID = ?")) {
-
-            stmt.setInt(1, carID);
+             PreparedStatement stmt = conn.prepareStatement("SELECT price_per_day FROM cars WHERE carType = ?")) {
+            stmt.setString(1, carName);
             ResultSet rs = stmt.executeQuery();
-            if (!rs.next()) { showAlert(Alert.AlertType.ERROR, "Error", "Price info not found."); return; }
+            if (!rs.next()) {
+                showAlert(Alert.AlertType.ERROR, "Error", "Price info not found.");
+                return;
+            }
 
             int pricePerDay = rs.getInt("price_per_day");
             java.sql.Date entryDate = java.sql.Date.valueOf(entry);
             java.sql.Date returnDate = java.sql.Date.valueOf(ret);
 
-            long diffDays = (returnDate.getTime() - entryDate.getTime()) / (1000*60*60*24) + 1;
+            long diffDays = (returnDate.getTime() - entryDate.getTime()) / (1000 * 60 * 60 * 24) + 1;
             long totalRent = diffDays * pricePerDay;
 
             String message = "=== Car Rental Chalan ===\n\n"
@@ -190,7 +135,6 @@ public class bookcarController {
                     + "Total Rent: Rs. " + totalRent + "\n\nThank you!";
 
             showAlert(Alert.AlertType.INFORMATION, "Rental Chalan", message);
-
         } catch (Exception ex) {
             showAlert(Alert.AlertType.ERROR, "Error", ex.getMessage());
         }

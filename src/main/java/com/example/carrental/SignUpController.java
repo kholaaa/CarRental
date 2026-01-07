@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
@@ -25,12 +24,8 @@ public class SignUpController {
 
     @FXML
     public void initialize() {
-        // Background image
-        backgroundImage.setImage(
-                new Image("file:C:\\CarRentalImages\\signup.jpg")
-        );
+        backgroundImage.setImage(new Image("file:C:\\CarRentalImages\\signup.jpg"));
 
-        // Show/Hide password logic
         visiblePasswordField.managedProperty().bind(showPasswordCheck.selectedProperty());
         visiblePasswordField.visibleProperty().bind(showPasswordCheck.selectedProperty());
         visiblePasswordField.textProperty().bindBidirectional(passwordField.textProperty());
@@ -47,7 +42,7 @@ public class SignUpController {
         String number = numberField.getText();
 
         if (name.isEmpty() || email.isEmpty() || password.isEmpty() || number.isEmpty()) {
-            showAlert("Error", "Please fill all fields");
+            showAlert("Error", "All fields required!");
             return;
         }
 
@@ -58,11 +53,9 @@ public class SignUpController {
             stmt.setString(2, email);
             stmt.setString(3, password);
             stmt.setString(4, number);
-
             stmt.executeUpdate();
             showAlert("Success", "Registration successful!");
             openDashboard();
-
         } catch (Exception e) {
             e.printStackTrace();
             showAlert("Database Error", e.getMessage());
@@ -72,9 +65,7 @@ public class SignUpController {
     @FXML
     private void handleBackToLogin() {
         try {
-            Parent root = FXMLLoader.load(
-                    getClass().getResource("/com/example/carrental/login.fxml")
-            );
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/carrental/login.fxml"));
             Stage stage = (Stage) nameField.getScene().getWindow();
             stage.setScene(new Scene(root));
         } catch (Exception e) {
@@ -84,9 +75,7 @@ public class SignUpController {
 
     private void openDashboard() {
         try {
-            Parent root = FXMLLoader.load(
-                    getClass().getResource("/com/example/carrental/dashboard.fxml")
-            );
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/carrental/dashboard.fxml"));
             Stage stage = (Stage) nameField.getScene().getWindow();
             stage.setScene(new Scene(root));
         } catch (Exception e) {

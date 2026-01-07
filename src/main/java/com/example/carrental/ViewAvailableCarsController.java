@@ -9,7 +9,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -18,7 +17,6 @@ public class ViewAvailableCarsController {
 
     @FXML private ImageView backgroundImage;
     @FXML private TableView<Car> carsTable;
-
     @FXML private TableColumn<Car, Integer> carIdCol;
     @FXML private TableColumn<Car, String> modelCol;
     @FXML private TableColumn<Car, String> typeCol;
@@ -28,12 +26,8 @@ public class ViewAvailableCarsController {
 
     @FXML
     public void initialize() {
-        // Background image
-        backgroundImage.setImage(
-                new Image("file:C:\\CarRentalImages\\Available cars.jpg")
-        );
+        backgroundImage.setImage(new Image("file:C:\\CarRentalImages\\Available cars.jpg"));
 
-        // Bind columns
         carIdCol.setCellValueFactory(data -> data.getValue().carIdProperty().asObject());
         modelCol.setCellValueFactory(data -> data.getValue().modelProperty());
         typeCol.setCellValueFactory(data -> data.getValue().typeProperty());
@@ -46,13 +40,9 @@ public class ViewAvailableCarsController {
 
     private void loadCars() {
         ObservableList<Car> list = FXCollections.observableArrayList();
-
         try (Connection conn = DBConnection.getConnection();
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(
-                     "SELECT carid, carmodel, cartype, colour, price_per_day, availability FROM cars"
-             )) {
-
+             ResultSet rs = stmt.executeQuery("SELECT carid, carmodel, cartype, colour, price_per_day, availability FROM cars")) {
             while (rs.next()) {
                 list.add(new Car(
                         rs.getInt("carid"),
@@ -63,9 +53,7 @@ public class ViewAvailableCarsController {
                         rs.getString("availability")
                 ));
             }
-
             carsTable.setItems(list);
-
         } catch (Exception e) {
             e.printStackTrace();
             showAlert("Database Error", e.getMessage());
@@ -76,9 +64,7 @@ public class ViewAvailableCarsController {
     private void handleBack() {
         try {
             Stage stage = (Stage) carsTable.getScene().getWindow();
-            stage.setScene(new Scene(
-                    FXMLLoader.load(getClass().getResource("/car/rental/system/dashboard.fxml"))
-            ));
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/com/example/carrental/dashboard.fxml"))));
         } catch (Exception e) {
             e.printStackTrace();
         }
