@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.carrental.add_carController"
+            prefWidth="600" prefHeight="500">
+
+    <VBox spacing="15" alignment="CENTER"
+          AnchorPane.topAnchor="40"
+          AnchorPane.leftAnchor="100"
+          AnchorPane.rightAnchor="100">
+
+        <Label text="ADD CAR" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
+        <GridPane hgap="15" vgap="15">
+            <Label text="Car ID:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="carIdField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Type:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TextField fx:id="typeField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="Color:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <TextField fx:id="colorField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <Label text="Model:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <TextField fx:id="modelField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+            <Label text="Rent per Day:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <TextField fx:id="rentField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+        </GridPane>
+
+        <HBox spacing="15" alignment="CENTER">
+            <Button text="Save" onAction="#handleSave"/>
+            <Button text="Clear" onAction="#handleClear"/>
+            <Button text="Back" onAction="#handleBack"/>
+        </HBox>
+
+    </VBox>
+</AnchorPane>
