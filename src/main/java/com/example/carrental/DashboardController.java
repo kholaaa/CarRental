@@ -3,14 +3,15 @@ package com.example.carrental;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.scene.control.Button;
 import javafx.scene.control.Alert;
-import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
- public class DashboardController {
+public class DashboardController {
 
     @FXML private Button addCarButton;
     @FXML private Button viewCarButton;
@@ -20,12 +21,48 @@ import java.io.IOException;
     @FXML private Button reportButton;
     @FXML private Button logoutButton;
 
-    private void openWindow(String fxmlPath, String title) {
+    @FXML private ImageView backgroundImage;  // Important!
+
+    @FXML
+    public void initialize() {
+        // Load background image programmatically (reliable method)
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Image img = new Image(getClass().getResourceAsStream("/com/example/carrental/pics/bg.jpg"));
+            if (img.isError()) {
+                throw new Exception("Image load failed");
+            }
+            backgroundImage.setImage(img);
+        } catch (Exception e) {
+            System.err.println("WARNING: Could not load bg.jpg!");
+            System.err.println("Checked path: /com/example/carrental/pics/bg.jpg");
+            System.err.println("Make sure the file exists in src/main/resources/com/example/carrental/pics/bg.jpg");
+            e.printStackTrace();
+            // Fallback dark background
+            backgroundImage.setStyle("-fx-background-color: #16213e;");
+        }
+
+        // Button actions
+        addCarButton.setOnAction(e -> openWindow("add_car.fxml", "Add Car"));
+        viewCarButton.setOnAction(e -> openWindow("ViewAvailableCars.fxml", "View Available Cars"));
+        customerButton.setOnAction(e -> openWindow("customer.fxml", "Customer Details"));
+        bookCarButton.setOnAction(e -> openWindow("bookcar.fxml", "Book Car"));
+        returnCarButton.setOnAction(e -> openWindow("return_car.fxml", "Return Car"));
+        reportButton.setOnAction(e -> openWindow("generate_report.fxml", "Generate Report"));
+        logoutButton.setOnAction(e -> handleLogout());
+    }
+
+    private void openWindow(String fxmlFile, String title) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            if (loader.getLocation() == null) {
+                showAlert("File Not Found", "FXML file not found: " + fxmlFile +
+                        "\n\nEnsure it exists in src/main/resources/com/example/carrental/");
+                return;
+            }
+            Scene scene = new Scene(loader.load());
             Stage stage = new Stage();
-            stage.setScene(new Scene(loader.load()));
             stage.setTitle(title);
+            stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -33,26 +70,16 @@ import java.io.IOException;
         }
     }
 
-    @FXML
-    public void initialize() {
-        addCarButton.setOnAction(e -> openWindow("/com/example/carrental/add_car.fxml", "Add Car"));
-        viewCarButton.setOnAction(e -> openWindow("/com/example/carrental/ViewAvailableCars.fxml", "View Available Cars"));
-        customerButton.setOnAction(e -> openWindow("/com/example/carrental/customer.fxml", "Customer Details"));
-        bookCarButton.setOnAction(e -> openWindow("/com/example/carrental/bookcar.fxml", "Book Car"));
-        returnCarButton.setOnAction(e -> openWindow("/com/example/carrental/return_car.fxml", "Return Car"));
-        reportButton.setOnAction(e -> openWindow("/com/example/carrental/genrate_report.fxml", "Generate Report"));
-        logoutButton.setOnAction(this::handleLogout);
-    }
-
-    private void handleLogout(ActionEvent event) {
+    private void handleLogout() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Logout");
         alert.setHeaderText(null);
-        alert.setContentText("Logged out successfully.");
+        alert.setContentText("You have been logged out successfully.");
         alert.showAndWait();
 
-        // Close the entire application or just dashboard
-        logoutButton.getScene().getWindow().hide();
+        // Close dashboard
+        Stage stage = (Stage) logoutButton.getScene().getWindow();
+        stage.close();
     }
 
     private void showAlert(String title, String message) {

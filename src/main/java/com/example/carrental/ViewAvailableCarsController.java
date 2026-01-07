@@ -26,7 +26,7 @@ public class ViewAvailableCarsController {
 
     @FXML
     public void initialize() {
-        backgroundImage.setImage(new Image("file:C:\\CarRentalImages\\Available cars.jpg"));
+        backgroundImage.setImage(new Image(""));
 
         carIdCol.setCellValueFactory(data -> data.getValue().carIdProperty().asObject());
         modelCol.setCellValueFactory(data -> data.getValue().modelProperty());

@@ -4,14 +4,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.carrental.DashboardController"
             prefWidth="1200" prefHeight="700">
 
-    <!-- Background Image -->
+    <!-- Background ImageView - EMPTY (image will be loaded in controller) -->
     <ImageView fx:id="backgroundImage"
                fitWidth="1200" fitHeight="700"
                preserveRatio="false"
@@ -19,11 +18,7 @@
                AnchorPane.topAnchor="0"
                AnchorPane.bottomAnchor="0"
                AnchorPane.leftAnchor="0"
-               AnchorPane.rightAnchor="0">
-        <image>
-            <Image url="@/com/example/carrental/pics/bg.jpg"/>
-        </image>
-    </ImageView>
+               AnchorPane.rightAnchor="0"/>
 
     <!-- Rental Rules -->
     <VBox layoutX="50" layoutY="100" spacing="20">
@@ -66,4 +61,5 @@
                 prefWidth="250" prefHeight="60"
                 style="-fx-font-size: 16px; -fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 8;"/>
     </VBox>
+
 </AnchorPane>
