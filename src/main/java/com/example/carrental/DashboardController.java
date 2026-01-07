@@ -10,7 +10,7 @@ import javafx.event.ActionEvent;
 
 import java.io.IOException;
 
-public class DashboardController {
+ public class DashboardController {
 
     @FXML private Button addCarButton;
     @FXML private Button viewCarButton;

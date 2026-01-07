@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 
-public class ReturnCar {
+ public class return_carController {
 
     @FXML private TextField carIdField;
     @FXML private TextField customerIdField;

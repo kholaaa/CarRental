@@ -4,97 +4,46 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;         // ← Already there
+import javafx.scene.image.ImageView;    // ← ADD THIS LINE
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class LoginController {
+public class loginController {
 
-    @FXML
-    private ImageView backgroundImage;
-
-    @FXML
-    private TextField emailField;
-
-    @FXML
-    private PasswordField passwordField;
-
-    @FXML
-    private TextField visiblePasswordField;
-
-    @FXML
-    private CheckBox showPassword;
+    @FXML private ImageView backgroundImage;
+    @FXML private TextField emailField;
+    @FXML private PasswordField passwordField;
+    @FXML private TextField visiblePasswordField;
+    @FXML private CheckBox showPassword;
 
     @FXML
     public void initialize() {
         // Load background image
-        backgroundImage.setImage(
-                new Image(getClass().getResourceAsStream("/car/rental/system/login.jpg"))
-        );
+        try {
+            backgroundImage.setImage(new Image(getClass().getResourceAsStream("/com/example/carrental/images/login.jpg")));
+        } catch (Exception e) {
+            System.out.println("Login background image not found.");
+        }
+
+        // Password visibility binding (handles show/hide automatically)
+        visiblePasswordField.managedProperty().bind(showPassword.selectedProperty());
+        visiblePasswordField.visibleProperty().bind(showPassword.selectedProperty());
+        visiblePasswordField.textProperty().bindBidirectional(passwordField.textProperty());
+
+        passwordField.managedProperty().bind(showPassword.selectedProperty().not());
+        passwordField.visibleProperty().bind(showPassword.selectedProperty().not());
     }
 
     @FXML
     private void handleShowPassword() {
-        if (showPassword.isSelected()) {
-            visiblePasswordField.setText(passwordField.getText());
-            visiblePasswordField.setVisible(true);
-            passwordField.setVisible(false);
-        } else {
-            passwordField.setText(visiblePasswordField.getText());
-            passwordField.setVisible(true);
-            visiblePasswordField.setVisible(false);
-        }
+        // This method is required for the onAction in FXML
+        // The binding above already handles everything, so body can be empty
     }
 
-    @FXML
-    private void handleLogin() {
-
-        String email = emailField.getText();
-        String password = showPassword.isSelected()
-                ? visiblePasswordField.getText()
-                : passwordField.getText();
-
-        try (Connection conn = DBConnection.getConnection()) {
-
-            String sql = "SELECT * FROM login WHERE email = ? AND password = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, email);
-            stmt.setString(2, password);
-
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Login Successful!");
-                alert.showAndWait();
-
-                // Open dashboard
-                new Dashboard().start(new Stage());
-
-                // Close login window
-                ((Stage) emailField.getScene().getWindow()).close();
-
-            } else {
-                new Alert(Alert.AlertType.ERROR, "Invalid email or password.").show();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Database error:\n" + e.getMessage()).show();
-        }
-    }
-
-    @FXML
-    private void handleSignup() throws Exception {
-        ((Stage) emailField.getScene().getWindow()).close();
-        new SignUp().start(new Stage());
-    }
-
-    @FXML
-    private void handleForgot() throws Exception {
-        new ForgetPassword().start(new Stage());
-    }
+    // ... rest of your code (handleLogin, handleSignup, handleForgot, helpers) remains the same ...
 }
