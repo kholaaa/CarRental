@@ -1,6 +1,7 @@
 # CarRental
 "CAR RENTAL SYSTEM" using JavaFAX for GUI.
 // insert ss
+https://github.com/kholaaa/CarRental/blob/4708cbe5b9bcb78b8cbb1459f32c16774e6013bd/Screenshot%202026-01-07%20090450.png
 Login / Signup screens
  Loading splash screens
  Dashboard
