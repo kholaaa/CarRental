@@ -1,6 +1,8 @@
 # CarRental
 "CAR RENTAL SYSTEM" using JavaFAX for GUI.
-// insert ss
+
+![Screenshot 2026-01-07 090450](https://github.com/user-attachments/assets/21010b6c-9abd-46a7-8787-14ff8fcc9de4)
+
 Login / Signup screens
  Loading splash screens
  Dashboard
@@ -42,30 +44,35 @@ Generate Report.
  **JDBC**
   For database connectivity
 **Project Structure**
-src/
-└── com/example/carrental/
-├── HelloApplication.java      *Initial entry point (pics.fxml → login/loading)
-├── login.java                   * Login screen launcher
+src/ com/example/carrental/
+
+├── HelloApplication.java  
+
+*Initial entry point (pics.fxml → login/loading)
+├── login.java    * Login screen launcher
 ├── Dashboard.java                  * Dashboard launcher
 ├── controllers/                    * All FXML controllers
-│   ├── loginController.java
-│   ├── SignUpController.java
-│   ├── forget_passwordController.java
-│   ├── loadingController.java
-│   ├── loading2Controller.java
-│   ├── DashboardController.java
-│   ├── add_carController.java
-│   ├── ViewAvailableCarsController.java
-│   ├── customerController.java
-│   ├── bookcarController.java
-│   ├── return_carController.java
-│   └── generate_reportController.java
-├── model/
-│   ├── Car.java
-│   └── RentalReport.java
-├── DBConnection.java               * Database connection utility
-└── resources/
-└── com/example/carrental/      * FXML files and images
+
+   ├── loginController.java
+   ├── SignUpController.java
+   ├── forget_passwordController.java
+   ├── loadingController.java
+   ├── loading2Controller.java
+   ├── DashboardController.java
+   ├── add_carController.java
+   ├── ViewAvailableCarsController.java
+   ├── customerController.java
+   ├── bookcarController.java
+   ├── return_carController.java
+   └── generate_reportController.java
+   
+ **model**
+      Car.java
+      RentalReport.java
+      DBConnection.java               * Database connection utility
+  **resources**
+       com/example/carrental/      * FXML files and images
+       
   **DATABASE CODE**
     
 CREATE TABLE login (
@@ -75,7 +82,7 @@ CREATE TABLE login (
     PhoneNumber VARCHAR(20)
 );
 
--- Cars
+**Cars**
 CREATE TABLE cars (
     carID INT PRIMARY KEY,
     carmodel VARCHAR(50),
@@ -85,14 +92,14 @@ CREATE TABLE cars (
     Availability VARCHAR(10) DEFAULT 'yes'
 );
 
--- Customers
+ **Customers**
 CREATE TABLE customers (
     customerID INT PRIMARY KEY,
     name VARCHAR(50),
     phone VARCHAR(20)
 );
 
--- Bookings
+**Bookings**
 CREATE TABLE bookcar (
     bookcarID INT AUTO_INCREMENT PRIMARY KEY,
     customerID INT,
@@ -116,7 +123,6 @@ CREATE TABLE returncar (
 **Steps includes**
 
 Clone the repositoryBashgit clone https://github.com/yourusername/car-rental-system.git
-cd car-rental-system
 Set up MySQL Database
 Create database: CREATE DATABASE CarRental;
 Run the table creation scripts above
@@ -128,11 +134,7 @@ Add JavaFX to your project
 If using IntelliJ/Eclipse: Add JavaFX library/modules
 Or run with VM options:Bash--module-path /path/to/javafx-sdk/lib --add-modules javafx.controls,javafx.fxml
 
-Run the Application
-Main class: com.example.carrental.HelloApplication (or login depending on entry point)
+**Run the Application**
+Main class: com.example.carrental.HelloApplication (or login depending on entry point).
 
 
-
-  f pending returns
-- **Responsive UI**
-  - JavaFX with custom styling and background images
