@@ -1,5 +1,6 @@
 package com.example.carrental;
 
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -7,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -23,13 +25,11 @@ public class loginController {
 
     @FXML
     public void initialize() {
-        // Load background image from resources
+        // Load background image
         try {
             backgroundImage.setImage(new Image(getClass().getResourceAsStream("/com/example/carrental/pics/car2.png")));
         } catch (Exception e) {
             System.out.println("Login background image not found in resources.");
-            // Optional fallback to absolute path
-            // backgroundImage.setImage(new Image("file:C:\\CarRentalImages\\login.jpg"));
         }
 
         // Password show/hide binding
@@ -39,11 +39,6 @@ public class loginController {
 
         passwordField.managedProperty().bind(showPassword.selectedProperty().not());
         passwordField.visibleProperty().bind(showPassword.selectedProperty().not());
-    }
-
-    @FXML
-    private void handleShowPassword() {
-        // Required for FXML onAction — binding already handles logic
     }
 
     @FXML
@@ -65,10 +60,11 @@ public class loginController {
 
             if (rs.next()) {
                 showAlert(Alert.AlertType.INFORMATION, "Login Successful!");
-
-                closeCurrentWindow();
-                openLoadingScreen();  // Go to first loading screen
-
+                // Close login window
+                Stage stage = (Stage) emailField.getScene().getWindow();
+                stage.close();
+                // Open first loading screen
+                openLoadingScreen();
             } else {
                 showAlert(Alert.AlertType.ERROR, "Invalid email or password.");
             }
@@ -80,7 +76,16 @@ public class loginController {
 
     @FXML
     private void handleSignup() {
-        openWindow("/com/example/carrental/signup.fxml", "Sign Up");
+        // Open signup in same stage
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/carrental/signup.fxml"));
+            Scene scene = new Scene(loader.load(), 900, 600);
+            Stage stage = (Stage) emailField.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Sign Up - Car Rental System");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -90,7 +95,7 @@ public class loginController {
 
     private void openLoadingScreen() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/carrental/Loading.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/carrental/loading.fxml"));
             Scene scene = new Scene(loader.load());
             Stage stage = new Stage();
             stage.setScene(scene);
@@ -110,16 +115,13 @@ public class loginController {
             stage.setTitle(title);
             stage.setScene(scene);
             stage.show();
-            closeCurrentWindow();
+            // Close current window
+            Stage currentStage = (Stage) emailField.getScene().getWindow();
+            currentStage.close();
         } catch (IOException e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Could not open " + title);
         }
-    }
-
-    private void closeCurrentWindow() {
-        Stage stage = (Stage) emailField.getScene().getWindow();
-        stage.close();
     }
 
     private void showAlert(Alert.AlertType type, String message) {

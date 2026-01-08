@@ -1,39 +1,34 @@
 package com.example.carrental;
 
 import javafx.animation.PauseTransition;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.net.URL;
+import java.io.IOException;
 
 public class loading2Controller {
 
-    @FXML
-    private ImageView logoImage;
+    @FXML private ImageView backgroundImage;
+    @FXML private Label welcomeLabel;
 
     @FXML
     public void initialize() {
-        // Load the logo image
         try {
-            Image image = new Image(getClass().getResourceAsStream("pics/load1.jpg"));
-            if (image.isError()) {
-                throw new Exception("Image failed to load");
-            }
-            logoImage.setImage(image);
+            backgroundImage.setImage(new Image(getClass().getResourceAsStream("/com/example/carrental/pics/loading2.jpg")));
         } catch (Exception e) {
-            System.out.println("Warning: loading2.jpg not found in resources/com/example/carrental/pics/");
-            // Optional fallback during development (remove in production)
-            // logoImage.setImage(new Image("file:C:\\CarRentalImages\\loading2.jpg"));
+            System.out.println("Loading2 background not found.");
         }
 
-        // Wait 3 seconds then try to open the Dashboard
+        welcomeLabel.setText("Welcome to Car Rental System");
+
+        // Wait 3 seconds then open dashboard
         PauseTransition delay = new PauseTransition(Duration.seconds(3));
         delay.setOnFinished(event -> openDashboard());
         delay.play();
@@ -41,50 +36,12 @@ public class loading2Controller {
 
     private void openDashboard() {
         try {
-            // First, check if the FXML file can be found
-            URL fxmlUrl = getClass().getResource("Dashboard.fxml");
-            if (fxmlUrl == null) {
-                System.err.println("CRITICAL: Dashboard.fxml NOT FOUND!");
-                System.err.println("Expected location: src/main/resources/com/example/carrental/Dashboard.fxml");
-
-                Platform.runLater(() -> {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("File Not Found");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Dashboard.fxml could not be found.\n\n" +
-                            "Please ensure the file is in:\n" +
-                            "src/main/resources/com/example/carrental/Dashboard.fxml");
-                    alert.showAndWait();
-                });
-                return;
-            }
-
-            // Load the Dashboard
-            FXMLLoader loader = new FXMLLoader(fxmlUrl);
-            Scene scene = new Scene(loader.load());
-
-            Stage dashboardStage = new Stage();
-            dashboardStage.setTitle("Car Rental Dashboard");
-            dashboardStage.setScene(scene);
-            dashboardStage.setMaximized(true);
-            dashboardStage.show();
-
-            // Close the current Loading2 window
-            Stage currentStage = (Stage) logoImage.getScene().getWindow();
-            currentStage.close();
-
-        } catch (Exception e) {
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/carrental/dashboard.fxml"));
+            Stage stage = (Stage) backgroundImage.getScene().getWindow();
+            stage.setScene(new Scene(root, 1200, 700));
+            stage.setTitle("Dashboard - Car Rental System");
+        } catch (IOException e) {
             e.printStackTrace();
-
-            Platform.runLater(() -> {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Loading Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Failed to load the Dashboard.\n\n" +
-                        "Error: " + e.getMessage() + "\n\n" +
-                        "Check console for full details.");
-                alert.showAndWait();
-            });
         }
     }
 }

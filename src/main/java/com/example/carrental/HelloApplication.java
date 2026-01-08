@@ -5,22 +5,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class HelloApplication extends Application {
 
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("/com/example/carrental/login.fxml"));
-        Scene scene = new Scene(loader.load());
-        stage.setTitle("Car Rental System - Login");
+    public void start(Stage stage) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/carrental/loading.fxml"));
+        Scene scene = new Scene(loader.load(), 900, 600);
         stage.setScene(scene);
-        stage.setResizable(false);
-        stage.centerOnScreen();
+        stage.setTitle("Car Rental System");
         stage.show();
     }
 
     public static void main(String[] args) {
-        launch(args);
+        launch();
     }
 }

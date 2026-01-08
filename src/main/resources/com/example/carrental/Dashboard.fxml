@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.image.ImageView?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.carrental.DashboardController"
             prefWidth="1200" prefHeight="700">
 
-    <!-- Background ImageView - EMPTY (image will be loaded in controller) -->
+    <!-- Background Image -->
     <ImageView fx:id="backgroundImage"
                fitWidth="1200" fitHeight="700"
                preserveRatio="false"
@@ -20,7 +20,7 @@
                AnchorPane.leftAnchor="0"
                AnchorPane.rightAnchor="0"/>
 
-    <!-- Rental Rules -->
+    <!-- Rental Rules Section -->
     <VBox layoutX="50" layoutY="100" spacing="20">
         <padding>
             <Insets top="20" left="20"/>
@@ -39,25 +39,25 @@
 
     <!-- Navigation Buttons -->
     <VBox layoutX="850" layoutY="100" spacing="25" alignment="CENTER_RIGHT">
-        <Button fx:id="addCarButton" text="Add Car"
+        <Button fx:id="addCarButton" text="Add Car" onAction="#handleAddCar"
                 prefWidth="250" prefHeight="60"
                 style="-fx-font-size: 16px; -fx-background-color: #2c3e50; -fx-text-fill: white; -fx-background-radius: 8;"/>
-        <Button fx:id="viewCarButton" text="VIEW AVAILABLE CARS"
+        <Button fx:id="viewCarButton" text="VIEW AVAILABLE CARS" onAction="#handleViewCar"
                 prefWidth="250" prefHeight="60"
                 style="-fx-font-size: 16px; -fx-background-color: #2c3e50; -fx-text-fill: white; -fx-background-radius: 8;"/>
-        <Button fx:id="customerButton" text="CUSTOMER DETAILS"
+        <Button fx:id="customerButton" text="CUSTOMER DETAILS" onAction="#handleCustomer"
                 prefWidth="250" prefHeight="60"
                 style="-fx-font-size: 16px; -fx-background-color: #2c3e50; -fx-text-fill: white; -fx-background-radius: 8;"/>
-        <Button fx:id="bookCarButton" text="BOOK A CAR"
+        <Button fx:id="bookCarButton" text="BOOK A CAR" onAction="#handleBookCar"
                 prefWidth="250" prefHeight="60"
                 style="-fx-font-size: 16px; -fx-background-color: #2c3e50; -fx-text-fill: white; -fx-background-radius: 8;"/>
-        <Button fx:id="returnCarButton" text="RETURN A CAR"
+        <Button fx:id="returnCarButton" text="RETURN A CAR" onAction="#handleReturnCar"
                 prefWidth="250" prefHeight="60"
                 style="-fx-font-size: 16px; -fx-background-color: #2c3e50; -fx-text-fill: white; -fx-background-radius: 8;"/>
-        <Button fx:id="reportButton" text="GENERATE REPORT"
+        <Button fx:id="reportButton" text="GENERATE REPORT" onAction="#handleReport"
                 prefWidth="250" prefHeight="60"
                 style="-fx-font-size: 16px; -fx-background-color: #2c3e50; -fx-text-fill: white; -fx-background-radius: 8;"/>
-        <Button fx:id="logoutButton" text="Logout"
+        <Button fx:id="logoutButton" text="Logout" onAction="#handleLogout"
                 prefWidth="250" prefHeight="60"
                 style="-fx-font-size: 16px; -fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 8;"/>
     </VBox>

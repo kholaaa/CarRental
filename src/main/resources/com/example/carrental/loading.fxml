@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.example.carrental.loadingController">
+    <ImageView fx:id="backgroundImage"
+               fitWidth="900" fitHeight="600"
+               preserveRatio="true"
+               pickOnBounds="true"/>
+</StackPane>
