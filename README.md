@@ -31,6 +31,7 @@ Dashboard consist of following tables:
 
      Register customer details such as:
    Customer ID, Name, Email and PhoneNumber.
+   
   **Booking System**
 
    ![AvaliableCars.jpeg](https://github.com/kholaaa/CarRental/blob/edca0c6ea5c7dc992a2c6b0d730ee0e8a8f7afa6/AvaliableCars.jpeg)
