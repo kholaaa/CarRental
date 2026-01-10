@@ -4,37 +4,41 @@
 ![Screenshot 2026-01-07 090450](https://github.com/user-attachments/assets/21010b6c-9abd-46a7-8787-14ff8fcc9de4)
 
 Login / Signup screens
- Loading splash screens
- Dashboard
- 
-![Welcome Screen.jpeg](https://github.com/kholaaa/CarRental/blob/07dec8de8199fc9a8b76c54a328072dec94229b6/welcom%20screen.jpeg)
-
- Add/View Cars
- Book Car with Chalan
-Generate Report.
 **Features for users**
 **User Authentication**
   - Login, Signup, Forgot Password
 - **Splash & Loading Screens**
   - Professional multi-stage loading animation
-  **Dashboard**
-   Central navigation to all modules
+ Loading splash screens
+
+ **Dashboard**
+
+![Welcome Screen.jpeg](https://github.com/kholaaa/CarRental/blob/07dec8de8199fc9a8b76c54a328072dec94229b6/welcom%20screen.jpeg)
+
   **Car Management**
    Add new cars
    View all cars (with availability status) in a TableView
+   
+ ![BookaCar.jpeg](https://github.com/kholaaa/CarRental/blob/864e71fd655f263d820a80e893c8d8a5740fe8cb/BookaCar.jpeg)
+ 
   **Customer Management**
    Register customer details
+   ![CustomerDetails.jpeg](https://github.com/kholaaa/CarRental/blob/864e71fd655f263d820a80e893c8d8a5740fe8cb/CustomerDetails.jpeg)
+   
   **Booking System**
     Select available cars via ComboBox
     Enter booking dates
     Generate instant rental chalan (invoice) with total rent calculation
     Update car availability to "No" on booking
+    ![AvaliableCars.jpeg](https://github.com/kholaaa/CarRental/blob/864e71fd655f263d820a80e893c8d8a5740fe8cb/AvaliableCars.jpeg)
  **Return System**
    Record return details (fuel level, condition, date)
    Automatically set car availability back to "Yes"
+   ![ReturnCar.jpeg](https://github.com/kholaaa/CarRental/blob/864e71fd655f263d820a80e893c8d8a5740fe8cb/AvaliableCars.jpeg)
  **Report Generation**
     View all bookings with status (Pending / Returned)
    Calculate and display total revenue earned.
+   ![CarRental\Report.jpeg](https://github.com/kholaaa/CarRental/blob/864e71fd655f263d820a80e893c8d8a5740fe8cb/Report.jpeg)
   **Technologies used**
  **Java**
  (JDK 8 or higher)
