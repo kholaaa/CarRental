@@ -6,7 +6,7 @@
 Login / Signup screens
  Loading splash screens
  Dashboard
- ![image alt](https://github.com/kholaaa/CarRental/commit/e8adbde7a91a77b69665494ad777de9674ad9fff)
+ ![Welcome Screen](welcome_screen.jpeg)
  Add/View Cars
  Book Car with Chalan
 Generate Report.
