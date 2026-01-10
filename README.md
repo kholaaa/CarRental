@@ -32,8 +32,8 @@ Dashboard consist of following tables:
      Register customer details such as:
    Customer ID, Name, Email and PhoneNumber.
   **Booking System**
-  
-    ![AvaliableCars.jpeg](https://github.com/kholaaa/CarRental/blob/864e71fd655f263d820a80e893c8d8a5740fe8cb/AvaliableCars.jpeg)
+
+   ![AvaliableCars.jpeg](https://github.com/kholaaa/CarRental/blob/edca0c6ea5c7dc992a2c6b0d730ee0e8a8f7afa6/AvaliableCars.jpeg)
 
      Select available cars.
     Enter Car ID, model, Brand and price per day.
