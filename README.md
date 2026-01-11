@@ -27,7 +27,7 @@ Dashboard consist of following tables:
   
   **Car Management**
   
- ![BookACar.png]https://github.com/kholaaa/CarRental/blob/c32403d2e64bcebffab2108e4342f696bc0a1637/BookACar.png)
+ ![BookACar.png](https://github.com/kholaaa/CarRental/blob/c32403d2e64bcebffab2108e4342f696bc0a1637/BookACar.png)
  
    CarBooking includes CarID, start date and return date.
    
