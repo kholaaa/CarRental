@@ -50,6 +50,11 @@ public class DashboardController {
         loadUniqueDashboardBackground();
     }
 
+    @FXML
+    private void handleMyBookings(ActionEvent event) throws IOException {
+        System.out.println(">>> handleMyBookings() called - loading my_bookings.fxml");
+        switchScene(event, "my_bookings.fxml");
+    }
     private void loadUniqueDashboardBackground() {
         String imagePath = "com/example/carrental/pics/car2.png";
 
@@ -107,12 +112,12 @@ public class DashboardController {
     }
 
     @FXML private void handleReturnCar(ActionEvent event) throws IOException {
+
+        System.out.println(">>> handleReturnCar() called - should load return_car.fxml");
         switchScene(event, "return_car.fxml");
     }
 
-    @FXML private void handleMyBookings(ActionEvent event) throws IOException {
-        switchScene(event, "my_bookings.fxml");
-    }
+
 
     @FXML private void handleLogout(ActionEvent event) throws IOException {
         Session.clear();

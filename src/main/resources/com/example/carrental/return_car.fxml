@@ -10,7 +10,7 @@
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.carrental.MyBookingsController"
-            style="-fx-background-image: url('/pics/lld.png');
+            style="-fx-background-image: url('/pics/llg.png');
                    -fx-background-size: cover;
                    -fx-background-position: center center;
                    -fx-background-repeat: no-repeat;">
