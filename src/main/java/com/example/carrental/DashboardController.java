@@ -53,14 +53,20 @@ public class DashboardController {
     @FXML
     private void handleMyBookings(ActionEvent event) throws IOException {
         System.out.println(">>> handleMyBookings() called - loading my_bookings.fxml");
+        System.out.println("╔════════════════════════════════════════════╗");
+        System.out.println("║   MY BOOKINGS BUTTON WAS ACTUALLY CLICKED  ║");
+        System.out.println("║   Loading → my_bookings.fxml               ║");
+        System.out.println("╚════════════════════════════════════════════╝");
+        switchScene(event, "my_bookings.fxml");
         switchScene(event, "my_bookings.fxml");
     }
     private void loadUniqueDashboardBackground() {
-        String imagePath = "com/example/carrental/pics/car2.png";
+        String imagePath = "/com/example/carrental/pics/llg.png";
 
         try (InputStream stream = getClass().getResourceAsStream(imagePath)) {
             if (stream == null) {
-                System.err.println("Background missing: " + imagePath + " → fallback gradient");
+                System.err.println("Background image NOT FOUND: " + imagePath);
+                System.err.println("Expected location: src/main/resources" + imagePath);
                 rootPane.setStyle("-fx-background-color: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);");
                 return;
             }
@@ -112,6 +118,11 @@ public class DashboardController {
     }
 
     @FXML private void handleReturnCar(ActionEvent event) throws IOException {
+
+            System.out.println("╔════════════════════════════════════════════╗");
+            System.out.println("║   RETURN CAR BUTTON WAS ACTUALLY CLICKED   ║");
+            System.out.println("║   Loading → return_car.fxml                ║");
+            System.out.println("╚════════════════════════════════════════════╝");
 
         System.out.println(">>> handleReturnCar() called - should load return_car.fxml");
         switchScene(event, "return_car.fxml");

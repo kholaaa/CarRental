@@ -21,7 +21,7 @@ public class RentalReport {
 
     @FXML
     public void initialize() {
-        setDarkBackground(rootPane, "report_bg.jpg");  // Now this will work!
+        setDarkBackground(rootPane, "llg.png");  // Now this will work!
 
         customerCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         carCol.setCellValueFactory(new PropertyValueFactory<>("carId"));

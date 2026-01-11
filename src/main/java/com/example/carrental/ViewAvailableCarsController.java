@@ -44,7 +44,7 @@ public class ViewAvailableCarsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Set background
-        setDarkBackground(rootPane, "img.png");
+        setDarkBackground(rootPane, "llg.png");
 
         // Set up table columns
         idCol.setCellValueFactory(new PropertyValueFactory<>("carId"));

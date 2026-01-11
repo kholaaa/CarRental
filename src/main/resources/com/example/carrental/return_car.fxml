@@ -9,45 +9,40 @@
             prefWidth="1280.0"
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.carrental.MyBookingsController"
-            style="-fx-background-image: url('/pics/llg.png');
-                   -fx-background-size: cover;
-                   -fx-background-position: center center;
-                   -fx-background-repeat: no-repeat;">
+            fx:controller="com.example.carrental.return_carController">
 
-    <children>
-        <VBox spacing="30.0" alignment="CENTER"
-              AnchorPane.topAnchor="40.0"
-              AnchorPane.bottomAnchor="40.0"
-              AnchorPane.leftAnchor="80.0"
-              AnchorPane.rightAnchor="80.0">
+    <VBox alignment="CENTER" spacing="25"
+          AnchorPane.topAnchor="80.0"
+          AnchorPane.bottomAnchor="80.0"
+          AnchorPane.leftAnchor="200.0"
+          AnchorPane.rightAnchor="200.0">
 
-            <Label text="My Bookings And Returns"
-                   style="-fx-font-size: 36px;
-                          -fx-font-weight: bold;
-                          -fx-text-fill: white;"/>
+        <Label text="Return a Car"
+               style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: white;"/>
 
-            <TableView fx:id="bookingsTable" prefHeight="500.0">
-                <columns>
-                    <TableColumn fx:id="carIdCol" text="Car ID" prefWidth="100.0"/>
-                    <TableColumn fx:id="modelCol" text="Model" prefWidth="220.0"/>
-                    <TableColumn fx:id="fromCol" text="From Date" prefWidth="150.0"/>
-                    <TableColumn fx:id="toCol" text="To Date" prefWidth="150.0"/>
-                    <TableColumn fx:id="costCol" text="Total Cost" prefWidth="140.0"/>
-                    <TableColumn fx:id="statusCol" text="Status" prefWidth="120.0"/>
-                    <TableColumn fx:id="returnFuelCol" text="Return Fuel %" prefWidth="130.0"/>
-                    <TableColumn fx:id="returnConditionCol" text="Return Condition" prefWidth="220.0"/>
-                </columns>
-            </TableView>
+        <VBox spacing="15">
+            <Label text="Car ID" style="-fx-text-fill: white;"/>
+            <TextField fx:id="carIdField" promptText="Enter Car ID"/>
 
-            <Button text="BACK TO DASHBOARD"
-                    onAction="#handleBack"
-                    prefHeight="55.0"
-                    prefWidth="300.0"
-                    style="-fx-background-color: #d32f2f;
-                           -fx-text-fill: white;
-                           -fx-font-size: 18px;
-                           -fx-font-weight: bold;"/>
+            <Label text="Fuel Level at Return (%)" style="-fx-text-fill: white;"/>
+            <TextField fx:id="fuelLevelField" promptText="0 - 100"/>
+
+            <Label text="Car Condition" style="-fx-text-fill: white;"/>
+            <TextArea fx:id="conditionField"
+                      promptText="Describe condition / damages..."
+                      prefHeight="120"/>
         </VBox>
-    </children>
+
+        <HBox spacing="40" alignment="CENTER">
+            <Button text="Submit Return"
+                    onAction="#handleReturnCar"
+                    prefWidth="180"
+                    prefHeight="50"/>
+
+            <Button text="Back"
+                    onAction="#handleBack"
+                    prefWidth="120"
+                    prefHeight="50"/>
+        </HBox>
+    </VBox>
 </AnchorPane>
