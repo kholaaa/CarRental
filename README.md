@@ -1,3 +1,24 @@
+**PROJECT OVERVIEW**
+
+The Car Rental System is a Java-based desktop application designed to manage car rentals efficiently. 
+It provides a user-friendly interface built with JavaFX and styled using CSS, while MySQL is used for secure and persistent data storage.
+The system supports complete rental operations including authentication, car management, customer handling, booking, returns, and report generation.
+
+ **Technologies Used**
+
+Java (JDF).
+
+JavaFX – GUI development
+
+FXML & Scene Builder – UI layout design
+
+CSS – UI styling
+
+MySQL – Relational database
+
+JDBC – Database connectivity
+
+
 # CarRental
 "CAR RENTAL SYSTEM" using JavaFAX for GUI and CSS for buttons styling.
 
@@ -78,22 +99,6 @@ Dashboard consist of following tables:
     Rental Days
     Total cost/
     
-  **Technologies used**
- **Java**
- (JDK 8 or higher)
-  **JavaFX**
-   For rich desktop UI
- **MySQL**
-  Relational database for persistent storage
- **Scene Builder**
- (optional) For designing FXML layouts
- **JDBC**
-  For database connectivity
-  **CSS**
-  For styling.
-**Project Structure**
-src/ com/example/carrental/
-
 ├── HelloApplication.java  
 
 *Initial entry point (pics.fxml → login/loading)
@@ -157,8 +162,8 @@ CREATE TABLE bookcar (
     FOREIGN KEY (customerID) REFERENCES customers(customerID),
     FOREIGN KEY (carID) REFERENCES cars(carID)
 );
-
 Returns
+
 CREATE TABLE returncar (
     returnID INT AUTO_INCREMENT PRIMARY KEY,
     fuellevel INT,
