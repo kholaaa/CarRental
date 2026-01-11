@@ -32,8 +32,9 @@ Dashboard consist of following tables:
    CarBooking includes CarID, start date and return date.
    
    **Add new cars**
-   
-      ![AddNewCar.png](https://github.com/kholaaa/CarRental/blob/a0803dec940f22e3be1361202b7bdc96d4f673a5/AddNewCar.png)
+
+    ![AddNewCar.png](https://github.com/kholaaa/CarRental/blob/db9dc4769af68f29660ca915dd345c00d4a20bdf/AddNewCar.png)
+
 
   add new car includes features such as:
   CarID
