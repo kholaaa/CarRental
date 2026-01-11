@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
 <AnchorPane fx:id="rootPane"
             prefHeight="720.0"
@@ -11,23 +9,18 @@
             stylesheets="@dashboard.css"
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.carrental.DashboardController"
-            style="-fx-background-image: url('/com/example/carrental/pics/llg.png');
-                   -fx-background-size: cover;
-                   -fx-background-position: center center;
-                   -fx-background-repeat: no-repeat;">
+            fx:controller="com.example.carrental.DashboardController">
 
     <children>
-
-        <!-- ================= TITLE ================= -->
+        <!-- Page Title -->
         <Label text="Welcome to Car Rental System"
-               style="-fx-font-size: 48px; -fx-font-weight: bold; -fx-text-fill: white;"
+               style="-fx-font-size: 48px; -fx-font-weight: bold;"
                AnchorPane.topAnchor="60.0"
                AnchorPane.leftAnchor="0.0"
                AnchorPane.rightAnchor="0.0"
                alignment="CENTER"/>
 
-        <!-- ================= BUTTON GRID ================= -->
+        <!-- Main Dashboard Buttons Grid -->
         <GridPane hgap="40.0" vgap="40.0"
                   AnchorPane.topAnchor="180.0"
                   AnchorPane.leftAnchor="160.0"
@@ -72,7 +65,7 @@
                     GridPane.columnIndex="0"/>
 
             <Button fx:id="myBookingsButton"
-                    text="MY BOOKINGS and RETURNS"
+                    text="MY BOOKINGS AND RETURNS"
                     onAction="#handleMyBookings"
                     prefHeight="90.0"
                     prefWidth="320.0"
@@ -98,10 +91,9 @@
                     styleClass="dashboard-btn admin-btn"
                     GridPane.rowIndex="2"
                     GridPane.columnIndex="1"/>
-
         </GridPane>
 
-        <!-- ================= LOGOUT ================= -->
+        <!-- Logout Button -->
         <Button fx:id="logoutButton"
                 text="LOGOUT"
                 onAction="#handleLogout"
@@ -111,13 +103,13 @@
                 AnchorPane.bottomAnchor="30.0"
                 AnchorPane.rightAnchor="60.0"/>
 
-        <!-- ================= FOOTER ================= -->
+        <!-- Footer -->
         <Label text="© 2026 Car Rental System • Powered by JavaFX"
-               style="-fx-font-size: 14px; -fx-text-fill: #aaaaaa;"
+               style="-fx-font-size: 14px;"
                AnchorPane.bottomAnchor="10.0"
                AnchorPane.leftAnchor="0.0"
                AnchorPane.rightAnchor="0.0"
-               alignment="CENTER"/>
-
+               alignment="CENTER"
+               styleClass="footer"/>
     </children>
 </AnchorPane>

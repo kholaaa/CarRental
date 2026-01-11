@@ -34,7 +34,7 @@ public class add_carController {
 
     private void loadBackgroundImage() {
         // Change this to your actual image name (place it in src/main/resources/com/example/carrental/pics/)
-        String imagePath = "/com/example/carrental/pics/img.png";  // ← recommended dark car-themed image
+        String imagePath = "/com/example/carrental/pics/llg.png";  // ← recommended dark car-themed image
 
         try (InputStream stream = getClass().getResourceAsStream(imagePath)) {
             if (stream == null) {

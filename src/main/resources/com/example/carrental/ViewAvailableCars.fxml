@@ -30,7 +30,9 @@
 
             <TableView fx:id="carsTable"
                        prefHeight="450.0"
-                       prefWidth="900.0">
+                       prefWidth="900.0"
+                       style="-fx-background-color: rgba(255,255,255,0.7);"
+            >
                 <columns>
                     <TableColumn fx:id="idCol"     prefWidth="120.0" text="Car ID" />
                     <TableColumn fx:id="modelCol"  prefWidth="250.0" text="Model" />

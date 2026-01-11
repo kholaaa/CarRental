@@ -15,7 +15,9 @@
             <Label text="Rental Report"
                    style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: white;"/>
 
-            <TableView fx:id="reportTable" prefHeight="450.0" prefWidth="900.0">
+            <TableView fx:id="reportTable" prefHeight="450.0" prefWidth="900.0"
+                       style="-fx-background-color: rgba(255,255,255,0.7);"
+            >
                 <columns>
                     <TableColumn fx:id="customerCol" text="Customer ID" prefWidth="120.0"/>
                     <TableColumn fx:id="carCol" text="Car ID" prefWidth="120.0"/>

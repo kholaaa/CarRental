@@ -37,12 +37,23 @@
             <Button text="Submit Return"
                     onAction="#handleReturnCar"
                     prefWidth="180"
-                    prefHeight="50"/>
+                    prefHeight="50"
+                    style="-fx-background-color: #2ecc71;
+                   -fx-text-fill: white;
+                   -fx-font-size: 16px;
+                   -fx-font-weight: bold;
+                   -fx-background-radius: 8;"/>
 
-            <Button text="Back"
+            <Button text="Back To Dashboard"
                     onAction="#handleBack"
-                    prefWidth="120"
-                    prefHeight="50"/>
+                    prefWidth="180"
+                    prefHeight="50"
+                    style="-fx-background-color: #e74c3c;
+                   -fx-text-fill: white;
+                   -fx-font-size: 16px;
+                   -fx-font-weight: bold;
+                   -fx-background-radius: 8;"/>
         </HBox>
+
     </VBox>
 </AnchorPane>
