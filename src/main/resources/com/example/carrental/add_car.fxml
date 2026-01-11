@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.carrental.add_carController"
-            prefWidth="600" prefHeight="500">
+<AnchorPane fx:id="rootPane" prefHeight="720.0" prefWidth="1280.0"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.carrental.add_carController">
 
-    <VBox spacing="15" alignment="CENTER"
-          AnchorPane.topAnchor="40"
-          AnchorPane.leftAnchor="100"
-          AnchorPane.rightAnchor="100">
+    <children>
+        <!-- Main centered card container -->
+        <VBox alignment="CENTER" spacing="25.0" style="-fx-background-color: rgba(30,30,50,0.75); -fx-background-radius: 15; -fx-padding: 40;"
+              prefWidth="600.0" prefHeight="580.0"
+              AnchorPane.topAnchor="70.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0">
 
-        <Label text="ADD CAR" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+            <!-- Title -->
+            <Label text="Add New Car"
+                   style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: white;"/>
 
-        <GridPane hgap="15" vgap="15">
-            <Label text="Car ID:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-            <TextField fx:id="carIdField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <!-- Form Fields -->
+            <TextField fx:id="carIdField" promptText="Car ID (unique number)" prefHeight="50.0" style="-fx-font-size: 16px;"/>
+            <TextField fx:id="modelField" promptText="Model (e.g. Corolla)" prefHeight="50.0" style="-fx-font-size: 16px;"/>
+            <TextField fx:id="typeField" promptText="Type (e.g. Sedan, SUV)" prefHeight="50.0" style="-fx-font-size: 16px;"/>
+            <TextField fx:id="colourField" promptText="Colour (e.g. Black, Silver)" prefHeight="50.0" style="-fx-font-size: 16px;"/>
+            <TextField fx:id="priceField" promptText="Price per Day (PKR)" prefHeight="50.0" style="-fx-font-size: 16px;"/>
 
-            <Label text="Type:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-            <TextField fx:id="typeField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <!-- Buttons - centered and beautifully spaced -->
+            <HBox alignment="CENTER" spacing="40.0" prefHeight="80.0">
+                <Button text="ADD CAR"
+                        onAction="#handleAddCar"
+                        prefHeight="60.0" prefWidth="220.0"
+                        style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold; -fx-background-radius: 10;"/>
 
-            <Label text="Color:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-            <TextField fx:id="colorField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-
-            <Label text="Model:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-            <TextField fx:id="modelField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-
-            <Label text="Rent per Day:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-            <TextField fx:id="rentField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-        </GridPane>
-
-        <HBox spacing="15" alignment="CENTER">
-            <Button text="Save" onAction="#handleSave"/>
-            <Button text="Clear" onAction="#handleClear"/>
-            <Button text="Back" onAction="#handleBack"/>
-        </HBox>
-
-    </VBox>
+                <Button text="BACK TO DASHBOARD"
+                        onAction="#handleBack"
+                        prefHeight="60.0" prefWidth="260.0"
+                        style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold; -fx-background-radius: 10;"/>
+            </HBox>
+        </VBox>
+    </children>
 </AnchorPane>

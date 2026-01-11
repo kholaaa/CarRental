@@ -1,40 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.carrental.SignUpController"
-            prefWidth="800" prefHeight="600">
+<AnchorPane fx:id="rootPane" prefHeight="720.0" prefWidth="1280.0"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.carrental.SignUpController">
 
-    <!-- Background -->
-    <ImageView fx:id="backgroundImage"
-               fitWidth="800"
-               fitHeight="600"
-               preserveRatio="false"/>
+    <children>
+        <!-- Centered Sign Up Card -->
+        <VBox alignment="CENTER" layoutX="277.0" layoutY="120.0" prefHeight="550.0" prefWidth="432.0" spacing="25.0"
+              style="-fx-background-color: rgba(30,30,30,0.88); -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #444444; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7), 25, 0, 0, 8);">
 
-    <!-- Signup Panel -->
-    <VBox spacing="10"
-          layoutX="250"
-          layoutY="150"
-          prefWidth="300"
-          style="-fx-background-color: pink; -fx-padding: 20;">
+            <padding>
+                <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+            </padding>
 
-        <Label text="SIGN UP"
-               style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <!-- Title -->
+            <Label style="-fx-font-size: 32px; -fx-text-fill: white; -fx-font-weight: bold;" text="Create New Account" />
 
-        <TextField fx:id="nameField" promptText="Name"/>
-        <TextField fx:id="emailField" promptText="Email"/>
-        <PasswordField fx:id="passwordField" promptText="Password"/>
-        <TextField fx:id="numberField" promptText="Phone Number"/>
+            <!-- Username -->
+            <TextField fx:id="usernameField" prefHeight="50.0" prefWidth="320.0" promptText="Username"
+                       style="-fx-background-color: #3c3c3c; -fx-text-fill: white; -fx-prompt-text-fill: #aaaaaa;" />
 
-        <CheckBox fx:id="showPasswordCheck" text="Show Password"/>
+            <!-- Name -->
+            <TextField fx:id="nameField" prefHeight="50.0" prefWidth="320.0" promptText="Full Name"
+                       style="-fx-background-color: #3c3c3c; -fx-text-fill: white; -fx-prompt-text-fill: #aaaaaa;" />
 
-        <Button text="SIGN UP NOW" onAction="#handleSignup"/>
-        <Button text="BACK TO LOGIN" onAction="#handleBackToLogin"/>
+            <!-- Email -->
+            <TextField fx:id="emailField" prefHeight="50.0" prefWidth="320.0" promptText="Email"
+                       style="-fx-background-color: #3c3c3c; -fx-text-fill: white; -fx-prompt-text-fill: #aaaaaa;" />
 
-    </VBox>
+            <!-- Password -->
+            <PasswordField fx:id="passwordField" prefHeight="50.0" prefWidth="320.0" promptText="Password"
+                           style="-fx-background-color: #3c3c3c; -fx-text-fill: white; -fx-prompt-text-fill: #aaaaaa;" />
 
+            <!-- Phone (optional) -->
+            <TextField fx:id="phoneField" prefHeight="50.0" prefWidth="320.0" promptText="Phone Number (optional)"
+                       style="-fx-background-color: #3c3c3c; -fx-text-fill: white; -fx-prompt-text-fill: #aaaaaa;" />
+
+            <!-- Sign Up Button -->
+            <Button onAction="#handleSignUp" prefHeight="55.0" prefWidth="320.0"
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"
+                    text="SIGN UP" />
+
+            <!-- Back to Login Button -->
+            <Button fx:id="backToLoginButton" text="BACK TO LOGIN"
+                    onAction="#handleBackToLogin" prefHeight="50.0" prefWidth="320.0"
+                    style="-fx-background-color: #d32f2f; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;" />
+        </VBox>
+    </children>
 </AnchorPane>

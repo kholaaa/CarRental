@@ -1,75 +1,139 @@
 package com.example.carrental;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
 
- public class return_carController {
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class return_carController {
 
     @FXML private TextField carIdField;
-    @FXML private TextField customerIdField;
-    @FXML private TextField returnDateField;
     @FXML private TextField fuelLevelField;
     @FXML private TextField conditionField;
+    @FXML private AnchorPane rootPane;
 
     @FXML
-    private void submitReturn() {
-        String carId = carIdField.getText();
-        String customerId = customerIdField.getText();
-        String returnDate = returnDateField.getText();
-        String fuelLevel = fuelLevelField.getText();
-        String condition = conditionField.getText();
+    private void handleReturnCar(ActionEvent event) {
 
-        if (carId.isEmpty() || customerId.isEmpty() || returnDate.isEmpty() || fuelLevel.isEmpty() || condition.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Please fill all fields");
-            return;
+        try {
+            int carId = Integer.parseInt(carIdField.getText().trim());
+            int fuelLevel = Integer.parseInt(fuelLevelField.getText().trim());
+            String condition = conditionField.getText().trim();
+
+            if (fuelLevel < 0 || fuelLevel > 100) {
+                showAlert(Alert.AlertType.ERROR, "Fuel level must be between 0 and 100.");
+                return;
+            }
+
+            if (condition.isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, "Please describe the car condition.");
+                return;
+            }
+
+            int customerId = Session.getUserId();
+            if (customerId == -1) {
+                showAlert(Alert.AlertType.ERROR, "You must be logged in to return a car.");
+                return;
+            }
+
+            try (Connection conn = DBConnection.getConnection()) {
+
+                // 1. Check ACTIVE booking (important)
+                String checkQuery = """
+                    SELECT bookcarID 
+                    FROM bookcar 
+                    WHERE carID = ? 
+                    AND customerID = ?
+                    AND returndate >= CURDATE()
+                """;
+
+                PreparedStatement checkStmt = conn.prepareStatement(checkQuery);
+                checkStmt.setInt(1, carId);
+                checkStmt.setInt(2, customerId);
+
+                ResultSet rs = checkStmt.executeQuery();
+                if (!rs.next()) {
+                    showAlert(Alert.AlertType.ERROR,
+                            "You do not have an active booking for this car.");
+                    return;
+                }
+
+                // 2. Insert into returncar (KEEP booking history)
+                String insertReturn = """
+                    INSERT INTO returncar 
+                    (carID, customerID, returndate, fuellevel, carcondition)
+                    VALUES (?, ?, CURDATE(), ?, ?)
+                """;
+
+                PreparedStatement insertStmt = conn.prepareStatement(insertReturn);
+                insertStmt.setInt(1, carId);
+                insertStmt.setInt(2, customerId);
+                insertStmt.setInt(3, fuelLevel);
+                insertStmt.setString(4, condition);
+                insertStmt.executeUpdate();
+
+                // 3. Mark car as available again
+                String updateCar = "UPDATE cars SET Availability = 'Yes' WHERE carID = ?";
+                PreparedStatement updateStmt = conn.prepareStatement(updateCar);
+                updateStmt.setInt(1, carId);
+                updateStmt.executeUpdate();
+
+                showAlert(Alert.AlertType.INFORMATION,
+                        "Car returned successfully!\nIt is now available for booking.");
+
+                // Clear fields
+                carIdField.clear();
+                fuelLevelField.clear();
+                conditionField.clear();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR,
+                        "Database error: " + e.getMessage());
+            }
+
+        } catch (NumberFormatException e) {
+            showAlert(Alert.AlertType.ERROR,
+                    "Car ID and Fuel Level must be valid numbers.");
         }
+    }
 
-        try (Connection conn = DBConnection.getConnection()) {
-            String insertSQL = "INSERT INTO returncar (fuellevel, carcondition, carID, customerID, returndate) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement ps = conn.prepareStatement(insertSQL);
-            ps.setInt(1, Integer.parseInt(fuelLevel));
-            ps.setString(2, condition);
-            ps.setInt(3, Integer.parseInt(carId));
-            ps.setInt(4, Integer.parseInt(customerId));
-            ps.setDate(5, Date.valueOf(returnDate));
-            ps.executeUpdate();
+    @FXML
+    private void handleBack(ActionEvent event) {
+        try {
+            Stage stage =
+                    (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            String updateSQL = "UPDATE cars SET availability='Yes' WHERE carID=?";
-            ps = conn.prepareStatement(updateSQL);
-            ps.setInt(1, Integer.parseInt(carId));
-            ps.executeUpdate();
+            Parent root = FXMLLoader.load(
+                    getClass().getResource("/com/example/carrental/Dashboard.fxml"));
 
-            showAlert(Alert.AlertType.INFORMATION, "Car returned successfully!");
-            clearFields();
-        } catch (Exception e) {
+            stage.setScene(new Scene(root));
+            stage.centerOnScreen();
+
+        } catch (IOException e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, e.getMessage());
+            showAlert(Alert.AlertType.ERROR,
+                    "Unable to load Dashboard.");
         }
     }
 
-    @FXML
-    private void clearFields() {
-        carIdField.clear();
-        customerIdField.clear();
-        returnDateField.clear();
-        fuelLevelField.clear();
-        conditionField.clear();
-    }
-
-    @FXML
-    private void goBack() {
-        Stage stage = (Stage) carIdField.getScene().getWindow();
-        stage.close();
-    }
-
-    private void showAlert(Alert.AlertType type, String msg) {
+    private void showAlert(Alert.AlertType type, String message) {
         Alert alert = new Alert(type);
+        alert.setTitle("Car Rental System");
         alert.setHeaderText(null);
-        alert.setContentText(msg);
-        alert.show();
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

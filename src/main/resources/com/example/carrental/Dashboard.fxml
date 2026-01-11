@@ -1,65 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21"
+<AnchorPane fx:id="rootPane"
+            prefHeight="720.0"
+            prefWidth="1280.0"
+            stylesheets="@dashboard.css"
+            xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.carrental.DashboardController"
-            prefWidth="1200" prefHeight="700">
+            style="-fx-background-image: url('/pics/img.png');
+                   -fx-background-size: cover;
+                   -fx-background-position: center center;
+                   -fx-background-repeat: no-repeat;">
 
-    <!-- Background ImageView - EMPTY (image will be loaded in controller) -->
-    <ImageView fx:id="backgroundImage"
-               fitWidth="1200" fitHeight="700"
-               preserveRatio="false"
-               pickOnBounds="true"
-               AnchorPane.topAnchor="0"
-               AnchorPane.bottomAnchor="0"
-               AnchorPane.leftAnchor="0"
-               AnchorPane.rightAnchor="0"/>
+    <children>
 
-    <!-- Rental Rules -->
-    <VBox layoutX="50" layoutY="100" spacing="20">
-        <padding>
-            <Insets top="20" left="20"/>
-        </padding>
-        <Label text="Rental Rules"
-               style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white; -fx-effect: dropshadow(gaussian, black, 10, 0, 2, 2);"/>
-        <Label text="1. Customer must provide valid ID."
-               style="-fx-font-size: 18px; -fx-text-fill: white;"/>
-        <Label text="2. All dues must be cleared before return."
-               style="-fx-font-size: 18px; -fx-text-fill: white;"/>
-        <Label text="3. Late return will incur additional fees."
-               style="-fx-font-size: 18px; -fx-text-fill: white;"/>
-        <Label text="4. Fuel must be refilled to at least 50%."
-               style="-fx-font-size: 18px; -fx-text-fill: white;"/>
-    </VBox>
+        <!-- ================= TITLE ================= -->
+        <Label text="Welcome to Car Rental System"
+               style="-fx-font-size: 48px; -fx-font-weight: bold; -fx-text-fill: white;"
+               AnchorPane.topAnchor="60.0"
+               AnchorPane.leftAnchor="0.0"
+               AnchorPane.rightAnchor="0.0"
+               alignment="CENTER"/>
 
-    <!-- Navigation Buttons -->
-    <VBox layoutX="850" layoutY="100" spacing="25" alignment="CENTER_RIGHT">
-        <Button fx:id="addCarButton" text="Add Car"
-                prefWidth="250" prefHeight="60"
-                style="-fx-font-size: 16px; -fx-background-color: #2c3e50; -fx-text-fill: white; -fx-background-radius: 8;"/>
-        <Button fx:id="viewCarButton" text="VIEW AVAILABLE CARS"
-                prefWidth="250" prefHeight="60"
-                style="-fx-font-size: 16px; -fx-background-color: #2c3e50; -fx-text-fill: white; -fx-background-radius: 8;"/>
-        <Button fx:id="customerButton" text="CUSTOMER DETAILS"
-                prefWidth="250" prefHeight="60"
-                style="-fx-font-size: 16px; -fx-background-color: #2c3e50; -fx-text-fill: white; -fx-background-radius: 8;"/>
-        <Button fx:id="bookCarButton" text="BOOK A CAR"
-                prefWidth="250" prefHeight="60"
-                style="-fx-font-size: 16px; -fx-background-color: #2c3e50; -fx-text-fill: white; -fx-background-radius: 8;"/>
-        <Button fx:id="returnCarButton" text="RETURN A CAR"
-                prefWidth="250" prefHeight="60"
-                style="-fx-font-size: 16px; -fx-background-color: #2c3e50; -fx-text-fill: white; -fx-background-radius: 8;"/>
-        <Button fx:id="reportButton" text="GENERATE REPORT"
-                prefWidth="250" prefHeight="60"
-                style="-fx-font-size: 16px; -fx-background-color: #2c3e50; -fx-text-fill: white; -fx-background-radius: 8;"/>
-        <Button fx:id="logoutButton" text="Logout"
-                prefWidth="250" prefHeight="60"
-                style="-fx-font-size: 16px; -fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 8;"/>
-    </VBox>
+        <!-- ================= BUTTON GRID ================= -->
+        <GridPane hgap="40.0" vgap="40.0"
+                  AnchorPane.topAnchor="180.0"
+                  AnchorPane.leftAnchor="160.0"
+                  AnchorPane.rightAnchor="160.0">
 
+            <!-- Row 0 -->
+            <Button fx:id="viewAvailableCarsButton"
+                    text="VIEW AVAILABLE CARS"
+                    onAction="#handleViewAvailableCars"
+                    prefHeight="90.0"
+                    prefWidth="320.0"
+                    styleClass="dashboard-btn"
+                    GridPane.rowIndex="0"
+                    GridPane.columnIndex="0"/>
+
+            <Button fx:id="bookCarButton"
+                    text="BOOK A CAR"
+                    onAction="#handleBookCar"
+                    prefHeight="90.0"
+                    prefWidth="320.0"
+                    styleClass="dashboard-btn"
+                    GridPane.rowIndex="0"
+                    GridPane.columnIndex="1"/>
+
+            <Button fx:id="returnCarButton"
+                    text="RETURN A CAR"
+                    onAction="#handleReturnCar"
+                    prefHeight="90.0"
+                    prefWidth="320.0"
+                    styleClass="dashboard-btn"
+                    GridPane.rowIndex="0"
+                    GridPane.columnIndex="2"/>
+
+            <!-- Row 1 -->
+            <Button fx:id="addCarsButton"
+                    text="ADD NEW CAR"
+                    onAction="#handleAddCars"
+                    prefHeight="90.0"
+                    prefWidth="320.0"
+                    styleClass="dashboard-btn admin-btn"
+                    GridPane.rowIndex="1"
+                    GridPane.columnIndex="0"/>
+
+            <Button fx:id="myBookingsButton"
+                    text="MY BOOKINGS and RETURNS"
+                    onAction="#handleMyBookings"
+                    prefHeight="90.0"
+                    prefWidth="320.0"
+                    styleClass="dashboard-btn"
+                    GridPane.rowIndex="1"
+                    GridPane.columnIndex="1"/>
+
+            <Button fx:id="customerDetailsButton"
+                    text="CUSTOMER DETAILS"
+                    onAction="#handleCustomerDetails"
+                    prefHeight="90.0"
+                    prefWidth="320.0"
+                    styleClass="dashboard-btn admin-btn"
+                    GridPane.rowIndex="1"
+                    GridPane.columnIndex="2"/>
+
+            <!-- Row 2 -->
+            <Button fx:id="generateReportButton"
+                    text="GENERATE REPORT"
+                    onAction="#handleGenerateReport"
+                    prefHeight="90.0"
+                    prefWidth="320.0"
+                    styleClass="dashboard-btn admin-btn"
+                    GridPane.rowIndex="2"
+                    GridPane.columnIndex="1"/>
+
+        </GridPane>
+
+        <!-- ================= LOGOUT ================= -->
+        <Button fx:id="logoutButton"
+                text="LOGOUT"
+                onAction="#handleLogout"
+                prefHeight="60.0"
+                prefWidth="200.0"
+                styleClass="logout-btn"
+                AnchorPane.bottomAnchor="30.0"
+                AnchorPane.rightAnchor="60.0"/>
+
+        <!-- ================= FOOTER ================= -->
+        <Label text="© 2026 Car Rental System • Powered by JavaFX"
+               style="-fx-font-size: 14px; -fx-text-fill: #aaaaaa;"
+               AnchorPane.bottomAnchor="10.0"
+               AnchorPane.leftAnchor="0.0"
+               AnchorPane.rightAnchor="0.0"
+               alignment="CENTER"/>
+
+    </children>
 </AnchorPane>

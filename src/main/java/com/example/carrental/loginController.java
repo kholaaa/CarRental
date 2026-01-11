@@ -1,131 +1,145 @@
 package com.example.carrental;
 
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class loginController {
 
-    @FXML private ImageView backgroundImage;
-    @FXML private TextField emailField;
+    @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
-    @FXML private TextField visiblePasswordField;
-    @FXML private CheckBox showPassword;
+    @FXML private AnchorPane rootPane;
 
     @FXML
     public void initialize() {
-        // Load background image from resources
-        try {
-            backgroundImage.setImage(new Image(getClass().getResourceAsStream("/com/example/carrental/pics/car2.png")));
+        loadBackgroundImage();
+    }
+
+    private void loadBackgroundImage() {
+        String imagePath = "/com/example/carrental/pics/llg.png";
+
+        try (InputStream stream = getClass().getResourceAsStream(imagePath)) {
+            if (stream == null) {
+                System.err.println("Warning: Background image not found at " + imagePath + " — using dark fallback");
+                rootPane.setStyle("-fx-background-color: #111111;");
+                return;
+            }
+
+            Image bgImage = new Image(stream);
+            BackgroundImage backgroundImage = new BackgroundImage(
+                    bgImage,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundPosition.CENTER,
+                    BackgroundSize.DEFAULT
+            );
+            rootPane.setBackground(new Background(backgroundImage));
+
         } catch (Exception e) {
-            System.out.println("Login background image not found in resources.");
-            // Optional fallback to absolute path
-            // backgroundImage.setImage(new Image("file:C:\\CarRentalImages\\login.jpg"));
+            e.printStackTrace();
+            rootPane.setStyle("-fx-background-color: #111111;");
         }
-
-        // Password show/hide binding
-        visiblePasswordField.managedProperty().bind(showPassword.selectedProperty());
-        visiblePasswordField.visibleProperty().bind(showPassword.selectedProperty());
-        visiblePasswordField.textProperty().bindBidirectional(passwordField.textProperty());
-
-        passwordField.managedProperty().bind(showPassword.selectedProperty().not());
-        passwordField.visibleProperty().bind(showPassword.selectedProperty().not());
     }
 
     @FXML
-    private void handleShowPassword() {
-        // Required for FXML onAction — binding already handles logic
-    }
+    private void handleLogin(ActionEvent event) {
+        String username = usernameField.getText().trim();
+        String password = passwordField.getText().trim();
 
-    @FXML
-    private void handleLogin() {
-        String email = emailField.getText().trim();
-        String password = passwordField.getText();
-
-        if (email.isEmpty() || password.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Please enter email and password.");
+        if (username.isEmpty() || password.isEmpty()) {
+            Platform.runLater(() -> showAlert(Alert.AlertType.WARNING, "Please enter both username and password."));
             return;
         }
 
         try (Connection conn = DBConnection.getConnection()) {
-            String sql = "SELECT * FROM login WHERE email = ? AND password = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, email);
-            stmt.setString(2, password);
+            String query = "SELECT id, password, role FROM users WHERE username = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                showAlert(Alert.AlertType.INFORMATION, "Login Successful!");
+                String storedPassword = rs.getString("password");
 
-                closeCurrentWindow();
-                openLoadingScreen();  // Go to first loading screen
+                if (storedPassword.equals(password)) {
+                    int userId = rs.getInt("id");
+                    String role = rs.getString("role");
 
+                    Session.setUser(userId, role);
+
+                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+                    Parent loading2Root = FXMLLoader.load(getClass().getResource("/com/example/carrental/loading2.fxml"));
+                    Scene loading2Scene = new Scene(loading2Root);
+                    stage.setScene(loading2Scene);
+
+                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                    pause.setOnFinished(e -> {
+                        Platform.runLater(() -> {
+                            try {
+                                Parent dashboardRoot = FXMLLoader.load(getClass().getResource("/com/example/carrental/Dashboard.fxml"));
+                                Scene dashboardScene = new Scene(dashboardRoot, 1280, 720);
+                                stage.setTitle("Car Rental System - Dashboard");
+                                stage.setScene(dashboardScene);
+                                stage.centerOnScreen();
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                                showAlert(Alert.AlertType.ERROR, "Failed to load dashboard.");
+                            }
+                        });
+                    });
+                    pause.play();
+                } else {
+                    Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, "Incorrect password."));
+                }
             } else {
-                showAlert(Alert.AlertType.ERROR, "Invalid email or password.");
+                Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, "Username not found."));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, "Database error: " + e.getMessage()));
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Database error: " + e.getMessage());
+        } catch (IOException e) {
+            Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, "Failed to load next screen."));
+            e.printStackTrace();
         }
     }
 
     @FXML
-    private void handleSignup() {
-        openWindow("/com/example/carrental/signup.fxml", "Sign Up");
+    private void handleSignUp(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Parent signUpRoot = FXMLLoader.load(getClass().getResource("/com/example/carrental/SignUp.fxml"));
+        Scene signUpScene = new Scene(signUpRoot);
+        stage.setScene(signUpScene);
     }
 
     @FXML
-    private void handleForgot() {
-        openWindow("/com/example/carrental/forget_password.fxml", "Forgot Password");
-    }
-
-    private void openLoadingScreen() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/carrental/Loading.fxml"));
-            Scene scene = new Scene(loader.load());
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setMaximized(true);
-            stage.setTitle("Loading...");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void openWindow(String fxmlPath, String title) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Scene scene = new Scene(loader.load());
-            Stage stage = new Stage();
-            stage.setTitle(title);
-            stage.setScene(scene);
-            stage.show();
-            closeCurrentWindow();
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Could not open " + title);
-        }
-    }
-
-    private void closeCurrentWindow() {
-        Stage stage = (Stage) emailField.getScene().getWindow();
-        stage.close();
+    private void handleForgotPassword(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Parent forgotRoot = FXMLLoader.load(getClass().getResource("/com/example/carrental/forget_password.fxml"));
+        Scene forgotScene = new Scene(forgotRoot);
+        stage.setScene(forgotScene);
     }
 
     private void showAlert(Alert.AlertType type, String message) {
         Alert alert = new Alert(type);
         alert.setHeaderText(null);
         alert.setContentText(message);
-        alert.showAndWait();
+        alert.show();  // ← Non-blocking show() instead of showAndWait()
     }
 }

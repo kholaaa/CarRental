@@ -1,90 +1,125 @@
 package com.example.carrental;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.io.IOException;
+import java.sql.*;
 
 public class generate_reportController {
 
-    @FXML private TableView<RentalReport> tableView;
-    @FXML private TableColumn<RentalReport, Integer> bookingIdCol, carIdCol, customerIdCol;
-    @FXML private TableColumn<RentalReport, Date> entryDateCol, returnDateCol;
-    @FXML private TableColumn<RentalReport, Double> rentPerDayCol, totalAmountCol;
-    @FXML private TableColumn<RentalReport, String> statusCol;
-    @FXML private Label totalRevenueLabel, pendingCountLabel;
-    @FXML private Button backButton, refreshButton;
+    @FXML private TableView<Booking> reportTable;
+    @FXML private TableColumn<Booking, Integer> customerCol;
+    @FXML private TableColumn<Booking, Integer> carCol;
+    @FXML private TableColumn<Booking, Integer> daysCol;
+    @FXML private TableColumn<Booking, Double> costCol;
+    @FXML private AnchorPane rootPane;
+
+    private final ObservableList<Booking> bookingData = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        bookingIdCol.setCellValueFactory(new PropertyValueFactory<>("bookingID"));
-        carIdCol.setCellValueFactory(new PropertyValueFactory<>("carID"));
-        customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
-        entryDateCol.setCellValueFactory(new PropertyValueFactory<>("entryDate"));
-        returnDateCol.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
-        rentPerDayCol.setCellValueFactory(new PropertyValueFactory<>("rentPerDay"));
-        totalAmountCol.setCellValueFactory(new PropertyValueFactory<>("totalAmount"));
-        statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
+        customerCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        carCol.setCellValueFactory(new PropertyValueFactory<>("carId"));
+        daysCol.setCellValueFactory(new PropertyValueFactory<>("days"));
+        costCol.setCellValueFactory(new PropertyValueFactory<>("totalCost"));
 
-        backButton.setOnAction(e -> handleBack());
-        refreshButton.setOnAction(e -> loadReport());
+        loadBookings();
+    }
+    private void loadBookings() {
+        bookingData.clear();
+        try (Connection conn = DBConnection.getConnection()) {
+            String query =
+                    "SELECT b.customerID, b.carID, DATEDIFF(b.returndate, b.entrydate) AS days, b.total_cost " +
+                            "FROM bookcar b " +
+                            "ORDER BY b.booking_date DESC";
 
-        loadReport();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            boolean hasData = false;
+            while (rs.next()) {
+                hasData = true;
+                bookingData.add(new Booking(
+                        rs.getInt("customerID"),
+                        rs.getInt("carID"),
+                        rs.getInt("days"),
+                        rs.getDouble("total_cost")
+                ));
+            }
+
+            reportTable.setItems(bookingData);
+
+            if (!hasData) {
+                showAlert(Alert.AlertType.INFORMATION, "No bookings found yet.");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Failed to load report: " + e.getMessage());
+        }
     }
 
-    private void loadReport() {
-        List<RentalReport> reportList = new ArrayList<>();
-        double totalRevenue = 0;
-        int pendingCount = 0;
 
-        try (Connection conn = DBConnection.getConnection()) {
-            String query = "SELECT b.bookcarID, b.carID, b.customerID, b.entrydate, b.returndate, c.price_per_day, r.returnID " +
-                    "FROM bookcar b JOIN cars c ON b.carID = c.carID LEFT JOIN returncar r ON b.bookcarID = r.bookcarID";  // Assumed join
-            PreparedStatement stmt = conn.prepareStatement(query);
-            ResultSet rs = stmt.executeQuery();
+    // Safe BACK button handler (now correctly placed inside the class)
+    @FXML
+    private void handleBack(ActionEvent event) {
+        try {
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            while (rs.next()) {
-                int bookingID = rs.getInt("bookcarID");
-                int carID = rs.getInt("carID");
-                int customerID = rs.getInt("customerID");
-                Date entryDate = rs.getDate("entrydate");
-                Date returnDate = rs.getDate("returndate");
-                double rentPerDay = rs.getDouble("price_per_day");
-                int returnID = rs.getInt("returnID");
+            // Always use the FULL resource path with leading "/"
+            Parent dashboardRoot = FXMLLoader.load(getClass().getResource("/com/example/carrental/Dashboard.fxml"));
 
-                long days = ChronoUnit.DAYS.between(entryDate.toLocalDate(), returnDate.toLocalDate());
-                if (days <= 0) days = 1;
-                double total = rentPerDay * days;
+            Scene scene = new Scene(dashboardRoot);
+            stage.setScene(scene);
+            stage.centerOnScreen();
 
-                String status;
-                if (returnID == 0) {
-                    status = "Pending";
-                    pendingCount++;
-                } else {
-                    status = "Returned";
-                    totalRevenue += total;
-                }
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR,
+                    "Cannot load Dashboard.\n" +
+                            "Please check if Dashboard.fxml exists in the correct path.");
+        }
+    }
 
-                reportList.add(new RentalReport(bookingID, carID, customerID, entryDate, returnDate, rentPerDay, total, status));
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+    // Helper for showing alerts (useful for errors)
+    private void showAlert(Alert.AlertType type, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle("Car Rental System");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    // Inner POJO class for table rows
+    public static class Booking {
+        private final int customerId;
+        private final int carId;
+        private final int days;
+        private final double totalCost;
+
+        public Booking(int customerId, int carId, int days, double totalCost) {
+            this.customerId = customerId;
+            this.carId = carId;
+            this.days = days;
+            this.totalCost = totalCost;
         }
 
-        tableView.getItems().setAll(reportList);
-        totalRevenueLabel.setText("Total Revenue Earned: Rs. " + String.format("%.2f", totalRevenue));
-        pendingCountLabel.setText("Pending Returns: " + pendingCount);
-    }
-
-    private void handleBack() {
-        Stage stage = (Stage) tableView.getScene().getWindow();
-        stage.close();
+        public int getCustomerId() { return customerId; }
+        public int getCarId() { return carId; }
+        public int getDays() { return days; }
+        public double getTotalCost() { return totalCost; }
     }
 }

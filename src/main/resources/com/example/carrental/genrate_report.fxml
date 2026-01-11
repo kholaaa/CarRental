@@ -1,36 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.carrental.generate_reportController">
+<AnchorPane fx:id="rootPane" prefHeight="720.0" prefWidth="1280.0"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.carrental.generate_reportController">
+
     <children>
-        <VBox spacing="15" alignment="CENTER" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
-              AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" style="-fx-background-color: #E6E6FA;">
+        <VBox alignment="CENTER" spacing="30.0"
+              AnchorPane.topAnchor="40.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
 
-            <Label text="GENERATE REPORT" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+            <Label text="Rental Report"
+                   style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: white;"/>
 
-            <TableView fx:id="tableView" prefHeight="300" prefWidth="820">
+            <TableView fx:id="reportTable" prefHeight="450.0" prefWidth="900.0">
                 <columns>
-                    <TableColumn fx:id="bookingIdCol" text="Booking ID" />
-                    <TableColumn fx:id="carIdCol" text="Car ID" />
-                    <TableColumn fx:id="customerIdCol" text="Customer ID" />
-                    <TableColumn fx:id="entryDateCol" text="Entry Date" />
-                    <TableColumn fx:id="returnDateCol" text="Return Date" />
-                    <TableColumn fx:id="rentPerDayCol" text="Rent/Day" />
-                    <TableColumn fx:id="totalAmountCol" text="Total Amount" />
-                    <TableColumn fx:id="statusCol" text="Status" />
+                    <TableColumn fx:id="customerCol" text="Customer ID" prefWidth="120.0"/>
+                    <TableColumn fx:id="carCol" text="Car ID" prefWidth="120.0"/>
+                    <TableColumn fx:id="daysCol" text="Rental Days" prefWidth="150.0"/>
+                    <TableColumn fx:id="costCol" text="Total Cost (PKR)" prefWidth="180.0"/>
                 </columns>
             </TableView>
 
-            <Label fx:id="totalRevenueLabel" text="Total Revenue: " style="-fx-font-weight: bold;" />
-            <Label fx:id="pendingCountLabel" text="Pending Returns: " style="-fx-font-weight: bold;" />
-
-            <HBox spacing="20" alignment="CENTER">
-                <Button fx:id="backButton" text="Back" />
-                <Button fx:id="refreshButton" text="Refresh" />
-            </HBox>
+            <Button text="BACK TO DASHBOARD"
+                    onAction="#handleBack"
+                    prefHeight="55.0" prefWidth="250.0"
+                    style="-fx-background-color: #d32f2f; -fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
         </VBox>
     </children>
 </AnchorPane>

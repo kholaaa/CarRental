@@ -1,39 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.carrental.bookcarController" prefWidth="650" prefHeight="450">
+<AnchorPane fx:id="rootPane" prefHeight="720.0" prefWidth="1280.0"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.carrental.bookcarController">
 
-    <!-- Background Image -->
-    <ImageView fitWidth="650" fitHeight="450" pickOnBounds="true" preserveRatio="false">
-        <image>
-            <Image url="@../CarRentalImages/book car.jpg"/>
-        </image>
-    </ImageView>
+    <children>
+        <!-- Centered elegant card -->
+        <VBox alignment="CENTER" spacing="30.0" style="-fx-background-color: rgba(30,30,50,0.75); -fx-background-radius: 20; -fx-padding: 50;"
+              prefWidth="650.0" prefHeight="620.0"
+              AnchorPane.topAnchor="50.0" AnchorPane.bottomAnchor="50.0"
+              AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="175.0">
 
-    <!-- Title -->
-    <Label text="BOOK CAR" layoutX="250" layoutY="20" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <!-- Title -->
+            <Label text="Book a Car"
+                   style="-fx-font-size: 42px; -fx-font-weight: bold; -fx-text-fill: white;"/>
 
-    <!-- Form -->
-    <Label text="Customer ID:" layoutX="80" layoutY="100" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
-    <TextField fx:id="customerIdField" layoutX="260" layoutY="100" prefWidth="220"/>
+            <!-- Car ID -->
+            <TextField fx:id="carIdField"
+                       promptText="Enter Car ID"
+                       prefHeight="55.0" prefWidth="500.0"
+                       style="-fx-font-size: 18px;"/>
 
-    <Label text="Car Name:" layoutX="80" layoutY="150" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
-    <ComboBox fx:id="carNameComboBox" layoutX="260" layoutY="150" prefWidth="220"/>
+            <!-- Date Pickers -->
+            <HBox spacing="30.0" alignment="CENTER">
+                <VBox spacing="8.0">
+                    <Label text="Start Date" style="-fx-font-size: 16px; -fx-text-fill: #cccccc;"/>
+                    <DatePicker fx:id="entryDatePicker" prefWidth="230.0" style="-fx-font-size: 16px;"/>
+                </VBox>
 
-    <Label text="Entry Date (YYYY-MM-DD):" layoutX="80" layoutY="200" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
-    <TextField fx:id="entryDateField" layoutX="260" layoutY="200" prefWidth="220"/>
+                <VBox spacing="8.0">
+                    <Label text="Return Date" style="-fx-font-size: 16px; -fx-text-fill: #cccccc;"/>
+                    <DatePicker fx:id="returnDatePicker" prefWidth="230.0" style="-fx-font-size: 16px;"/>
+                </VBox>
+            </HBox>
 
-    <Label text="Return Date (YYYY-MM-DD):" layoutX="80" layoutY="250" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
-    <TextField fx:id="returnDateField" layoutX="260" layoutY="250" prefWidth="220"/>
+            <!-- Buttons - beautifully centered -->
+            <HBox alignment="CENTER" spacing="50.0" prefHeight="80.0">
+                <Button text="BOOK NOW"
+                        onAction="#handleBookCar"
+                        prefHeight="65.0" prefWidth="240.0"
+                        style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold; -fx-background-radius: 12;"/>
 
-    <!-- Buttons -->
-    <Button fx:id="submitButton" text="Submit" layoutX="80" layoutY="320" prefWidth="100"/>
-    <Button fx:id="clearButton" text="Clear" layoutX="220" layoutY="320" prefWidth="100"/>
-    <Button fx:id="backButton" text="Back" layoutX="360" layoutY="320" prefWidth="100"/>
-    <Button fx:id="chalanButton" text="CHALAN" layoutX="500" layoutY="320" prefWidth="100"/>
-
+                <Button text="BACK TO DASHBOARD"
+                        onAction="#handleBack"
+                        prefHeight="65.0" prefWidth="280.0"
+                        style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold; -fx-background-radius: 12;"/>
+            </HBox>
+        </VBox>
+    </children>
 </AnchorPane>

@@ -1,64 +1,45 @@
 package com.example.carrental;
 
-import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.control.ProgressIndicator;
-import javafx.stage.Stage;
-import javafx.util.Duration;
+import javafx.scene.layout.AnchorPane;
 
-import java.io.IOException;
+import java.io.InputStream;
 
 public class loadingController {
 
-    @FXML private ImageView backgroundImage;
-    @FXML private ProgressIndicator progressIndicator;
+    @FXML
+    private ImageView logoImageView;  // must exist in Loading.fxml with fx:id="logoImageView"
+
+    @FXML
+    private AnchorPane rootPane;      // must exist in Loading.fxml with fx:id="rootPane"
 
     @FXML
     public void initialize() {
-        // Load background image
-        try {
-            Image img = new Image(getClass().getResourceAsStream("com/example/carrental/pics/load1.jpg"));
-            if (!img.isError()) {
-                backgroundImage.setImage(img);
+        // 1. Set black background
+        rootPane.setStyle("-fx-background-color: black;");
+
+        // 2. Load image SAFELY
+        String imagePath = "/pics/img.png";   // ← most important part: path must start with /
+
+        try (InputStream inputStream = loadingController.class.getResourceAsStream(imagePath)) {
+            if (inputStream == null) {
+                System.err.println("ERROR: Image not found at path: " + imagePath);
+                System.err.println("Check that file exists in: src/main/resources/pics/llg.png");
+                // You can leave logo empty or set fallback color/image
+                logoImageView.setStyle("-fx-background-color: #333333;");
+            } else {
+                Image logo = new Image(inputStream);
+                logoImageView.setImage(logo);
+                System.out.println("Loading logo loaded successfully");
             }
         } catch (Exception e) {
-            // Fallback to absolute path
-            backgroundImage.setImage(new Image("com/example/carrental/pics/load1.jpg"));
-        }
-
-        if (progressIndicator != null) {
-            progressIndicator.setVisible(true);
-        }
-
-        // 2-second delay then open loading2
-        PauseTransition delay = new PauseTransition(Duration.seconds(2));
-        delay.setOnFinished(event -> openNextScreen());
-        delay.play();
-    }
-
-    private void openNextScreen() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/carrental/loading2.fxml"));
-            Parent root = loader.load();
-
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setMaximized(true);
-            stage.setTitle("Loading...");
-            stage.show();
-
-            // Close current loading screen
-            Stage currentStage = (Stage) backgroundImage.getScene().getWindow();
-            currentStage.close();
-
-        } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("ERROR: Could not load loading2.fxml");
+            System.err.println("Failed to load logo image");
         }
+
+        // Optional: remove this useless line from your original code
+        // loadingController.class.getResourceAsStream("/pics/img.jpg");  ← does nothing
     }
 }
