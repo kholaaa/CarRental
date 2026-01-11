@@ -54,7 +54,7 @@ Dashboard consist of following tables:
    
   **Booking System**
 
-   ![AvaliableCars.png](https://github.com/kholaaa/CarRental/blob/99dd925ec540e2865e90b322ee6066a780b63006/registerCustomer.png)
+   ![AvaliableCars.png](https://github.com/kholaaa/CarRental/blob/7a10eac97ef33204f167d5a458872b2932e31970/AvaliableCars.png)
     
      Select available cars.
     Enter Car ID, model, Brand and price per day.
@@ -62,7 +62,7 @@ Dashboard consist of following tables:
     
  **Return System**
   
-   ![MyBookingAND Return.png](https://github.com/kholaaa/CarRental/blob/99dd925ec540e2865e90b322ee6066a780b63006/MyBookingAND%20Return.png)
+   !["C:\Users\Macrosoft\Downloads\return.jpeg"](https://github.com/kholaaa/CarRental/blob/7a10eac97ef33204f167d5a458872b2932e31970/return.jpeg)
 
     Record return details.
    Automatically set car availability back to "Yes"
