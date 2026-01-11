@@ -4,34 +4,57 @@
 ![Screenshot 2026-01-07 090450](https://github.com/user-attachments/assets/21010b6c-9abd-46a7-8787-14ff8fcc9de4)
 
 Login / Signup screens
- Loading splash screens
- Dashboard
- Add/View Cars
- Book Car with Chalan
-Generate Report.
 **Features for users**
 **User Authentication**
   - Login, Signup, Forgot Password
 - **Splash & Loading Screens**
   - Professional multi-stage loading animation
-  **Dashboard**
-   Central navigation to all modules
+ Loading splash screens
+
+ **Dashboard**
+
+![Welcome Screen.jpeg](https://github.com/kholaaa/CarRental/blob/07dec8de8199fc9a8b76c54a328072dec94229b6/welcom%20screen.jpeg)
+
+Dashboard consist of following tables:
+  book a car, view avaliable cars, add cars, customer details, return a car, generate a report and lastly logout.
+  
   **Car Management**
+  
+ ![BookaCar.jpeg](https://github.com/kholaaa/CarRental/blob/864e71fd655f263d820a80e893c8d8a5740fe8cb/BookaCar.jpeg)
+ 
    Add new cars
    View all cars (with availability status) in a TableView
+ 
   **Customer Management**
-   Register customer details
+  
+   ![CustomerDetails.jpeg](https://github.com/kholaaa/CarRental/blob/864e71fd655f263d820a80e893c8d8a5740fe8cb/CustomerDetails.jpeg)
+
+     Register customer details such as:
+   Customer ID, Name, Email and PhoneNumber.
+   
   **Booking System**
-    Select available cars via ComboBox
-    Enter booking dates
-    Generate instant rental chalan (invoice) with total rent calculation
-    Update car availability to "No" on booking
+
+   ![AvaliableCars.jpeg](https://github.com/kholaaa/CarRental/blob/edca0c6ea5c7dc992a2c6b0d730ee0e8a8f7afa6/AvaliableCars.jpeg)
+
+     Select available cars.
+    Enter Car ID, model, Brand and price per day.
+    Update car availability to "No" on booking.
+    
  **Return System**
-   Record return details (fuel level, condition, date)
+  
+   ![ReturnCar.jpeg](https://github.com/kholaaa/CarRental/blob/1dc662207e0f2bfd7ffe720a1b2793caea864674/ReturnCar.jpeg)
+
+    Record return details.
    Automatically set car availability back to "Yes"
  **Report Generation**
-    View all bookings with status (Pending / Returned)
-   Calculate and display total revenue earned.
+    
+   ![CarRental\Report.jpeg](https://github.com/kholaaa/CarRental/blob/864e71fd655f263d820a80e893c8d8a5740fe8cb/Report.jpeg)
+
+   View all bookings with status which includes:
+    Customer ID 
+    Car ID 
+    Rental Days.
+    
   **Technologies used**
  **Java**
  (JDK 8 or higher)
