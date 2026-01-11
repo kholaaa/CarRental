@@ -1,7 +1,9 @@
 # CarRental
-"CAR RENTAL SYSTEM" using JavaFAX for GUI.
+"CAR RENTAL SYSTEM" using JavaFAX for GUI and CSS for buttons styling.
 
-![Screenshot 2026-01-07 090450](https://github.com/user-attachments/assets/21010b6c-9abd-46a7-8787-14ff8fcc9de4)
+**Login Screen**
+
+![login.png](https://github.com/kholaaa/CarRental/blob/99dd925ec540e2865e90b322ee6066a780b63006/login.png)
 
 Login / Signup screens
 **Features for users**
@@ -13,47 +15,67 @@ Login / Signup screens
 
  **Dashboard**
 
-![Welcome Screen.jpeg](https://github.com/kholaaa/CarRental/blob/07dec8de8199fc9a8b76c54a328072dec94229b6/welcom%20screen.jpeg)
+![welcome.png](https://github.com/kholaaa/CarRental/blob/99dd925ec540e2865e90b322ee6066a780b63006/welcome.png)
 
 Dashboard consist of following tables:
-  book a car, view avaliable cars, add cars, customer details, return a car, generate a report and lastly logout.
+  book a car
+  view avaliable cars
+  add cars
+  customer details
+  return a car
+  generate a report and lastly logout.
   
   **Car Management**
   
- ![BookaCar.jpeg](https://github.com/kholaaa/CarRental/blob/864e71fd655f263d820a80e893c8d8a5740fe8cb/BookaCar.jpeg)
+ ![BookACar.png](https://github.com/kholaaa/CarRental/blob/99dd925ec540e2865e90b322ee6066a780b63006/BookACar.png)
  
-   Add new cars
-   View all cars (with availability status) in a TableView
- 
+   CarBooking includes CarID, start date and return date.
+   
+   **Add new cars**
+   
+      ![AddNewCar.png](https://github.com/kholaaa/CarRental/blob/99dd925ec540e2865e90b322ee6066a780b63006/AddNewCar.png)
+
+  add new car includes features such as:
+  CarID
+  Model
+  Type
+  Colour
+  Price per day.
+  
   **Customer Management**
   
-   ![CustomerDetails.jpeg](https://github.com/kholaaa/CarRental/blob/864e71fd655f263d820a80e893c8d8a5740fe8cb/CustomerDetails.jpeg)
-
-     Register customer details such as:
-   Customer ID, Name, Email and PhoneNumber.
+   ![registerCustomer.png](https://github.com/kholaaa/CarRental/blob/99dd925ec540e2865e90b322ee6066a780b63006/registerCustomer.png)
+    
+   Register customer details such as:
+   Customer ID
+   Name 
+   Email 
+   PhoneNumber.
    
   **Booking System**
 
-   ![AvaliableCars.jpeg](https://github.com/kholaaa/CarRental/blob/edca0c6ea5c7dc992a2c6b0d730ee0e8a8f7afa6/AvaliableCars.jpeg)
-
+   ![AvaliableCars.png](https://github.com/kholaaa/CarRental/blob/7a10eac97ef33204f167d5a458872b2932e31970/AvaliableCars.png)
+    
      Select available cars.
     Enter Car ID, model, Brand and price per day.
     Update car availability to "No" on booking.
     
  **Return System**
   
-   ![ReturnCar.jpeg](https://github.com/kholaaa/CarRental/blob/1dc662207e0f2bfd7ffe720a1b2793caea864674/ReturnCar.jpeg)
+   !["C:\Users\Macrosoft\Downloads\return.jpeg"](https://github.com/kholaaa/CarRental/blob/7a10eac97ef33204f167d5a458872b2932e31970/return.jpeg)
 
     Record return details.
    Automatically set car availability back to "Yes"
+   
  **Report Generation**
     
-   ![CarRental\Report.jpeg](https://github.com/kholaaa/CarRental/blob/864e71fd655f263d820a80e893c8d8a5740fe8cb/Report.jpeg)
+   ![RentalReport.png](https://github.com/kholaaa/CarRental/blob/99dd925ec540e2865e90b322ee6066a780b63006/RentalReport.png)
 
    View all bookings with status which includes:
     Customer ID 
     Car ID 
-    Rental Days.
+    Rental Days
+    Total cost/
     
   **Technologies used**
  **Java**
@@ -66,6 +88,8 @@ Dashboard consist of following tables:
  (optional) For designing FXML layouts
  **JDBC**
   For database connectivity
+  **CSS**
+  For styling.
 **Project Structure**
 src/ com/example/carrental/
 
