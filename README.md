@@ -27,13 +27,13 @@ Dashboard consist of following tables:
   
   **Car Management**
   
- ![BookACar.png](https://github.com/kholaaa/CarRental/blob/99dd925ec540e2865e90b322ee6066a780b63006/BookACar.png)
+ ![BookACar.png](https://github.com/kholaaa/CarRental/blob/c32403d2e64bcebffab2108e4342f696bc0a1637/BookACar.png)
  
    CarBooking includes CarID, start date and return date.
    
    **Add new cars**
    
-      ![AddNewCar.png](https://github.com/kholaaa/CarRental/blob/99dd925ec540e2865e90b322ee6066a780b63006/AddNewCar.png)
+      ![AddNewCar.png](https://github.com/kholaaa/CarRental/blob/a0803dec940f22e3be1361202b7bdc96d4f673a5/AddNewCar.png)
 
   add new car includes features such as:
   CarID
