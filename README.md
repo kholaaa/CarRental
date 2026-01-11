@@ -33,7 +33,7 @@ Dashboard consist of following tables:
    
    **Add new cars**
    
-      ![AddNewCar.png](https://github.com/kholaaa/CarRental/blob/99dd925ec540e2865e90b322ee6066a780b63006/AddNewCar.png)
+      ![AddNewCar.png](https://github.com/kholaaa/CarRental/blob/a0803dec940f22e3be1361202b7bdc96d4f673a5/AddNewCar.png)
 
   add new car includes features such as:
   CarID
