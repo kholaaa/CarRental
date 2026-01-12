@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -10,28 +9,38 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.carrental.TermsConditionsController">
 
-    <VBox alignment="CENTER" spacing="30.0"
+    <VBox alignment="CENTER"
           AnchorPane.topAnchor="0.0"
           AnchorPane.bottomAnchor="0.0"
           AnchorPane.leftAnchor="0.0"
           AnchorPane.rightAnchor="0.0">
 
-        <!-- Title -->
-        <Label fx:id="termsTitleLabel"
-               styleClass="terms-title"/>
+        <!-- Glass Card -->
+        <VBox spacing="25"
+              alignment="CENTER"
+              maxWidth="900"
+              styleClass="glass-card">
 
-        <!-- Content (scrollable if long) -->
-        <ScrollPane fitToWidth="true" hbarPolicy="NEVER"
-                    prefViewportWidth="800.0" prefViewportHeight="400.0">
-            <Label fx:id="termsContentLabel"
-                   wrapText="true"
-                   styleClass="terms-content"/>
-        </ScrollPane>
+            <!-- Title -->
+            <Label fx:id="termsTitleLabel"
+                   styleClass="terms-title"/>
 
-        <!-- Back Button -->
-        <Button fx:id="backButton" text="BACK TO DASHBOARD"
-                onAction="#handleBack"
-                styleClass="dashboard-btn customer-btn"
-                prefHeight="60.0" prefWidth="300.0"/>
+            <!-- Scrollable Content -->
+            <ScrollPane fitToWidth="true"
+                        hbarPolicy="NEVER"
+                        vbarPolicy="AS_NEEDED"
+                        styleClass="terms-scroll">
+
+                <Label fx:id="termsContentLabel"
+                       wrapText="true"
+                       styleClass="terms-content"/>
+            </ScrollPane>
+
+            <!-- Back Button -->
+            <Button fx:id="backButton"
+                    text="BACK TO DASHBOARD"
+                    onAction="#handleBack"
+                    styleClass="dashboard-btn customer-btn"/>
+        </VBox>
     </VBox>
 </AnchorPane>
