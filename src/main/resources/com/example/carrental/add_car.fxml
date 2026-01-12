@@ -9,23 +9,22 @@
             fx:controller="com.example.carrental.add_carController">
 
     <children>
-        <!-- Main centered card container -->
+
         <VBox alignment="CENTER" spacing="25.0" style="-fx-background-color: rgba(30,30,50,0.75); -fx-background-radius: 15; -fx-padding: 40;"
               prefWidth="600.0" prefHeight="580.0"
               AnchorPane.topAnchor="70.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0">
 
-            <!-- Title -->
             <Label text="Add New Car"
                    style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: white;"/>
 
-            <!-- Form Fields -->
+
             <TextField fx:id="carIdField" promptText="Car ID (unique number)" prefHeight="50.0" style="-fx-font-size: 16px;"/>
             <TextField fx:id="modelField" promptText="Model (e.g. Corolla)" prefHeight="50.0" style="-fx-font-size: 16px;"/>
             <TextField fx:id="typeField" promptText="Type (e.g. Sedan, SUV)" prefHeight="50.0" style="-fx-font-size: 16px;"/>
             <TextField fx:id="colourField" promptText="Colour (e.g. Black, Silver)" prefHeight="50.0" style="-fx-font-size: 16px;"/>
             <TextField fx:id="priceField" promptText="Price per Day (PKR)" prefHeight="50.0" style="-fx-font-size: 16px;"/>
 
-            <!-- Buttons - centered and beautifully spaced -->
+
             <HBox alignment="CENTER" spacing="40.0" prefHeight="80.0">
                 <Button text="ADD CAR"
                         onAction="#handleAddCar"

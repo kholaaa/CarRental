@@ -21,7 +21,7 @@ public class RentalReport {
 
     @FXML
     public void initialize() {
-        setDarkBackground(rootPane, "llg.png");  // Now this will work!
+        setDarkBackground(rootPane, "llg.png");
 
         customerCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         carCol.setCellValueFactory(new PropertyValueFactory<>("carId"));
@@ -31,7 +31,7 @@ public class RentalReport {
         loadRentalReport();
     }
 
-    // ADD THIS METHOD - This was missing!
+
     private void setDarkBackground(AnchorPane rootPane, String imageName) {
         try {
             Image bgImage = new Image(getClass().getResourceAsStream("/com/example/carrental/pics/" + imageName));
@@ -44,15 +44,15 @@ public class RentalReport {
             );
             rootPane.setBackground(new Background(backgroundImage));
         } catch (Exception e) {
-            // Fallback to solid dark if image not found
+
             rootPane.setStyle("-fx-background-color: #222222;");
         }
     }
 
     private void loadRentalReport() {
-        bookingData.clear(); // Prevents duplicates if reloaded
+        bookingData.clear();
         try (Connection conn = DBConnection.getConnection()) {
-            String query = "SELECT * FROM bookings"; // Change if your table name is different
+            String query = "SELECT * FROM bookings";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
@@ -60,7 +60,7 @@ public class RentalReport {
                         rs.getString("customer_id"),
                         rs.getString("car_id"),
                         rs.getInt("rental_days"),
-                        rs.getString("booking_date") // Adjust column name if needed
+                        rs.getString("booking_date")
                 ));
             }
             reportTable.setItems(bookingData);
@@ -69,7 +69,7 @@ public class RentalReport {
         }
     }
 
-    // Inner Booking class - PERFECTLY FINE here, no need for separate file
+
     class Booking {
         private final String customerId, carId, bookingDate;
         private final int days;

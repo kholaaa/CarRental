@@ -9,18 +9,18 @@
             fx:controller="com.example.carrental.customerController">
 
     <children>
-        <!-- Centered elegant card for the table -->
+
         <VBox alignment="CENTER" spacing="30.0"
               style="-fx-background-color: rgba(30,30,50,0.75); -fx-background-radius: 20; -fx-padding: 40;"
               prefWidth="950.0" prefHeight="620.0"
               AnchorPane.topAnchor="50.0" AnchorPane.bottomAnchor="50.0"
               AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="125.0">
 
-            <!-- Title -->
+
             <Label text="Registered Customers"
                    style="-fx-font-size: 42px; -fx-font-weight: bold; -fx-text-fill: white;"/>
 
-            <!-- Table -->
+
             <TableView fx:id="customersTable" prefHeight="480.0" prefWidth="900.0"
                        style="-fx-background-color: transparent; -fx-table-cell-border-color: transparent;">
                 <columns>
@@ -32,7 +32,7 @@
                 </columns>
             </TableView>
 
-            <!-- Back Button -->
+
             <Button text="BACK TO DASHBOARD"
                     onAction="#handleBack"
                     prefHeight="65.0" prefWidth="300.0"

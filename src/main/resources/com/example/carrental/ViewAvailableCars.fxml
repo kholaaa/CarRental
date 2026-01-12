@@ -13,9 +13,9 @@
             prefWidth="1280.0"
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.carrental.ViewAvailableCarsController">
+            fx:controller="com.example.carrental.ViewAvailableCarsController"
+            stylesheets="@tables.css"> <!-- separate CSS for table -->
 
-    <!-- All children go here -->
     <children>
 
         <VBox alignment="CENTER"
@@ -25,36 +25,30 @@
               AnchorPane.leftAnchor="0.0"
               AnchorPane.rightAnchor="0.0">
 
-            <Label text="Available Cars"
-                   style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: white;" />
 
+            <Label text="Add New Car"
+                   style="-fx-font-family: 'Arial'; -fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+
+            <!-- Cars Table -->
             <TableView fx:id="carsTable"
                        prefHeight="450.0"
-                       prefWidth="900.0"
-                       style="-fx-background-color: rgba(255,255,255,0.7);"
-            >
+                       prefWidth="500.0"
+                       styleClass="beautiful-table">
                 <columns>
                     <TableColumn fx:id="idCol"     prefWidth="120.0" text="Car ID" />
                     <TableColumn fx:id="modelCol"  prefWidth="250.0" text="Model" />
                     <TableColumn fx:id="typeCol"   prefWidth="220.0" text="Brand" />
                     <TableColumn fx:id="priceCol"  prefWidth="180.0" text="Price/Day" />
-                    <TableColumn fx:id="statusCol"
-                                 prefWidth="150.0"
-                                 text="Status"
-                                 style="-fx-alignment: CENTER;" />
+                    <TableColumn fx:id="statusCol" prefWidth="150.0" text="Status"/>
                 </columns>
-
             </TableView>
 
-            <Button onAction="#handleBack"
-                    text="BACK TO DASHBOARD"
+            <!-- Back Button -->
+            <Button text="BACK TO DASHBOARD"
+                    onAction="#handleBack"
                     prefHeight="55.0"
                     prefWidth="300.0"
-                    style="-fx-background-color: #d32f2f;
-                           -fx-text-fill: white;
-                           -fx-font-size: 18px;
-                           -fx-font-weight: bold;" />
-
+                    styleClass="action-btn"/>
         </VBox>
 
     </children>

@@ -30,8 +30,8 @@ public class bookcarController {
     }
 
     private void loadBackgroundImage() {
-        // Change to your actual image name (must be in src/main/resources/com/example/carrental/pics/)
-        String imagePath = "/com/example/carrental/pics/llg.png";  // ← dark elegant car background recommended
+
+        String imagePath = "/com/example/carrental/pics/llg.png";
 
         try (InputStream stream = getClass().getResourceAsStream(imagePath)) {
             if (stream == null) {
@@ -131,11 +131,12 @@ public class bookcarController {
                 insertStmt.setDouble(5, totalCost);
                 insertStmt.executeUpdate();
 
-                // 4. Mark car unavailable
-                String updateCar = "UPDATE cars SET Availability = 'No' WHERE carID = ?";
-                PreparedStatement updateStmt = conn.prepareStatement(updateCar);
+
+                String updateAvailability = "UPDATE cars SET Availability = 'No' WHERE carID = ?";
+                PreparedStatement updateStmt = conn.prepareStatement(updateAvailability);
                 updateStmt.setInt(1, carId);
                 updateStmt.executeUpdate();
+
 
                 showAlert(Alert.AlertType.INFORMATION,
                         "Booking successful!\n" +

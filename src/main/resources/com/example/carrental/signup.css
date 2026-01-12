@@ -1,0 +1,6 @@
+.root-pane {
+    -fx-background-image: url("/com/example/carrental/pics/signup_bg.jpg");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+}

@@ -16,7 +16,7 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            // 1. Load loading screen
+
             Parent loadingRoot = FXMLLoader.load(getClass().getResource("/com/example/carrental/Loading.fxml"));
             Scene loadingScene = new Scene(loadingRoot, 1280, 720); // Better default size
             stage.setTitle("Car Rental System - Loading");
@@ -24,7 +24,7 @@ public class HelloApplication extends Application {
             stage.centerOnScreen();
             stage.show();
 
-            // 2. After 3 seconds → switch to login
+
             PauseTransition pause = new PauseTransition(Duration.seconds(3));
             pause.setOnFinished(event -> {
                 try {

@@ -32,7 +32,7 @@ public class MyBookingsController {
 
     @FXML
     public void initialize() {
-        // Set up columns
+
         carIdCol.setCellValueFactory(new PropertyValueFactory<>("carId"));
         modelCol.setCellValueFactory(new PropertyValueFactory<>("model"));
         fromCol.setCellValueFactory(new PropertyValueFactory<>("fromDate"));
@@ -83,7 +83,7 @@ public class MyBookingsController {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            // You can add alert here if you want
+
         }
     }
 
@@ -96,7 +96,7 @@ public class MyBookingsController {
         stage.centerOnScreen();
     }
 
-    // Inner class for table rows
+
     public static class BookingRecord {
         private final int carId;
         private final String model;

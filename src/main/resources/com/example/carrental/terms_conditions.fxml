@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0"
+            stylesheets="@dashboard.css"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.carrental.TermsConditionsController">
+
+    <VBox alignment="CENTER" spacing="30.0"
+          AnchorPane.topAnchor="0.0"
+          AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0"
+          AnchorPane.rightAnchor="0.0">
+
+        <!-- Title -->
+        <Label fx:id="termsTitleLabel"
+               styleClass="terms-title"/>
+
+        <!-- Content (scrollable if long) -->
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER"
+                    prefViewportWidth="800.0" prefViewportHeight="400.0">
+            <Label fx:id="termsContentLabel"
+                   wrapText="true"
+                   styleClass="terms-content"/>
+        </ScrollPane>
+
+        <!-- Back Button -->
+        <Button fx:id="backButton" text="BACK TO DASHBOARD"
+                onAction="#handleBack"
+                styleClass="dashboard-btn customer-btn"
+                prefHeight="60.0" prefWidth="300.0"/>
+    </VBox>
+</AnchorPane>

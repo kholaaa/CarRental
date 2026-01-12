@@ -22,8 +22,8 @@ public class add_carController {
 
     @FXML private TextField carIdField;
     @FXML private TextField modelField;
-    @FXML private TextField typeField;      // Changed from brandField → better naming
-    @FXML private TextField colourField;    // Added missing colour field
+    @FXML private TextField typeField;
+    @FXML private TextField colourField;
     @FXML private TextField priceField;
     @FXML private AnchorPane rootPane;
 
@@ -33,8 +33,8 @@ public class add_carController {
     }
 
     private void loadBackgroundImage() {
-        // Change this to your actual image name (place it in src/main/resources/com/example/carrental/pics/)
-        String imagePath = "/com/example/carrental/pics/llg.png";  // ← recommended dark car-themed image
+
+        String imagePath = "/com/example/carrental/pics/llg.png";
 
         try (InputStream stream = getClass().getResourceAsStream(imagePath)) {
             if (stream == null) {

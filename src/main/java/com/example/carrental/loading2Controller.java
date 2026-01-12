@@ -12,7 +12,7 @@ import javafx.scene.layout.AnchorPane;
 
 public class loading2Controller {
     @FXML
-    private Label welcomeLabel; // Add <Label fx:id="welcomeLabel" ... /> in loading2.fxml
+    private Label welcomeLabel;
 
     @FXML
     private AnchorPane rootPane;
@@ -21,7 +21,7 @@ public class loading2Controller {
     public void initialize() {
         welcomeLabel.setText("Loading.........");
 
-        // Set background image (assume welcome_bg.jpg in pics)
+
         Image bgImage = new Image(getClass().getResourceAsStream("/com/example/carrental/pics/llg.png"));
         BackgroundImage backgroundImage = new BackgroundImage(bgImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         rootPane.setBackground(new Background(backgroundImage));

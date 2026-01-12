@@ -1,0 +1,123 @@
+/* Title - extra bold & visible */
+.title-label {
+    -fx-font-size: 50px;
+    -fx-font-weight: 900;           /* very bold */
+    -fx-text-fill: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7), 15, 0, 0, 5);
+}
+
+/* Field Labels - bold & light */
+.field-label {
+    -fx-text-fill: #e8f4ff;
+    -fx-font-size: 17px;
+    -fx-font-weight: 700;           /* bold */
+    -fx-padding: 0 0 6 0;
+}
+
+/* Glass Input Fields */
+.glass-text-field,
+.glass-text-area {
+    -fx-background-color: rgba(255,255,255,0.16);
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: 700;           /* bold text input */
+    -fx-prompt-text-fill: rgba(255,255,255,0.60);
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-padding: 14 20 14 20;
+}
+
+.glass-text-area {
+    -fx-font-size: 15.5px;
+    -fx-font-weight: 700;
+    -fx-line-spacing: 2.0;
+}
+
+.glass-text-area .content {
+    -fx-background-color: transparent;
+}
+
+/* Special class for even bolder condition text if needed */
+.bold-text {
+    -fx-font-weight: 800 !important;
+}
+
+/* Focus highlight */
+.glass-text-field:focused,
+.glass-text-area:focused {
+    -fx-background-color: rgba(255,255,255,0.25);
+    -fx-border-color: #3498db;
+    -fx-border-width: 2.5;
+}
+/* Base button style */
+.btn {
+    -fx-font-size: 18px;
+    -fx-font-weight: 800;
+    -fx-text-fill: white;
+    -fx-background-radius: 16;
+    -fx-background-color: transparent; /* ? helps override default layers */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 15, 0, 0, 6);
+    -fx-cursor: hand;
+    -fx-padding: 12 30 12 30;
+}
+
+/* Submit - Green */
+.btn-submit {
+    -fx-background-color: #27ae60 !important;
+}
+
+.btn-submit:hover {
+    -fx-background-color: #2ecc71 !important;
+    -fx-scale-x: 1.06;
+    -fx-scale-y: 1.06;
+}
+
+/* Back - Red */
+.btn-back {
+    -fx-background-color: #c0392b !important;
+}
+
+.btn-back:hover {
+    -fx-background-color: #e74c3c !important;
+    -fx-scale-x: 1.06;
+    -fx-scale-y: 1.06;
+}
+/* Buttons - larger, bolder, clearer colors */
+.btn {
+    -fx-font-size: 18px;
+    -fx-font-weight: 800;           /* very bold */
+    -fx-text-fill: white;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 15, 0, 0, 6);
+    -fx-cursor: hand;
+}
+
+.btn-submit {
+    -fx-background-color: #27ae60;  /* nice green */
+}
+
+.btn-submit:hover {
+    -fx-background-color: #2ecc71;
+    -fx-scale-x: 1.06;
+    -fx-scale-y: 1.06;
+}
+
+.btn-back {
+    -fx-background-color: #c0392b;  /* strong red */
+}
+
+.btn-back:hover {
+    -fx-background-color: #e74c3c;
+    -fx-scale-x: 1.06;
+    -fx-scale-y: 1.06;
+}
+
+/* Glass card background */
+.glass-card {
+    -fx-background-color: rgba(255,255,255,0.11);
+    -fx-background-radius: 28;
+    -fx-border-radius: 28;
+    -fx-border-color: rgba(255,255,255,0.20);
+    -fx-border-width: 1.3;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.60), 40, 0.15, 0, 18);
+}

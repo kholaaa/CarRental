@@ -9,23 +9,23 @@
             fx:controller="com.example.carrental.bookcarController">
 
     <children>
-        <!-- Centered elegant card -->
+
         <VBox alignment="CENTER" spacing="30.0" style="-fx-background-color: rgba(30,30,50,0.75); -fx-background-radius: 20; -fx-padding: 50;"
               prefWidth="650.0" prefHeight="620.0"
               AnchorPane.topAnchor="50.0" AnchorPane.bottomAnchor="50.0"
               AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="175.0">
 
-            <!-- Title -->
+
             <Label text="Book a Car"
                    style="-fx-font-size: 42px; -fx-font-weight: bold; -fx-text-fill: white;"/>
 
-            <!-- Car ID -->
+
             <TextField fx:id="carIdField"
                        promptText="Enter Car ID"
                        prefHeight="55.0" prefWidth="500.0"
                        style="-fx-font-size: 18px;"/>
 
-            <!-- Date Pickers -->
+
             <HBox spacing="30.0" alignment="CENTER">
                 <VBox spacing="8.0">
                     <Label text="Start Date" style="-fx-font-size: 16px; -fx-text-fill: #cccccc;"/>
@@ -38,7 +38,7 @@
                 </VBox>
             </HBox>
 
-            <!-- Buttons - beautifully centered -->
+
             <HBox alignment="CENTER" spacing="50.0" prefHeight="80.0">
                 <Button text="BOOK NOW"
                         onAction="#handleBookCar"

@@ -1,39 +1,83 @@
-#rootPane {
-    -fx-background-image: url("/com/example/carrental/pics/llg.png");
-    -fx-background-repeat: no-repeat;
-    -fx-background-size: cover;
-    -fx-background-position: center;
-    -fx-background-color: linear-gradient(to bottom, #0f2027, #203a43, #2c5364); /* fallback */
+/* Sunset-to-night city street vibe gradient */
+.root {
+    -fx-background-color: linear-gradient(to bottom,
+        #ff4d4d,        /* warm red-orange headlights glow */
+        #e65c19,        /* deep orange */
+        #8c1c84,        /* twilight purple city lights */
+        #0d1b2a,        /* deep midnight blue-black */
+        #000814         /* pure dark */
+    );
 }
 
+/* Title - bright with glow */
+.dashboard-title {
+    -fx-font-size: 54px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(255, 80, 80, 0.8), 20, 0.4, 0, 6);
+}
+
+/* Base button style - force override default skin */
 .dashboard-btn {
     -fx-font-size: 18px;
     -fx-font-weight: bold;
-    -fx-background-color: #1e3c72;
+    -fx-text-fill: white;
+    -fx-background-radius: 14;
+    -fx-background-insets: 0;         /* ← important to kill default padding */
+    -fx-border-width: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7), 15, 0, 0, 8);
+    -fx-cursor: hand;
+}
+
+/* Customer buttons – bright electric blue */
+.dashboard-btn.customer-btn {
+    -fx-background-color: #00b4d8 !important;
+}
+
+.dashboard-btn.customer-btn:hover {
+    -fx-background-color: #00d4ff !important;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+/* Admin buttons – rich purple */
+.dashboard-btn.admin-btn {
+    -fx-background-color: #7209b7 !important;
+}
+
+.dashboard-btn.admin-btn:hover {
+    -fx-background-color: #9d4edd !important;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+/* Terms button – warm neutral grey */
+.dashboard-btn.terms-btn {
+    -fx-background-color: #495057 !important;
+}
+
+.dashboard-btn.terms-btn:hover {
+    -fx-background-color: #6c757d !important;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+/* Logout – strong red (taillight style) */
+.logout-btn {
+    -fx-background-color: #dc2f02 !important;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
     -fx-text-fill: white;
     -fx-background-radius: 12;
-}
-
-.dashboard-btn:hover {
-    -fx-background-color: #3a6073;
-}
-
-.admin-btn {
-    -fx-border-color: gold;
-    -fx-border-width: 2;
-}
-
-.logout-btn {
-    -fx-background-color: #d9534f;
-    -fx-text-fill: white;
-    -fx-font-size: 16px;
-    -fx-background-radius: 10;
+    -fx-background-insets: 0;
 }
 
 .logout-btn:hover {
-    -fx-background-color: #c9302c;
+    -fx-background-color: #ff5400 !important;
 }
 
-.footer {
-    -fx-text-fill: #ffffffcc;
+/* Footer */
+.footer-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: rgba(255,255,255,0.75);
 }

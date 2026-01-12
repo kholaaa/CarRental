@@ -1,9 +1,5 @@
 package com.example.carrental;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundSize;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +15,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundSize;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -35,7 +36,7 @@ public class ViewAvailableCarsController implements Initializable {
     @FXML private TableColumn<Car, String> modelCol;
     @FXML private TableColumn<Car, String> typeCol;
     @FXML private TableColumn<Car, Double> priceCol;
-    @FXML private TableColumn<Car, String> statusCol; // NEW: Availability status
+    @FXML private TableColumn<Car, String> statusCol;
 
     @FXML private AnchorPane rootPane;
 
@@ -43,15 +44,13 @@ public class ViewAvailableCarsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Set background
         setDarkBackground(rootPane, "llg.png");
 
-        // Set up table columns
         idCol.setCellValueFactory(new PropertyValueFactory<>("carId"));
         modelCol.setCellValueFactory(new PropertyValueFactory<>("model"));
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-        statusCol.setCellValueFactory(new PropertyValueFactory<>("status")); // NEW
+        statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         loadAvailableCars();
     }
@@ -84,7 +83,7 @@ public class ViewAvailableCarsController implements Initializable {
         try (Connection conn = DBConnection.getConnection();
              Statement stmt = conn.createStatement()) {
 
-            // Query: All cars with real-time status
+            // Updated query: only considers non-returned (active) bookings
             String query = """
                 SELECT 
                     c.carID, c.carmodel, c.cartype, c.price_per_day,
@@ -92,6 +91,7 @@ public class ViewAvailableCarsController implements Initializable {
                         WHEN EXISTS (
                             SELECT 1 FROM bookcar b 
                             WHERE b.carID = c.carID 
+                            AND (b.returned IS NULL OR b.returned = 0)
                             AND b.returndate >= CURDATE()
                         ) THEN 'Booked'
                         ELSE 'Available'
@@ -119,7 +119,6 @@ public class ViewAvailableCarsController implements Initializable {
         }
     }
 
-    // Updated Car class
     public static class Car {
         private final int carId;
         private final String model;

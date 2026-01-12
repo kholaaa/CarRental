@@ -75,13 +75,13 @@ public class generate_reportController {
     }
 
 
-    // Safe BACK button handler (now correctly placed inside the class)
+
     @FXML
     private void handleBack(ActionEvent event) {
         try {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            // Always use the FULL resource path with leading "/"
+
             Parent dashboardRoot = FXMLLoader.load(getClass().getResource("/com/example/carrental/Dashboard.fxml"));
 
             Scene scene = new Scene(dashboardRoot);
@@ -96,7 +96,7 @@ public class generate_reportController {
         }
     }
     private void loadBackgroundImage() {
-        // Recommended: dark elegant background (place in resources)
+
         String imagePath = "/com/example/carrental/pics/llg.png";
 
         try (InputStream stream = getClass().getResourceAsStream(imagePath)) {

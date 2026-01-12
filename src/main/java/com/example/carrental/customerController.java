@@ -42,7 +42,7 @@ public class customerController {
     }
 
     private void loadBackgroundImage() {
-        // Recommended: dark elegant background (place in resources)
+
         String imagePath = "/com/example/carrental/pics/llg.png";
 
         try (InputStream stream = getClass().getResourceAsStream(imagePath)) {

@@ -10,24 +10,24 @@ import java.io.InputStream;
 public class loadingController {
 
     @FXML
-    private ImageView logoImageView;  // must exist in Loading.fxml with fx:id="logoImageView"
+    private ImageView logoImageView;
 
     @FXML
-    private AnchorPane rootPane;      // must exist in Loading.fxml with fx:id="rootPane"
+    private AnchorPane rootPane;
 
     @FXML
     public void initialize() {
-        // 1. Set black background
+
         rootPane.setStyle("-fx-background-color: black;");
 
-        // 2. Load image SAFELY
-        String imagePath = "/pics/img.png";   // ← most important part: path must start with /
+
+        String imagePath = "/pics/img.png";
 
         try (InputStream inputStream = loadingController.class.getResourceAsStream(imagePath)) {
             if (inputStream == null) {
                 System.err.println("ERROR: Image not found at path: " + imagePath);
                 System.err.println("Check that file exists in: src/main/resources/pics/llg.png");
-                // You can leave logo empty or set fallback color/image
+
                 logoImageView.setStyle("-fx-background-color: #333333;");
             } else {
                 Image logo = new Image(inputStream);
@@ -39,7 +39,5 @@ public class loadingController {
             System.err.println("Failed to load logo image");
         }
 
-        // Optional: remove this useless line from your original code
-        // loadingController.class.getResourceAsStream("/pics/img.jpg");  ← does nothing
     }
 }
