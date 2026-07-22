@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="rootPane" prefHeight="720.0" prefWidth="1280.0"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.carrental.customerController">
+
+    <children>
+
+        <VBox alignment="CENTER" spacing="30.0"
+              style="-fx-background-color: rgba(30,30,50,0.75); -fx-background-radius: 20; -fx-padding: 40;"
+              prefWidth="950.0" prefHeight="620.0"
+              AnchorPane.topAnchor="50.0" AnchorPane.bottomAnchor="50.0"
+              AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="125.0">
+
+
+            <Label text="Registered Customers"
+                   style="-fx-font-size: 42px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+
+
+            <TableView fx:id="customersTable" prefHeight="480.0" prefWidth="900.0"
+                       style="-fx-background-color: transparent; -fx-table-cell-border-color: transparent;">
+                <columns>
+                    <TableColumn fx:id="idCol" text="ID" prefWidth="100.0"
+                                 style="-fx-alignment: CENTER;"/>
+                    <TableColumn fx:id="nameCol" text="Full Name" prefWidth="280.0"/>
+                    <TableColumn fx:id="emailCol" text="Email Address" prefWidth="320.0"/>
+                    <TableColumn fx:id="phoneCol" text="Phone Number" prefWidth="200.0"/>
+                </columns>
+            </TableView>
+
+
+            <Button text="BACK TO DASHBOARD"
+                    onAction="#handleBack"
+                    prefHeight="65.0" prefWidth="300.0"
+                    style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold; -fx-background-radius: 12;"/>
+        </VBox>
+    </children>
+</AnchorPane>

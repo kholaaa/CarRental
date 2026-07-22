@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="rootPane" prefHeight="720.0" prefWidth="1280.0"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.carrental.ChatbotController">
+
+    <children>
+
+        <VBox alignment="CENTER" spacing="12.0"
+              style="-fx-background-color: rgba(30,30,50,0.85); -fx-background-radius: 15; -fx-padding: 25;"
+              prefWidth="750.0" prefHeight="680.0"
+              AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
+              AnchorPane.leftAnchor="265.0" AnchorPane.rightAnchor="265.0">
+
+            <Label text="Chat Assistant"
+                   style="-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+
+            <Label text="Try asking:"
+                   style="-fx-font-size: 13px; -fx-text-fill: rgba(255,255,255,0.6); -fx-padding: 2 0 0 0;"/>
+
+            <FlowPane fx:id="suggestionsPane" hgap="8" vgap="8"
+                      prefWidth="700.0"
+                      style="-fx-background-color: rgba(255,255,255,0.05); -fx-background-radius: 10; -fx-padding: 10;"/>
+
+            <ListView fx:id="chatLog" prefHeight="350.0" prefWidth="700.0"
+                      style="-fx-background-color: rgba(0,0,0,0.3); -fx-background-radius: 10;"/>
+
+            <HBox alignment="CENTER" spacing="10.0" prefWidth="700.0">
+                <TextField fx:id="inputField" promptText="Type your question here..."
+                           prefHeight="42.0" prefWidth="560.0"
+                           onAction="#handleSend"
+                           style="-fx-background-color: rgba(255,255,255,0.12); -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 10; -fx-padding: 0 14;"/>
+                <Button text="SEND" onAction="#handleSend"
+                        prefHeight="42.0" prefWidth="120.0"
+                        style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;"/>
+            </HBox>
+
+            <Button text="BACK TO DASHBOARD" onAction="#handleBack"
+                    prefHeight="40.0" prefWidth="220.0"
+                    style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;"/>
+
+        </VBox>
+
+    </children>
+</AnchorPane>

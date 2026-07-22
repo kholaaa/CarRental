@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="rootPane" prefHeight="720.0" prefWidth="1280.0"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.carrental.bookcarController"
+            stylesheets="@tables.css">
+
+    <children>
+
+        <!-- Title -->
+        <Label text="Book a Car"
+               styleClass="page-title"
+               AnchorPane.topAnchor="25.0"
+               AnchorPane.leftAnchor="50.0"/>
+
+        <!-- Main Split: Cars Grid (left) + Booking Form (right) -->
+        <HBox spacing="30.0"
+              AnchorPane.topAnchor="90.0"
+              AnchorPane.bottomAnchor="30.0"
+              AnchorPane.leftAnchor="50.0"
+              AnchorPane.rightAnchor="50.0">
+
+            <!-- LEFT: Available Cars Grid -->
+            <VBox spacing="15.0" prefWidth="720.0">
+                <Label text="Select a Car"
+                       style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+
+                <TextField fx:id="searchField"
+                           promptText="Search cars..."
+                           prefWidth="350.0"
+                           maxWidth="350.0"
+                           style="-fx-font-size: 14px;"/>
+
+                <ScrollPane fitToWidth="true"
+                            prefHeight="480.0"
+                            style="-fx-background: transparent; -fx-background-color: transparent;">
+                    <content>
+                        <FlowPane fx:id="cardsContainer"
+                                  hgap="18" vgap="18"
+                                  style="-fx-background-color: transparent;"/>
+                    </content>
+                </ScrollPane>
+            </VBox>
+
+            <!-- RIGHT: Booking Form -->
+            <VBox fx:id="bookingForm"
+                  spacing="20.0"
+                  prefWidth="440.0"
+                  alignment="TOP_CENTER"
+                  style="-fx-background-color: rgba(255,255,255,0.08); -fx-background-radius: 20; -fx-border-color: rgba(255,255,255,0.15); -fx-border-radius: 20; -fx-border-width: 1; -fx-padding: 30;">
+
+                <Label text="Booking Details"
+                       style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+
+                <!-- Selected Car Info -->
+                <VBox fx:id="selectedCarBox"
+                      spacing="8.0"
+                      alignment="CENTER"
+                      style="-fx-background-color: rgba(255,255,255,0.06); -fx-background-radius: 14; -fx-padding: 20;"
+                      visible="false">
+
+                    <ImageView fx:id="selectedCarImage"
+                               fitWidth="280" fitHeight="160"
+                               preserveRatio="true"/>
+
+                    <Label fx:id="selectedCarName"
+                           style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+
+                    <Label fx:id="selectedCarDetails"
+                           style="-fx-font-size: 14px; -fx-text-fill: rgba(255,255,255,0.65);"/>
+
+                    <Label fx:id="selectedCarPrice"
+                           style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #ffb74d;"/>
+                </VBox>
+
+                <!-- Placeholder when no car selected -->
+                <Label fx:id="placeholderLabel"
+                       text="Click a car to select it"
+                       style="-fx-font-size: 15px; -fx-text-fill: rgba(255,255,255,0.40);"
+                       visible="true"/>
+
+                <!-- Car ID (auto-filled) -->
+                <TextField fx:id="carIdField"
+                           promptText="Car ID (auto-filled)"
+                           prefHeight="45.0" prefWidth="350.0"
+                           editable="false"
+                           maxWidth="350.0"
+                           style="-fx-font-size: 14px; -fx-background-color: rgba(255,255,255,0.10); -fx-text-fill: white; -fx-background-radius: 10;"/>
+
+                <!-- Dates -->
+                <HBox spacing="20.0" alignment="CENTER">
+                    <VBox spacing="6.0">
+                        <Label text="Start Date"
+                               style="-fx-font-size: 14px; -fx-text-fill: rgba(255,255,255,0.65);"/>
+                        <DatePicker fx:id="entryDatePicker"
+                                    prefWidth="160.0"/>
+                    </VBox>
+                    <VBox spacing="6.0">
+                        <Label text="Return Date"
+                               style="-fx-font-size: 14px; -fx-text-fill: rgba(255,255,255,0.65);"/>
+                        <DatePicker fx:id="returnDatePicker"
+                                    prefWidth="160.0"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Cost Preview -->
+                <Label fx:id="costPreview"
+                       text=""
+                       style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #81c784;"/>
+
+                <!-- Buttons -->
+                <HBox spacing="15.0" alignment="CENTER">
+                    <Button text="BOOK NOW"
+                            onAction="#handleBookCar"
+                            prefHeight="50.0" prefWidth="180.0"
+                            styleClass="btn-book"/>
+
+                    <Button text="BACK"
+                            onAction="#handleBack"
+                            prefHeight="50.0" prefWidth="140.0"
+                            styleClass="btn-back"/>
+                </HBox>
+            </VBox>
+        </HBox>
+    </children>
+</AnchorPane>

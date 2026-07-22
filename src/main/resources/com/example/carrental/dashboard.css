@@ -1,0 +1,97 @@
+/* Background: same image as login page */
+.root {
+    -fx-background-color: #000000;
+    -fx-background-image: url("pics/llg.png");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+}
+
+/* Title */
+.dashboard-title {
+    -fx-font-size: 48px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8), 18, 0.3, 0, 4);
+}
+
+/* Base glass button */
+.dashboard-btn {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-radius: 16;
+    -fx-background-insets: 0;
+    -fx-border-width: 1;
+    -fx-border-radius: 16;
+    -fx-cursor: hand;
+    -fx-background-color: rgba(255,255,255,0.08);
+    -fx-border-color: rgba(255,255,255,0.22);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 20, 0.10, 0, 4);
+}
+
+.dashboard-btn:hover {
+    -fx-background-color: rgba(255,255,255,0.15);
+    -fx-border-color: rgba(255,255,255,0.40);
+    -fx-scale-x: 1.04;
+    -fx-scale-y: 1.04;
+}
+
+/* Customer buttons — transparent warm glass */
+.dashboard-btn.customer-btn {
+    -fx-background-color: rgba(230,100,30,0.18);
+    -fx-border-color: rgba(255,140,60,0.35);
+}
+
+.dashboard-btn.customer-btn:hover {
+    -fx-background-color: rgba(230,100,30,0.32);
+    -fx-border-color: rgba(255,160,80,0.55);
+}
+
+/* Admin buttons — transparent red glass */
+.dashboard-btn.admin-btn {
+    -fx-background-color: rgba(180,40,40,0.18);
+    -fx-border-color: rgba(220,60,50,0.35);
+}
+
+.dashboard-btn.admin-btn:hover {
+    -fx-background-color: rgba(180,40,40,0.32);
+    -fx-border-color: rgba(240,70,60,0.55);
+}
+
+/* Terms button — almost invisible glass */
+.dashboard-btn.terms-btn {
+    -fx-background-color: rgba(255,255,255,0.05);
+    -fx-border-color: rgba(255,255,255,0.15);
+}
+
+.dashboard-btn.terms-btn:hover {
+    -fx-background-color: rgba(255,255,255,0.12);
+    -fx-border-color: rgba(255,255,255,0.30);
+}
+
+/* Logout — transparent red glass */
+.logout-btn {
+    -fx-background-color: rgba(200,40,30,0.18);
+    -fx-border-color: rgba(230,60,50,0.35);
+    -fx-border-width: 1;
+    -fx-border-radius: 14;
+    -fx-background-radius: 14;
+    -fx-background-insets: 0;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 16, 0.10, 0, 4);
+}
+
+.logout-btn:hover {
+    -fx-background-color: rgba(200,40,30,0.32);
+    -fx-border-color: rgba(240,60,50,0.55);
+}
+
+/* Footer */
+.footer-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: rgba(255,255,255,0.50);
+}
