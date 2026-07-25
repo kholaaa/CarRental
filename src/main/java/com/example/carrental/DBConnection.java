@@ -16,9 +16,9 @@ public class DBConnection {
     }
 
     private static final String URL =
-            "jdbc:mysql://127.0.0.1:3306/CarRental?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
+            "jdbc:mysql://127.0.0.1:3306/carrental?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
     private static final String USER = "root";
-    private static final String PASSWORD = "12345";
+    private static final String PASSWORD = "ot10forever@";
 
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);

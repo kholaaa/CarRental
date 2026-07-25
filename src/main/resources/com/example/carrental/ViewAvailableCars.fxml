@@ -14,7 +14,7 @@
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.carrental.ViewAvailableCarsController"
-            stylesheets="@tables.css">
+            stylesheets="@dashboard.css">
 
     <children>
 
@@ -25,12 +25,12 @@
               AnchorPane.rightAnchor="50.0">
 
             <!-- Title -->
-            <Label text="Available Cars"
+            <Label text="&#x1F697;  Available Cars"
                    styleClass="page-title"/>
 
             <!-- Search -->
             <TextField fx:id="searchField"
-                       promptText="Search by model or type..."
+                       promptText="&#x1F50D;  Search by model or type..."
                        prefWidth="400.0"
                        maxWidth="400.0"
                        styleClass="glass-text-field"/>
@@ -53,7 +53,7 @@
                     onAction="#handleBack"
                     prefHeight="50.0"
                     prefWidth="250.0"
-                    styleClass="action-btn"/>
+                    styleClass="btn btn-back"/>
         </VBox>
 
     </children>

@@ -14,18 +14,21 @@
 
     <children>
         <VBox alignment="CENTER" spacing="30.0"
+              styleClass="glass-card"
+              style="-fx-padding: 40;"
               AnchorPane.topAnchor="40.0"
+              AnchorPane.bottomAnchor="40.0"
               AnchorPane.leftAnchor="50.0"
               AnchorPane.rightAnchor="50.0">
 
             <!-- Page Title -->
-            <Label text="Rental Report"
-                   style="-fx-font-size: 36px; -fx-font-weight: bold;"
-                   styleClass="page-title"/>
+            <Label text="&#x1F4CA;  Rental Report"
+                   styleClass="page-title"
+                   style="-fx-font-size: 36px;"/>
 
             <!-- Report Table -->
             <TableView fx:id="reportTable" prefHeight="450.0" prefWidth="900.0"
-                       styleClass="report-table">
+                       styleClass="beautiful-table">
                 <columns>
                     <TableColumn fx:id="customerCol" text="Customer ID" prefWidth="120.0"/>
                     <TableColumn fx:id="carCol" text="Car ID" prefWidth="120.0"/>
@@ -39,7 +42,7 @@
                     onAction="#handleBack"
                     prefHeight="55.0"
                     prefWidth="250.0"
-                    styleClass="logout-btn"/>
+                    styleClass="btn btn-back"/>
         </VBox>
     </children>
 </AnchorPane>

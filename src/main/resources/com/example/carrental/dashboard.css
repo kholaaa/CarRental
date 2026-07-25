@@ -15,6 +15,14 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8), 18, 0.3, 0, 4);
 }
 
+/* Page titles (shared across screens) */
+.page-title {
+    -fx-text-fill: rgba(255,200,120,0.95);
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.65), 12, 0, 0, 4);
+}
+
 /* Base glass button */
 .dashboard-btn {
     -fx-font-size: 17px;
@@ -90,8 +98,96 @@
     -fx-border-color: rgba(240,60,50,0.55);
 }
 
+/* Action buttons (shared) */
+.btn {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-background-insets: 0;
+    -fx-border-width: 1;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 12, 0, 0, 4);
+}
+
+.btn-submit {
+    -fx-background-color: rgba(39,174,96,0.85);
+    -fx-border-color: rgba(46,204,113,0.50);
+}
+.btn-submit:hover {
+    -fx-background-color: rgba(46,204,113,1.0);
+    -fx-scale-x: 1.04;
+    -fx-scale-y: 1.04;
+}
+
+.btn-back {
+    -fx-background-color: rgba(192,57,43,0.85);
+    -fx-border-color: rgba(231,76,60,0.50);
+}
+.btn-back:hover {
+    -fx-background-color: rgba(231,76,60,1.0);
+    -fx-scale-x: 1.04;
+    -fx-scale-y: 1.04;
+}
+
 /* Footer */
 .footer-label {
     -fx-font-size: 12px;
     -fx-text-fill: rgba(255,255,255,0.50);
+}
+
+/* Recommendations section — warm white glass */
+.rec-section-title {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 10, 0.2, 0, 2);
+}
+
+.rec-listview {
+    -fx-background-color: rgba(255,255,255,0.08);
+    -fx-background-radius: 16;
+    -fx-border-color: rgba(255,255,255,0.22);
+    -fx-border-radius: 16;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 20, 0.10, 0, 4);
+    -fx-padding: 4;
+}
+
+.rec-listview .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: rgba(255,255,255,0.92);
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-padding: 12 18;
+}
+
+.rec-listview .list-cell:hover {
+    -fx-background-color: rgba(255,255,255,0.15);
+}
+
+.rec-listview .list-cell:empty {
+    -fx-background-color: transparent;
+}
+
+.rec-listview .scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.rec-listview .scroll-bar .thumb {
+    -fx-background-color: rgba(255,255,255,0.30);
+    -fx-background-radius: 4;
+}
+
+.rec-listview .scroll-bar .increment-button,
+.rec-listview .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.rec-listview .scroll-bar .increment-arrow,
+.rec-listview .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0;
 }

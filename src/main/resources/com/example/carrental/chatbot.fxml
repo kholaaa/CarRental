@@ -5,7 +5,8 @@
 
 <AnchorPane fx:id="rootPane" prefHeight="720.0" prefWidth="1280.0"
             xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.carrental.ChatbotController">
+            fx:controller="com.example.carrental.ChatbotController"
+            stylesheets="@dashboard.css">
 
     <children>
 
@@ -35,12 +36,12 @@
                            style="-fx-background-color: rgba(255,255,255,0.12); -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 10; -fx-padding: 0 14;"/>
                 <Button text="SEND" onAction="#handleSend"
                         prefHeight="42.0" prefWidth="120.0"
-                        style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;"/>
+                        styleClass="btn btn-submit" text="SEND"/>
             </HBox>
 
             <Button text="BACK TO DASHBOARD" onAction="#handleBack"
                     prefHeight="40.0" prefWidth="220.0"
-                    style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;"/>
+                    styleClass="btn btn-back" text="BACK TO DASHBOARD"/>
 
         </VBox>
 

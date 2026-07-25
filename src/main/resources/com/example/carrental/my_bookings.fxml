@@ -14,19 +14,21 @@
 
     <children>
         <VBox spacing="30.0" alignment="CENTER"
+              styleClass="glass-card"
+              style="-fx-padding: 40;"
               AnchorPane.topAnchor="40.0"
               AnchorPane.bottomAnchor="40.0"
               AnchorPane.leftAnchor="80.0"
               AnchorPane.rightAnchor="80.0">
 
             <!-- Page Title -->
-            <Label text="My Bookings And Returns"
-                   style="-fx-font-size: 36px;
-                          -fx-font-weight: bold;"
-                   styleClass="page-title"/>
+            <Label text="&#x1F4CB;  My Bookings &amp; Returns"
+                   styleClass="page-title"
+                   style="-fx-font-size: 36px;"/>
 
             <!-- Bookings Table -->
-            <TableView fx:id="bookingsTable" prefHeight="500.0">
+            <TableView fx:id="bookingsTable" prefHeight="500.0"
+                       styleClass="beautiful-table">
                 <columns>
                     <TableColumn fx:id="imageCol" prefWidth="90.0" text="" />
                     <TableColumn fx:id="carIdCol" text="Car ID" prefWidth="100.0"/>
@@ -45,7 +47,7 @@
                     onAction="#handleBack"
                     prefHeight="55.0"
                     prefWidth="300.0"
-                    styleClass="logout-btn"/>
+                    styleClass="btn btn-back"/>
         </VBox>
     </children>
 </AnchorPane>

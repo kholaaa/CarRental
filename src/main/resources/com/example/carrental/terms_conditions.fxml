@@ -8,7 +8,8 @@
 <AnchorPane fx:id="rootPane" prefHeight="720.0" prefWidth="1280.0"
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.carrental.TermsConditionsController">
+            fx:controller="com.example.carrental.TermsConditionsController"
+            stylesheets="@dashboard.css">
 
     <children>
         <ImageView fitWidth="1280.0" fitHeight="720.0" pickOnBounds="true" preserveRatio="false">
@@ -24,7 +25,8 @@
               maxWidth="820.0" maxHeight="560.0"
               AnchorPane.topAnchor="80.0" AnchorPane.bottomAnchor="80.0"
               AnchorPane.leftAnchor="230.0" AnchorPane.rightAnchor="230.0"
-              style="-fx-background-color: white; -fx-background-radius: 24; -fx-border-color: rgba(200,200,200,0.5); -fx-border-width: 1; -fx-border-radius: 24; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 40, 0.1, 0, 15);">
+              styleClass="glass-card"
+              style="-fx-background-color: white;">
 
             <Region prefHeight="4.0" maxWidth="820.0"
                     style="-fx-background-color: linear-gradient(to right, #e64a19, #ff8a50, #e64a19); -fx-background-radius: 24 24 0 0;"/>
@@ -57,7 +59,7 @@
                         text="BACK TO DASHBOARD"
                         onAction="#handleBack"
                         prefHeight="44.0" prefWidth="220.0"
-                        style="-fx-background-color: rgba(230,74,25,0.75); -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 12; -fx-border-color: rgba(255,138,80,0.4); -fx-border-width: 1; -fx-border-radius: 12; -fx-cursor: hand;"/>
+                        styleClass="btn btn-back"/>
             </HBox>
 
         </VBox>
