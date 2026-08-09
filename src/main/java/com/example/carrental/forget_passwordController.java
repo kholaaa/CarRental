@@ -74,12 +74,8 @@ public class forget_passwordController {
 
         String email = lookupEmail(username);
         if (email == null) {
-            step1Box.setVisible(false);
-            step1Box.setManaged(false);
-            step2Box.setVisible(true);
-            step2Box.setManaged(true);
-            stepLabel.setText("Step 2 of 3");
-            otpMessage.setText("If that account exists, a verification code was sent to the email on file.");
+            showAlert(Alert.AlertType.ERROR,
+                    "No account found with username '" + username + "'. Please check and try again.");
             return;
         }
 
@@ -101,10 +97,10 @@ public class forget_passwordController {
         if (emailed) {
             otpMessage.setText("A verification code was sent to the email on file. It expires in 10 minutes.");
         } else {
-            otpMessage.setText("Development mode: the code was shown on screen because no email is configured.");
+            otpMessage.setText("Dev mode - your verification code is:  " + code);
             showAlert(Alert.AlertType.INFORMATION,
-                    "Development mode: your verification code is " + code
-                            + "\n\nTo send real emails, fill in SMTP settings in src/main/resources/mail.properties.");
+                    "Your verification code is: " + code
+                            + "\n\n(Dev mode - no email configured. Fill in mail.properties to send real emails.)");
         }
     }
 
