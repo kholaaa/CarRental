@@ -105,6 +105,7 @@ public class ViewAvailableCarsController implements Initializable {
         if ("Available".equals(car.getStatus())) {
             card.setOnMouseClicked(e -> {
                 try {
+                    bookcarController.pendingCarId = car.getCarId();
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/carrental/bookcar.fxml"));
                     Parent root = loader.load();
                     Stage stage = (Stage) rootPane.getScene().getWindow();
@@ -164,7 +165,7 @@ public class ViewAvailableCarsController implements Initializable {
         try (Connection conn = DBConnection.getConnection();
              Statement stmt = conn.createStatement()) {
 
-            String query = """
+            String query =  """
                 SELECT 
                     c.carID, c.carmodel, c.cartype, c.price_per_day,
                     CASE 

@@ -48,6 +48,8 @@ public class bookcarController implements Initializable {
     private ObservableList<Car> carData = FXCollections.observableArrayList();
     private Car selectedCar = null;
 
+    public static int pendingCarId = -1;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadBackgroundImage();
@@ -55,6 +57,16 @@ public class bookcarController implements Initializable {
 
         loadAvailableCars();
         renderCards(carData);
+
+        if (pendingCarId != -1) {
+            for (Car car : carData) {
+                if (car.getCarId() == pendingCarId) {
+                    selectCar(car);
+                    break;
+                }
+            }
+            pendingCarId = -1;
+        }
 
         searchField.textProperty().addListener((obs, oldVal, newVal) -> {
             ObservableList<Car> filtered = FXCollections.observableArrayList(
