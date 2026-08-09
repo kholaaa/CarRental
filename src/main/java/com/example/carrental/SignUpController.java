@@ -79,6 +79,12 @@ public class SignUpController {
             return;
         }
 
+        String strengthError = PasswordUtil.strengthError(password);
+        if (strengthError != null) {
+            showAlert(Alert.AlertType.WARNING, strengthError);
+            return;
+        }
+
         try (Connection conn = DBConnection.getConnection()) {
             String sql = "INSERT INTO users (username, name, email, password, PhoneNumber, role) " +
                     "VALUES (?, ?, ?, ?, ?, 'customer')";
@@ -87,7 +93,7 @@ public class SignUpController {
             stmt.setString(1, username);
             stmt.setString(2, nameField.getText());
             stmt.setString(3, email);
-            stmt.setString(4, password);
+            stmt.setString(4, PasswordUtil.hash(password));
 
             // PhoneNumber has a UNIQUE constraint in the DB. Inserting "" for every
             // blank entry causes a duplicate-key error for the second blank signup,

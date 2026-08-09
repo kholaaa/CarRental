@@ -79,7 +79,20 @@ public class loginController {
             if (rs.next()) {
                 String storedPassword = rs.getString("password");
 
-                if (storedPassword.equals(password)) {
+                boolean passwordOk = PasswordUtil.isHashed(storedPassword)
+                        ? PasswordUtil.verify(password, storedPassword)
+                        : storedPassword.equals(password);
+
+                if (passwordOk) {
+                    if (!PasswordUtil.isHashed(storedPassword)) {
+                        try (PreparedStatement upgrade = conn.prepareStatement(
+                                "UPDATE users SET password = ? WHERE username = ?")) {
+                            upgrade.setString(1, PasswordUtil.hash(password));
+                            upgrade.setString(2, username);
+                            upgrade.executeUpdate();
+                        }
+                    }
+
                     int userId = rs.getInt("id");
                     String role = rs.getString("role");
 

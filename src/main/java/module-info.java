@@ -8,6 +8,9 @@ module com.example.carrental {
     requires java.sql;
     requires org.kordamp.ikonli.core;
     requires org.kordamp.ikonli.javafx;
+    requires jakarta.mail;
+    requires org.eclipse.angus.mail;
+    requires jakarta.activation;
 
     opens com.example.carrental to javafx.fxml;
     exports com.example.carrental;
