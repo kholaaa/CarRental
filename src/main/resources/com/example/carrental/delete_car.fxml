@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="rootPane" prefHeight="720.0" prefWidth="1280.0"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.carrental.delete_carController"
+            stylesheets="@dashboard.css">
+
+    <children>
+
+        <VBox alignment="CENTER" spacing="30.0"
+              styleClass="glass-card"
+              style="-fx-padding: 40;"
+              prefWidth="950.0" prefHeight="620.0"
+              AnchorPane.topAnchor="50.0" AnchorPane.bottomAnchor="50.0"
+              AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="125.0">
+
+            <Label text="Delete a Car"
+                   styleClass="page-title"
+                   style="-fx-font-size: 36px;"/>
+
+            <TableView fx:id="carsTable" prefHeight="430.0" prefWidth="850.0"
+                       styleClass="beautiful-table">
+                <columns>
+                    <TableColumn fx:id="carIdCol" text="Car ID" prefWidth="80.0"/>
+                    <TableColumn fx:id="modelCol" text="Model" prefWidth="200.0"/>
+                    <TableColumn fx:id="typeCol" text="Type" prefWidth="120.0"/>
+                    <TableColumn fx:id="colourCol" text="Colour" prefWidth="100.0"/>
+                    <TableColumn fx:id="priceCol" text="Price/Day (PKR)" prefWidth="140.0"/>
+                    <TableColumn fx:id="availabilityCol" text="Availability" prefWidth="110.0"/>
+                </columns>
+            </TableView>
+
+            <HBox alignment="CENTER" spacing="40.0">
+                <Button text="DELETE SELECTED CAR"
+                        onAction="#handleDeleteCar"
+                        prefHeight="55.0" prefWidth="260.0"
+                        styleClass="btn-back"/>
+
+                <Button text="BACK TO DASHBOARD"
+                        onAction="#handleBack"
+                        prefHeight="55.0" prefWidth="260.0"
+                        styleClass="btn-back"/>
+            </HBox>
+        </VBox>
+    </children>
+</AnchorPane>

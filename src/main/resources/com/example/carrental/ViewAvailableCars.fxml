@@ -30,7 +30,7 @@
 
             <!-- Search -->
             <TextField fx:id="searchField"
-                       promptText="&#x1F50D;  Search by model or type..."
+                       promptText="&#x1F50D;  Search: model, type, or 'cheap under 5000'..."
                        prefWidth="400.0"
                        maxWidth="400.0"
                        styleClass="glass-text-field"/>
@@ -53,7 +53,7 @@
                     onAction="#handleBack"
                     prefHeight="50.0"
                     prefWidth="250.0"
-                    styleClass="btn btn-back"/>
+                    styleClass="btn-back"/>
         </VBox>
 
     </children>

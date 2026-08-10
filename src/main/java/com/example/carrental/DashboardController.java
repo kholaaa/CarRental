@@ -25,6 +25,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import javafx.scene.image.Image;
 
@@ -39,11 +43,14 @@ public class DashboardController {
     @FXML private Button myBookingsButton;
     @FXML private Button customerDetailsButton;
     @FXML private Button generateReportButton;
+    @FXML private Button deleteCarButton;
     @FXML private Button logoutButton;
     @FXML private Button viewTermsButton;
 
     @FXML private Label recommendationsLabel;
     @FXML private ListView<String> recommendationsList;
+    @FXML private Label churnLabel;
+    @FXML private ListView<String> churnList;
 
 
     @FXML
@@ -57,15 +64,23 @@ public class DashboardController {
         customerDetailsButton.setManaged(isAdmin);
         generateReportButton.setVisible(isAdmin);
         generateReportButton.setManaged(isAdmin);
+        deleteCarButton.setVisible(isAdmin);
+        deleteCarButton.setManaged(isAdmin);
 
         // Customer-only feature
         myBookingsButton.setVisible(!isAdmin);
         myBookingsButton.setManaged(!isAdmin);
 
+        // Book a Car is also customer-only
+        bookCarButton.setVisible(!isAdmin);
+        bookCarButton.setManaged(!isAdmin);
+
+        // Return a Car is also customer-only
+        returnCarButton.setVisible(!isAdmin);
+        returnCarButton.setManaged(!isAdmin);
+
         // Common features (always visible)
         viewAvailableCarsButton.setVisible(true);
-        bookCarButton.setVisible(true);
-        returnCarButton.setVisible(true);
         logoutButton.setVisible(true);
         viewTermsButton.setVisible(true);
 
@@ -76,13 +91,45 @@ public class DashboardController {
         recommendationsList.setManaged(!isAdmin);
         if (!isAdmin) {
             loadRecommendations();
+        } else {
+            // Admin sees churn alerts instead of recommendations
+            churnLabel.setVisible(true);
+            churnLabel.setManaged(true);
+            churnList.setVisible(true);
+            churnList.setManaged(true);
+            loadChurnAlerts();
         }
 
         System.out.println("Trying to load background image...");
         System.out.println("Resource exists: " +
                 getClass().getResource("llg.png") != null);
+        System.out.println("CSS resolved to: " + getClass().getResource("dashboard.css"));
+        System.out.println("FXML resolved to: " + getClass().getResource("Dashboard.fxml"));
+
+        loadBackgroundImage();
 
         FloatingChatButton.install(rootPane);
+    }
+
+    private void loadBackgroundImage() {
+        String path = "/com/example/carrental/pics/llg.png";
+        try (InputStream is = getClass().getResourceAsStream(path)) {
+            if (is == null) {
+                rootPane.setStyle("-fx-background-color: #111111;");
+                return;
+            }
+            Image bgImage = new Image(is);
+            BackgroundImage bg = new BackgroundImage(
+                    bgImage,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundPosition.CENTER,
+                    new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, true)
+            );
+            rootPane.setBackground(new Background(bg));
+        } catch (Exception e) {
+            rootPane.setStyle("-fx-background-color: #111111;");
+        }
     }
 
     private void loadRecommendations() {
@@ -99,6 +146,44 @@ public class DashboardController {
         }
 
         recommendationsList.setItems(items);
+    }
+
+    private void loadChurnAlerts() {
+        String sql = """
+            SELECT u.name,
+                   COUNT(b.bookcarID) AS totalBookings,
+                   MAX(COALESCE(b.actual_return_date, b.booking_date)) AS lastActivity
+            FROM users u
+            JOIN bookcar b ON b.customerID = u.id
+            WHERE u.role = 'customer'
+            GROUP BY u.id, u.name
+            HAVING MAX(COALESCE(b.actual_return_date, b.booking_date))
+                   < DATE_SUB(CURDATE(), INTERVAL 90 DAY)
+            ORDER BY lastActivity ASC
+            LIMIT 12
+        """;
+
+        ObservableList<String> items = FXCollections.observableArrayList();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                items.add(String.format("%s — %d booking(s), last activity %s",
+                        rs.getString("name"),
+                        rs.getInt("totalBookings"),
+                        rs.getDate("lastActivity")));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (items.isEmpty()) {
+            items.add("No churn risk detected — all customers are active in the last 90 days.");
+        }
+
+        churnList.setItems(items);
     }
 
     @FXML
@@ -119,6 +204,11 @@ public class DashboardController {
     @FXML
     private void handleAddCars(ActionEvent event) throws IOException {
         switchScene(event, "add_car.fxml");
+    }
+
+    @FXML
+    private void handleDeleteCar(ActionEvent event) throws IOException {
+        switchScene(event, "delete_car.fxml");
     }
 
     @FXML

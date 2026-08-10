@@ -2,17 +2,28 @@ package com.example.carrental.ai.chatbot;
 
 import com.example.carrental.DBConnection;
 import com.example.carrental.Session;
+import com.example.carrental.ai.PricingAdvisor;
 
 import java.sql.*;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class IntentClassifier {
 
     private String lastIntent = "none";
     private String lastExtractedType = null;
+
+    // Tier 1: chat-completed booking state
+    private int bookingCarId = -1;
+    private String bookingCarModel = null;
+    private double bookingPricePerDay = 0;
+    private LocalDate bookingEntryDate = null;
+    private LocalDate bookingReturnDate = null;
 
     public String respond(String userMessage) {
         if (userMessage == null || userMessage.trim().isEmpty()) {
@@ -21,6 +32,12 @@ public class IntentClassifier {
 
         String msg = userMessage.toLowerCase(Locale.ROOT).trim();
         String[] words = msg.split("\\s+");
+
+        // In-progress booking flow (date entry / confirmation)
+        if (lastIntent.startsWith("book_")) {
+            String flowReply = handleBookingFlowInput(msg);
+            if (flowReply != null) return flowReply;
+        }
 
         // Greetings
         if (matchesAny(msg, "hello", "hi ", "hi!", "hey", "howdy", "greetings", "yo ", "yo!")) {
@@ -99,6 +116,27 @@ public class IntentClassifier {
             return getCarDetails(specificCar);
         }
 
+        // Dynamic price forecast (Tier 1-2)
+        if (matchesAny(msg, "dynamic", "price forecast", "price predict", "forecast price",
+                "best day", "when is cheapest", "cheapest day", "when should i book")) {
+            lastIntent = "price_forecast";
+            String type = extractCarType(msg);
+            if (type != null) {
+                LocalDate d = parseDate(msg);
+                if (d == null && msg.contains("weekend")) {
+                    d = LocalDate.now().with(DayOfWeek.SATURDAY);
+                    if (d.isBefore(LocalDate.now())) d = d.plusWeeks(1);
+                }
+                if (d == null) d = LocalDate.now();
+                PricingAdvisor.PriceSuggestion s = PricingAdvisor.suggestPrice(type, d);
+                return String.format(
+                        "Dynamic price forecast for %s on %s (%s):%n"
+                                + "Suggested rate: %.0f PKR/day%n%s",
+                        type, d, d.getDayOfWeek(), s.suggestedPrice, s.reason);
+            }
+            return "Tell me which car type to forecast, e.g. \"price forecast for sedan on Saturday\" or \"when is cheapest to rent an SUV?\"";
+        }
+
         // Price / cost queries
         if (matchesAny(msg, "price", "cost", "how much", "rate", "pricing", "tariff", "fee")) {
             lastIntent = "price";
@@ -148,6 +186,17 @@ public class IntentClassifier {
                 "previous rental", "returned cars")) {
             lastIntent = "booking_history";
             return myBookingHistory();
+        }
+
+        // CHAT COMPLETES THE BOOKING (Tier 1): "book a corolla", "i want to rent a sedan"
+        if ((matchesAny(msg, "book ", "book a", "book the", "book an", "book me",
+                "rent a", "rent the", "rent an", "rent me", "reserve a", "reserve the")
+                || msg.contains("i want to book") || msg.contains("i want to rent"))
+                && !matchesAny(msg, "how to book", "how do i book", "how to rent")) {
+            String started = startBookingByMessage(msg);
+            if (started != null) {
+                return started;
+            }
         }
 
         // Book / rent
@@ -273,6 +322,229 @@ public class IntentClassifier {
         return null;
     }
 
+    // ===== Tier 1: chat-completed booking (state machine) =====
+
+    private void resetBookingFlow() {
+        bookingCarId = -1;
+        bookingCarModel = null;
+        bookingPricePerDay = 0;
+        bookingEntryDate = null;
+        bookingReturnDate = null;
+    }
+
+    private String startBookingByMessage(String msg) {
+        String carName = extractSpecificCar(msg);
+        if (carName != null) return startBookingForModel(carName);
+        String type = extractCarType(msg);
+        if (type != null) return startBookingForType(type);
+        return null;
+    }
+
+    private String startBookingForModel(String model) {
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                     "SELECT carID, carmodel, price_per_day, Availability FROM cars "
+                             + "WHERE LOWER(carmodel) LIKE ? ORDER BY price_per_day ASC LIMIT 1")) {
+            ps.setString(1, "%" + model.toLowerCase(Locale.ROOT) + "%");
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                if (!rs.getString("Availability").equalsIgnoreCase("Yes")) {
+                    lastIntent = "none";
+                    return "Sorry, the " + rs.getString("carmodel") + " is currently booked. "
+                            + "Ask \"available cars\" to see what's free!";
+                }
+                return startBookingFlow(rs.getInt("carID"), rs.getString("carmodel"), rs.getDouble("price_per_day"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        lastIntent = "none";
+        return null;
+    }
+
+    private String startBookingForType(String type) {
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                     "SELECT carID, carmodel, price_per_day FROM cars "
+                             + "WHERE LOWER(cartype) = ? AND Availability = 'Yes' ORDER BY price_per_day ASC LIMIT 1")) {
+            ps.setString(1, type);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return startBookingFlow(rs.getInt("carID"), rs.getString("carmodel"), rs.getDouble("price_per_day"));
+            }
+            lastIntent = "none";
+            return "No available " + type + " cars right now. Try asking \"available cars\" for the full list.";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            lastIntent = "none";
+            return null;
+        }
+    }
+
+    private String startBookingFlow(int carId, String model, double pricePerDay) {
+        if (Session.getUserId() == -1) {
+            lastIntent = "none";
+            return "You'll need to log in before you can book. Log in first, then ask me again!";
+        }
+        bookingCarId = carId;
+        bookingCarModel = model;
+        bookingPricePerDay = pricePerDay;
+        lastIntent = "book_awaiting_entry";
+        return String.format("Sure! The %s is available at %.0f PKR/day.%n"
+                + "What date would you like to pick it up? (e.g. 2026-08-15, or say \"tomorrow\")",
+                model, pricePerDay);
+    }
+
+    private String handleBookingFlowInput(String msg) {
+        if (matchesAny(msg, "cancel", "never mind", "nevermind", "stop", "quit")) {
+            resetBookingFlow();
+            lastIntent = "none";
+            return "Booking cancelled. Let me know if you need anything else!";
+        }
+
+        switch (lastIntent) {
+            case "book_awaiting_entry": {
+                LocalDate date = parseDate(msg);
+                if (date == null) {
+                    return "I need a pickup date. Try something like 2026-08-15, or say \"tomorrow\".";
+                }
+                if (date.isBefore(LocalDate.now())) {
+                    return "The pickup date can't be in the past. When would you like to start? (e.g. 2026-08-15)";
+                }
+                bookingEntryDate = date;
+                lastIntent = "book_awaiting_return";
+                return String.format("Pickup set for %s.%nWhat date will you return it? (e.g. 2026-08-18)", date);
+            }
+            case "book_awaiting_return": {
+                LocalDate date = parseDate(msg);
+                if (date == null) {
+                    return "I need a return date. Try something like 2026-08-18, or say \"tomorrow\".";
+                }
+                if (!date.isAfter(bookingEntryDate)) {
+                    return "Return date must be after the pickup date (" + bookingEntryDate + "). When will you return it?";
+                }
+                bookingReturnDate = date;
+                long days = ChronoUnit.DAYS.between(bookingEntryDate, bookingReturnDate);
+                double total = days * bookingPricePerDay;
+                lastIntent = "book_awaiting_confirm";
+                return String.format(
+                        "Here's your booking summary:%n"
+                                + "- Car: %s%n"
+                                + "- Pickup: %s%n"
+                                + "- Return: %s%n"
+                                + "- Days: %d%n"
+                                + "- Total: %.0f PKR%n%n"
+                                + "Reply 'yes' to confirm, or 'no' to cancel.",
+                        bookingCarModel, bookingEntryDate, bookingReturnDate, days, total);
+            }
+            case "book_awaiting_confirm": {
+                if (matchesAny(msg, "yes", "yeah", "confirm", "sure", "yep", "book it", "go ahead", "ok")) {
+                    return completeBooking();
+                }
+                if (matchesAny(msg, "no", "cancel", "nope", "nah", "not now", "never mind")) {
+                    resetBookingFlow();
+                    lastIntent = "none";
+                    return "No problem — booking cancelled. Let me know if you'd like to book something else!";
+                }
+                return "Just say 'yes' to confirm your booking, or 'no' to cancel.";
+            }
+            default:
+                return null;
+        }
+    }
+
+    private String completeBooking() {
+        int customerId = Session.getUserId();
+        if (customerId == -1) {
+            resetBookingFlow();
+            lastIntent = "none";
+            return "Please log in first, then ask me to book again.";
+        }
+        long days = ChronoUnit.DAYS.between(bookingEntryDate, bookingReturnDate);
+        if (days <= 0) {
+            resetBookingFlow();
+            lastIntent = "none";
+            return "Invalid rental period. Please start the booking over.";
+        }
+
+        try (Connection conn = DBConnection.getConnection()) {
+            PreparedStatement carStmt = conn.prepareStatement(
+                    "SELECT price_per_day, Availability FROM cars WHERE carID = ?");
+            carStmt.setInt(1, bookingCarId);
+            ResultSet carRs = carStmt.executeQuery();
+            if (!carRs.next() || !carRs.getString("Availability").equalsIgnoreCase("Yes")) {
+                resetBookingFlow();
+                lastIntent = "none";
+                return "Sorry — that car just became unavailable. Please pick another car. Ask \"available cars\" to see options.";
+            }
+            double pricePerDay = carRs.getDouble("price_per_day");
+            double total = days * pricePerDay;
+
+            PreparedStatement overlapStmt = conn.prepareStatement(
+                    "SELECT COUNT(*) FROM bookcar WHERE carID = ? AND (entrydate <= ? AND returndate >= ?)");
+            overlapStmt.setInt(1, bookingCarId);
+            overlapStmt.setDate(2, java.sql.Date.valueOf(bookingReturnDate));
+            overlapStmt.setDate(3, java.sql.Date.valueOf(bookingEntryDate));
+            ResultSet overlapRs = overlapStmt.executeQuery();
+            overlapRs.next();
+            if (overlapRs.getInt(1) > 0) {
+                resetBookingFlow();
+                lastIntent = "none";
+                return "That car is already booked for those dates. Try different dates, or ask \"available cars\".";
+            }
+
+            PreparedStatement insertStmt = conn.prepareStatement(
+                    "INSERT INTO bookcar (carID, customerID, entrydate, returndate, total_cost) VALUES (?, ?, ?, ?, ?)");
+            insertStmt.setInt(1, bookingCarId);
+            insertStmt.setInt(2, customerId);
+            insertStmt.setDate(3, java.sql.Date.valueOf(bookingEntryDate));
+            insertStmt.setDate(4, java.sql.Date.valueOf(bookingReturnDate));
+            insertStmt.setDouble(5, total);
+            insertStmt.executeUpdate();
+
+            PreparedStatement updateStmt = conn.prepareStatement("UPDATE cars SET Availability = 'No' WHERE carID = ?");
+            updateStmt.setInt(1, bookingCarId);
+            updateStmt.executeUpdate();
+
+            String result = String.format(
+                    "Booking confirmed!%n"
+                            + "- Car: %s%n"
+                            + "- Pickup: %s%n"
+                            + "- Return: %s%n"
+                            + "- Days: %d%n"
+                            + "- Total: %.0f PKR%n%n"
+                            + "You can check it anytime by asking \"my bookings\". Drive safe!",
+                    bookingCarModel, bookingEntryDate, bookingReturnDate, days, total);
+
+            resetBookingFlow();
+            lastIntent = "none";
+            return result;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            resetBookingFlow();
+            lastIntent = "none";
+            return "Sorry, there was a database problem while booking. Please try again.";
+        }
+    }
+
+    private LocalDate parseDate(String msg) {
+        if (msg.contains("today")) return LocalDate.now();
+        if (msg.contains("tomorrow")) return LocalDate.now().plusDays(1);
+        if (msg.contains("day after")) return LocalDate.now().plusDays(2);
+        if (msg.contains("next week")) return LocalDate.now().plusWeeks(1);
+        String[] patterns = {"\\d{4}-\\d{2}-\\d{2}", "\\d{2}/\\d{2}/\\d{4}", "\\d{2}-\\d{2}-\\d{4}"};
+        for (String pattern : patterns) {
+            Matcher m = Pattern.compile(pattern).matcher(msg);
+            if (m.find()) {
+                try {
+                    return LocalDate.parse(m.group().replace("/", "-"));
+                } catch (Exception ignored) {}
+            }
+        }
+        return null;
+    }
+
     private String getCustomerName() {
         int userId = Session.getUserId();
         if (userId == -1) return null;
@@ -304,13 +576,15 @@ public class IntentClassifier {
                 + "  - \"My active bookings\"\n"
                 + "  - \"Booking history\"\n"
                 + "  - \"How to book a car?\"\n"
-                + "  - \"How to return a car?\"\n\n"
+                + "  - \"How to return a car?\"\n"
+                + "  - \"Book a Corolla\" / \"rent a sedan\" — I'll complete the booking for you!\n\n"
                 + " SMART QUERIES\n"
                 + "  - \"Estimate cost for 5 days\"\n"
                 + "  - \"Is a car available on 2025-03-01?\"\n"
                 + "  - \"Recommend me a car\"\n"
                 + "  - \"Compare SUV vs Sedan\"\n"
-                + "  - \"Most popular cars\"\n";
+                + "  - \"Most popular cars\"\n"
+                + "  - \"Price forecast for sedan on Saturday\"\n";
     }
 
     private String getFleetStats() {

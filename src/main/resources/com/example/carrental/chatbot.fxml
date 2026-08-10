@@ -36,12 +36,12 @@
                            style="-fx-background-color: rgba(255,255,255,0.12); -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 10; -fx-padding: 0 14;"/>
                 <Button text="SEND" onAction="#handleSend"
                         prefHeight="42.0" prefWidth="120.0"
-                        styleClass="btn btn-submit"/>
+                        styleClass="btn-submit"/>
             </HBox>
 
             <Button text="BACK TO DASHBOARD" onAction="#handleBack"
                     prefHeight="40.0" prefWidth="220.0"
-                    styleClass="btn btn-back"/>
+                    styleClass="btn-back"/>
 
         </VBox>
 

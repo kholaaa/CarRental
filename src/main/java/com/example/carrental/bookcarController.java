@@ -44,6 +44,11 @@ public class bookcarController implements Initializable {
     @FXML private DatePicker entryDatePicker;
     @FXML private DatePicker returnDatePicker;
     @FXML private Label costPreview;
+    @FXML private ComboBox<String> paymentMethodCombo;
+    @FXML private VBox cardDetailsBox;
+    @FXML private TextField cardNumberField;
+    @FXML private TextField cardExpiryField;
+    @FXML private TextField cardCvvField;
 
     private ObservableList<Car> carData = FXCollections.observableArrayList();
     private Car selectedCar = null;
@@ -54,6 +59,15 @@ public class bookcarController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadBackgroundImage();
         FloatingChatButton.install(rootPane);
+
+        paymentMethodCombo.setItems(FXCollections.observableArrayList(
+                "Credit Card", "Debit Card", "JazzCash", "Easypaisa", "Cash on Delivery"
+        ));
+        paymentMethodCombo.valueProperty().addListener((obs, oldVal, newVal) -> {
+            boolean isCard = "Credit Card".equals(newVal) || "Debit Card".equals(newVal);
+            cardDetailsBox.setVisible(isCard);
+            cardDetailsBox.setManaged(isCard);
+        });
 
         loadAvailableCars();
         renderCards(carData);
@@ -266,6 +280,18 @@ public class bookcarController implements Initializable {
             return;
         }
 
+        String paymentMethod = paymentMethodCombo.getValue();
+        if (paymentMethod == null || paymentMethod.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Please select a payment method.");
+            return;
+        }
+
+        if ("Credit Card".equals(paymentMethod) || "Debit Card".equals(paymentMethod)) {
+            if (!validateCardPayment()) {
+                return;
+            }
+        }
+
         try (Connection conn = DBConnection.getConnection()) {
             String carQuery = "SELECT price_per_day FROM cars WHERE carID = ? AND Availability = 'Yes'";
             PreparedStatement carStmt = conn.prepareStatement(carQuery);
@@ -316,7 +342,8 @@ public class bookcarController implements Initializable {
                     "Booking successful!\n" +
                             "Car: " + selectedCar.getModel() + "\n" +
                             "Rental Days: " + days + "\n" +
-                            "Total Cost: " + String.format("%,.0f", totalCost) + " PKR");
+                            "Total Cost: " + String.format("%,.0f", totalCost) + " PKR\n" +
+                            "Payment Method: " + paymentMethod);
 
             selectedCar = null;
             carIdField.clear();
@@ -344,6 +371,26 @@ public class bookcarController implements Initializable {
         stage.centerOnScreen();
     }
 
+    private boolean validateCardPayment() {
+        String cardNumber = cardNumberField.getText().replaceAll("\\s", "");
+        String expiry = cardExpiryField.getText().trim();
+        String cvv = cardCvvField.getText().trim();
+
+        if (cardNumber.isEmpty() || cardNumber.length() != 16 || !cardNumber.matches("\\d{16}")) {
+            showAlert(Alert.AlertType.ERROR, "Please enter a valid 16-digit card number.");
+            return false;
+        }
+        if (expiry.isEmpty() || !expiry.matches("\\d{2}/\\d{2}")) {
+            showAlert(Alert.AlertType.ERROR, "Please enter card expiry as MM/YY.");
+            return false;
+        }
+        if (cvv.isEmpty() || !cvv.matches("\\d{3,4}")) {
+            showAlert(Alert.AlertType.ERROR, "Please enter a valid CVV (3-4 digits).");
+            return false;
+        }
+        return true;
+    }
+
     private void showAlert(Alert.AlertType type, String message) {
         Alert alert = new Alert(type);
         alert.setTitle("Car Rental System");
@@ -352,7 +399,7 @@ public class bookcarController implements Initializable {
         alert.showAndWait();
     }
 
-    public static class Car implements SmartSearch.Searchable {
+    public static class Car implements SmartSearch.Priced {
         private final int carId;
         private final String model;
         private final String type;

@@ -13,36 +13,47 @@
             stylesheets="@dashboard.css">
 
     <children>
-        <VBox alignment="CENTER" spacing="30.0"
+        <VBox alignment="CENTER" spacing="20.0"
               styleClass="glass-card"
-              style="-fx-padding: 40;"
-              AnchorPane.topAnchor="40.0"
-              AnchorPane.bottomAnchor="40.0"
+              style="-fx-padding: 30;"
+              AnchorPane.topAnchor="25.0"
+              AnchorPane.bottomAnchor="25.0"
               AnchorPane.leftAnchor="50.0"
               AnchorPane.rightAnchor="50.0">
 
             <!-- Page Title -->
-            <Label text="&#x1F4CA;  Rental Report"
+            <Label text="Rental Report"
                    styleClass="page-title"
-                   style="-fx-font-size: 36px;"/>
+                   style="-fx-font-size: 32px;"/>
 
             <!-- Report Table -->
-            <TableView fx:id="reportTable" prefHeight="450.0" prefWidth="900.0"
+            <TableView fx:id="reportTable" prefHeight="400.0" prefWidth="1150.0"
                        styleClass="beautiful-table">
                 <columns>
-                    <TableColumn fx:id="customerCol" text="Customer ID" prefWidth="120.0"/>
-                    <TableColumn fx:id="carCol" text="Car ID" prefWidth="120.0"/>
-                    <TableColumn fx:id="daysCol" text="Rental Days" prefWidth="150.0"/>
-                    <TableColumn fx:id="costCol" text="Total Cost (PKR)" prefWidth="180.0"/>
+                    <TableColumn fx:id="customerNameCol" text="Customer Name" prefWidth="150.0"/>
+                    <TableColumn fx:id="carCol" text="Car ID" prefWidth="70.0"/>
+                    <TableColumn fx:id="startDateCol" text="Start Date" prefWidth="100.0"/>
+                    <TableColumn fx:id="returnDateCol" text="Return Date" prefWidth="100.0"/>
+                    <TableColumn fx:id="statusCol" text="Status" prefWidth="80.0"/>
+                    <TableColumn fx:id="conditionCol" text="Vehicle Condition" prefWidth="250.0"/>
+                    <TableColumn fx:id="fuelCol" text="Fuel %" prefWidth="70.0"/>
+                    <TableColumn fx:id="daysCol" text="Days" prefWidth="60.0"/>
+                    <TableColumn fx:id="costCol" text="Total Cost (PKR)" prefWidth="130.0"/>
                 </columns>
             </TableView>
+
+            <!-- AI Revenue Forecast (below the table) -->
+            <Label fx:id="forecastLabel"
+                   text="Computing revenue forecast..."
+                   wrapText="true"
+                   style="-fx-font-size: 15px; -fx-text-fill: #81c784; -fx-font-weight: bold; -fx-alignment: center;"/>
 
             <!-- Back Button -->
             <Button text="BACK TO DASHBOARD"
                     onAction="#handleBack"
                     prefHeight="55.0"
                     prefWidth="250.0"
-                    styleClass="btn btn-back"/>
+                    styleClass="btn-back"/>
         </VBox>
     </children>
 </AnchorPane>

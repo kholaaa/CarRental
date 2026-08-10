@@ -102,7 +102,7 @@ public class ViewAvailableCarsController implements Initializable {
 
         card.getChildren().addAll(imageView, nameLabel, detailsLabel, statusRow);
 
-        if ("Available".equals(car.getStatus())) {
+        if ("Available".equals(car.getStatus()) && !Session.isAdmin()) {
             card.setOnMouseClicked(e -> {
                 try {
                     bookcarController.pendingCarId = car.getCarId();
@@ -198,7 +198,7 @@ public class ViewAvailableCarsController implements Initializable {
         }
     }
 
-    public static class Car implements SmartSearch.Searchable {
+    public static class Car implements SmartSearch.Priced {
         private final int carId;
         private final String model;
         private final String type;

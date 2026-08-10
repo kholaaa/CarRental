@@ -1,11 +1,5 @@
-/* Background: same image as login page */
-.root {
-    -fx-background-color: #000000;
-    -fx-background-image: url("pics/llg.png");
-    -fx-background-size: cover;
-    -fx-background-position: center center;
-    -fx-background-repeat: no-repeat;
-}
+/* Background is set in code (dashboard controller) for full-screen cover.
+   No -fx-background-color here so CSS does not override the code-set image. */
 
 /* Title */
 .dashboard-title {
@@ -23,8 +17,34 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.65), 12, 0, 0, 4);
 }
 
-/* Base glass button */
-.dashboard-btn {
+/* NOTE: Each FXML control gets exactly ONE style class. JavaFX does not
+   apply styles to FXML-loaded nodes that carry 2+ custom style classes. */
+
+/* Dashboard action buttons — glassy warm tint, image shows through */
+.main-btn {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-radius: 18;
+    -fx-background-insets: 0;
+    -fx-border-width: 1;
+    -fx-border-radius: 18;
+    -fx-cursor: hand;
+    -fx-padding: 14 24 14 24;
+    -fx-background-color: rgba(230,100,30,0.28);
+    -fx-border-color: rgba(255,140,60,0.55);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 20, 0.10, 0, 4);
+}
+
+.main-btn:hover {
+    -fx-background-color: rgba(230,100,30,0.42);
+    -fx-border-color: rgba(255,160,80,0.75);
+    -fx-scale-x: 1.04;
+    -fx-scale-y: 1.04;
+}
+
+/* Terms button — glassy, image shows through */
+.terms-btn {
     -fx-font-size: 17px;
     -fx-font-weight: bold;
     -fx-text-fill: white;
@@ -33,55 +53,22 @@
     -fx-border-width: 1;
     -fx-border-radius: 16;
     -fx-cursor: hand;
-    -fx-background-color: rgba(255,255,255,0.08);
-    -fx-border-color: rgba(255,255,255,0.22);
+    -fx-background-color: rgba(255,255,255,0.12);
+    -fx-border-color: rgba(255,255,255,0.35);
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 20, 0.10, 0, 4);
 }
 
-.dashboard-btn:hover {
-    -fx-background-color: rgba(255,255,255,0.15);
-    -fx-border-color: rgba(255,255,255,0.40);
+.terms-btn:hover {
+    -fx-background-color: rgba(255,255,255,0.22);
+    -fx-border-color: rgba(255,255,255,0.50);
     -fx-scale-x: 1.04;
     -fx-scale-y: 1.04;
 }
 
-/* Customer buttons — transparent warm glass */
-.dashboard-btn.customer-btn {
-    -fx-background-color: rgba(230,100,30,0.18);
-    -fx-border-color: rgba(255,140,60,0.35);
-}
-
-.dashboard-btn.customer-btn:hover {
-    -fx-background-color: rgba(230,100,30,0.32);
-    -fx-border-color: rgba(255,160,80,0.55);
-}
-
-/* Admin buttons — transparent red glass */
-.dashboard-btn.admin-btn {
-    -fx-background-color: rgba(180,40,40,0.18);
-    -fx-border-color: rgba(220,60,50,0.35);
-}
-
-.dashboard-btn.admin-btn:hover {
-    -fx-background-color: rgba(180,40,40,0.32);
-    -fx-border-color: rgba(240,70,60,0.55);
-}
-
-/* Terms button — almost invisible glass */
-.dashboard-btn.terms-btn {
-    -fx-background-color: rgba(255,255,255,0.05);
-    -fx-border-color: rgba(255,255,255,0.15);
-}
-
-.dashboard-btn.terms-btn:hover {
-    -fx-background-color: rgba(255,255,255,0.12);
-    -fx-border-color: rgba(255,255,255,0.30);
-}
-
-/* Logout — transparent red glass */
+/* Logout — glassy red, image shows through */
 .logout-btn {
-    -fx-background-color: rgba(200,40,30,0.18);
-    -fx-border-color: rgba(230,60,50,0.35);
+    -fx-background-color: rgba(200,40,30,0.28);
+    -fx-border-color: rgba(230,60,50,0.55);
     -fx-border-width: 1;
     -fx-border-radius: 14;
     -fx-background-radius: 14;
@@ -94,27 +81,22 @@
 }
 
 .logout-btn:hover {
-    -fx-background-color: rgba(200,40,30,0.32);
-    -fx-border-color: rgba(240,60,50,0.55);
+    -fx-background-color: rgba(200,40,30,0.42);
+    -fx-border-color: rgba(240,60,50,0.75);
 }
 
-/* Action buttons (shared) */
-.btn {
+/* Action buttons (shared) — each carries a single class */
+.btn-submit {
     -fx-font-size: 17px;
     -fx-font-weight: bold;
     -fx-text-fill: white;
-    -fx-background-color: rgba(255,255,255,0.08);
     -fx-background-radius: 14;
     -fx-border-radius: 14;
     -fx-background-insets: 0;
     -fx-border-width: 1;
-    -fx-border-color: transparent;
     -fx-cursor: hand;
     -fx-padding: 10 30 10 30;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 12, 0, 0, 4);
-}
-
-.btn-submit {
     -fx-background-color: rgba(39,174,96,0.85);
     -fx-border-color: rgba(46,204,113,0.50);
 }
@@ -125,11 +107,21 @@
 }
 
 .btn-back {
-    -fx-background-color: rgba(192,57,43,0.85);
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-background-insets: 0;
+    -fx-border-width: 1;
+    -fx-cursor: hand;
+    -fx-padding: 10 30 10 30;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 12, 0, 0, 4);
+    -fx-background-color: #c0392b;
     -fx-border-color: rgba(231,76,60,0.50);
 }
 .btn-back:hover {
-    -fx-background-color: rgba(231,76,60,1.0);
+    -fx-background-color: #e74c3c;
     -fx-scale-x: 1.04;
     -fx-scale-y: 1.04;
 }
@@ -149,7 +141,7 @@
 }
 
 .rec-listview {
-    -fx-background-color: rgba(255,255,255,0.08);
+    -fx-background-color: rgba(255,255,255,0.05);
     -fx-background-radius: 16;
     -fx-border-color: rgba(255,255,255,0.22);
     -fx-border-radius: 16;
@@ -193,4 +185,50 @@
 .rec-listview .scroll-bar .decrement-arrow {
     -fx-shape: " ";
     -fx-padding: 0;
+}
+
+/* Modern beautiful table (shared) */
+.beautiful-table {
+    -fx-background-color: rgba(255, 255, 255, 0.975);
+    -fx-background-radius: 16;
+    -fx-border-radius: 16;
+    -fx-border-color: rgba(200,200,200,0.35);
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.20), 18, 0, 0, 6);
+    -fx-font-size: 15px;
+}
+
+.beautiful-table .column-header-background {
+    -fx-background-color: linear-gradient(to bottom, #1e3c72, #2a5298);
+    -fx-background-radius: 16 16 0 0;
+}
+
+.beautiful-table .column-header,
+.beautiful-table .filler {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 15.5px;
+    -fx-alignment: CENTER;
+}
+
+.beautiful-table .table-row-cell {
+    -fx-background-color: white;
+}
+
+.beautiful-table .table-row-cell:even {
+    -fx-background-color: #f8fbff;
+}
+
+.beautiful-table .table-row-cell:hover {
+    -fx-background-color: #e3f2fd;
+    -fx-cursor: hand;
+}
+
+.beautiful-table .table-row-cell:selected {
+    -fx-background-color: #2a5298;
+    -fx-text-fill: white;
+}
+
+.beautiful-table .table-cell {
+    -fx-alignment: CENTER;
+    -fx-padding: 9 14 9 14;
 }

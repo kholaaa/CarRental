@@ -34,12 +34,12 @@
                 <Button text="ADD CAR"
                         onAction="#handleAddCar"
                         prefHeight="60.0" prefWidth="220.0"
-                        styleClass="btn btn-submit"/>
+                        styleClass="btn-submit"/>
 
                 <Button text="BACK"
                         onAction="#handleBack"
                         prefHeight="60.0" prefWidth="260.0"
-                        styleClass="btn btn-back"/>
+                        styleClass="btn-back"/>
             </HBox>
         </VBox>
     </children>

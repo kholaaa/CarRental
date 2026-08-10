@@ -59,7 +59,7 @@
                         text="BACK TO DASHBOARD"
                         onAction="#handleBack"
                         prefHeight="44.0" prefWidth="220.0"
-                        styleClass="btn btn-back"/>
+                        styleClass="btn-back"/>
             </HBox>
 
         </VBox>

@@ -38,6 +38,7 @@ public class ChatbotController {
             "My bookings",
             "Estimate cost for 3 days",
             "Recommend me a car",
+            "I want to rent a sedan",
             "What types of cars?",
             "How many cars in total?",
             "Is a car available today?",

@@ -39,8 +39,8 @@
 
         <!-- Action Buttons -->
         <HBox alignment="CENTER" spacing="40.0">
-            <Button onAction="#handleReturnCar" prefHeight="50.0" prefWidth="240.0" styleClass="btn btn-submit" text="SUBMIT RETURN" />
-            <Button onAction="#handleBack" prefHeight="50.0" prefWidth="240.0" styleClass="btn btn-back" text="BACK TO DASHBOARD" />
+            <Button onAction="#handleReturnCar" prefHeight="50.0" prefWidth="240.0" styleClass="btn-submit" text="SUBMIT RETURN" />
+            <Button onAction="#handleBack" prefHeight="50.0" prefWidth="240.0" styleClass="btn-back" text="BACK TO DASHBOARD" />
         </HBox>
 
     </VBox>

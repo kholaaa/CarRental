@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane fx:id="rootPane" prefHeight="720.0" prefWidth="1280.0" stylesheets="@dashboard.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.carrental.DashboardController">
 
@@ -18,51 +19,61 @@
         <!-- Page Title -->
         <Label alignment="CENTER" styleClass="dashboard-title" text="Car Rental Dashboard" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0" />
 
-        <!-- Main Action Grid -->
-        <GridPane hgap="32.0" vgap="32.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="140.0">
+        <!-- Main Action Grid (centered) -->
+        <VBox alignment="CENTER" AnchorPane.topAnchor="75.0" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
 
-            <Button fx:id="viewAvailableCarsButton" onAction="#handleViewAvailableCars" prefHeight="74.0" prefWidth="338.0" styleClass="dashboard-btn customer-btn" text="  VIEW AVAILABLE CARS" textOverrun="CLIP" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                <graphic><ImageView fitWidth="28" fitHeight="28" preserveRatio="true"><image><Image url="@pics/icons/car.png"/></image></ImageView></graphic>
-                <padding><Insets bottom="20.0" left="20.0" right="20.0" top="20.0" /></padding></Button>
+            <GridPane hgap="24.0" vgap="28.0" prefWidth="920.0">
 
-            <Button fx:id="bookCarButton" onAction="#handleBookCar" prefHeight="70.0" prefWidth="339.0" styleClass="dashboard-btn customer-btn" text="  BOOK A CAR" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                <graphic><ImageView fitWidth="28" fitHeight="28" preserveRatio="true"><image><Image url="@pics/icons/calendar.png"/></image></ImageView></graphic>
-                <padding><Insets bottom="20.0" left="20.0" right="20.0" top="20.0" /></padding></Button>
+                <!-- Row 0: customer buttons -->
+                <Button fx:id="bookCarButton" onAction="#handleBookCar" prefHeight="84.0" prefWidth="290.0" styleClass="main-btn" text="  BOOK A CAR" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER">
+                    <graphic><ImageView fitWidth="28" fitHeight="28" preserveRatio="true"><image><Image url="@pics/icons/calendar.png"/></image></ImageView></graphic></Button>
 
-            <Button fx:id="returnCarButton" onAction="#handleReturnCar" prefHeight="69.0" prefWidth="338.0" styleClass="dashboard-btn customer-btn" text="  RETURN A CAR" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.rowIndex="0">
-                <graphic><ImageView fitWidth="28" fitHeight="28" preserveRatio="true"><image><Image url="@pics/icons/return.png"/></image></ImageView></graphic>
-                <padding><Insets bottom="20.0" left="20.0" right="20.0" top="20.0" /></padding></Button>
+                <Button fx:id="myBookingsButton" onAction="#handleMyBookings" prefHeight="84.0" prefWidth="290.0" styleClass="main-btn" text="  MY BOOKINGS" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="CENTER">
+                    <graphic><ImageView fitWidth="28" fitHeight="28" preserveRatio="true"><image><Image url="@pics/icons/clipboard.png"/></image></ImageView></graphic></Button>
 
-            <Button fx:id="addCarsButton" managed="false" onAction="#handleAddCars" prefHeight="100.0" prefWidth="340.0" styleClass="dashboard-btn admin-btn" text="  ADD NEW CAR" visible="false" textOverrun="CLIP" GridPane.columnIndex="0" GridPane.rowIndex="1">
-                <graphic><ImageView fitWidth="28" fitHeight="28" preserveRatio="true"><image><Image url="@pics/icons/add.png"/></image></ImageView></graphic></Button>
+                <Button fx:id="returnCarButton" onAction="#handleReturnCar" prefHeight="84.0" prefWidth="290.0" styleClass="main-btn" text="  RETURN A CAR" GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.halignment="CENTER">
+                    <graphic><ImageView fitWidth="28" fitHeight="28" preserveRatio="true"><image><Image url="@pics/icons/return.png"/></image></ImageView></graphic></Button>
 
-            <Button fx:id="myBookingsButton" onAction="#handleMyBookings" prefHeight="77.0" prefWidth="339.0" styleClass="dashboard-btn customer-btn" text="  MY BOOKINGS &amp; RETURNS" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                <graphic><ImageView fitWidth="28" fitHeight="28" preserveRatio="true"><image><Image url="@pics/icons/clipboard.png"/></image></ImageView></graphic>
-                <padding><Insets bottom="20.0" left="20.0" right="20.0" top="20.0" /></padding></Button>
+                <!-- Left stack: ADD NEW CAR above DELETE A CAR -->
+                <Button fx:id="addCarsButton" managed="false" onAction="#handleAddCars" prefHeight="95.0" prefWidth="290.0" styleClass="main-btn" text="  ADD NEW CAR" visible="false" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.halignment="CENTER">
+                    <graphic><ImageView fitWidth="32" fitHeight="32" preserveRatio="true"><image><Image url="@pics/icons/add.png"/></image></ImageView></graphic></Button>
 
-            <Button fx:id="customerDetailsButton" managed="false" onAction="#handleCustomerDetails" prefHeight="100.0" prefWidth="340.0" styleClass="dashboard-btn admin-btn" text="  CUSTOMER DETAILS" visible="false" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                <graphic><ImageView fitWidth="28" fitHeight="28" preserveRatio="true"><image><Image url="@pics/icons/users.png"/></image></ImageView></graphic></Button>
+                <Button fx:id="deleteCarButton" managed="false" onAction="#handleDeleteCar" prefHeight="95.0" prefWidth="290.0" styleClass="main-btn" text="  DELETE A CAR" visible="false" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.halignment="CENTER">
+                    <graphic><ImageView fitWidth="32" fitHeight="32" preserveRatio="true"><image><Image url="@pics/icons/trash.png"/></image></ImageView></graphic></Button>
 
-            <Button fx:id="generateReportButton" managed="false" onAction="#handleGenerateReport" prefHeight="100.0" prefWidth="340.0" styleClass="dashboard-btn admin-btn" text="  GENERATE REPORTS" visible="false" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                <graphic><ImageView fitWidth="28" fitHeight="28" preserveRatio="true"><image><Image url="@pics/icons/chart.png"/></image></ImageView></graphic></Button>
+                <!-- Middle: VIEW AVAILABLE CARS, vertically centered -->
+                <Button fx:id="viewAvailableCarsButton" onAction="#handleViewAvailableCars" prefHeight="95.0" prefWidth="290.0" styleClass="main-btn" text="  VIEW AVAILABLE CARS" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                    <graphic><ImageView fitWidth="32" fitHeight="32" preserveRatio="true"><image><Image url="@pics/icons/car.png"/></image></ImageView></graphic></Button>
 
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" percentWidth="33.3" />
-                <ColumnConstraints hgrow="SOMETIMES" percentWidth="33.3" />
-                <ColumnConstraints hgrow="SOMETIMES" percentWidth="33.3" />
-            </columnConstraints>
+                <!-- Right stack: GENERATE REPORTS above CUSTOMER DETAILS -->
+                <Button fx:id="generateReportButton" managed="false" onAction="#handleGenerateReport" prefHeight="95.0" prefWidth="290.0" styleClass="main-btn" text="  GENERATE REPORTS" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.halignment="CENTER">
+                    <graphic><ImageView fitWidth="32" fitHeight="32" preserveRatio="true"><image><Image url="@pics/icons/chart.png"/></image></ImageView></graphic></Button>
 
-            <rowConstraints>
-                <RowConstraints />
-                <RowConstraints />
-                <RowConstraints />
-            </rowConstraints>
-        </GridPane>
+                <Button fx:id="customerDetailsButton" managed="false" onAction="#handleCustomerDetails" prefHeight="95.0" prefWidth="290.0" styleClass="main-btn" text="  CUSTOMER DETAILS" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.halignment="CENTER">
+                    <graphic><ImageView fitWidth="32" fitHeight="32" preserveRatio="true"><image><Image url="@pics/icons/users.png"/></image></ImageView></graphic></Button>
+
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" percentWidth="33.3" />
+                    <ColumnConstraints hgrow="SOMETIMES" percentWidth="33.3" />
+                    <ColumnConstraints hgrow="SOMETIMES" percentWidth="33.3" />
+                </columnConstraints>
+
+                <rowConstraints>
+                    <RowConstraints />
+                    <RowConstraints />
+                </rowConstraints>
+            </GridPane>
+        </VBox>
 
         <!-- AI Recommendations (customer only) -->
-        <Label fx:id="recommendationsLabel" layoutX="100.0" layoutY="470.0" styleClass="rec-section-title" text="  RECOMMENDED FOR YOU" />
+        <Label fx:id="recommendationsLabel" layoutX="100.0" layoutY="505.0" styleClass="rec-section-title" text="  RECOMMENDED FOR YOU" />
 
-        <ListView fx:id="recommendationsList" layoutX="100.0" layoutY="505.0" prefHeight="100.0" prefWidth="1080.0" styleClass="rec-listview" />
+        <ListView fx:id="recommendationsList" layoutX="100.0" layoutY="540.0" prefHeight="100.0" prefWidth="1080.0" styleClass="rec-listview" />
+
+        <!-- Churn Alerts (admin only) -->
+        <Label fx:id="churnLabel" layoutX="100.0" layoutY="505.0" styleClass="rec-section-title" text="  CHURN ALERTS — AT-RISK CUSTOMERS" visible="false" managed="false" />
+
+        <ListView fx:id="churnList" layoutX="100.0" layoutY="540.0" prefHeight="100.0" prefWidth="1080.0" styleClass="rec-listview" visible="false" managed="false" />
 
         <!-- Logout -->
         <Button fx:id="logoutButton" onAction="#handleLogout" prefHeight="48.0" prefWidth="160.0" styleClass="logout-btn" text="  LOGOUT" AnchorPane.bottomAnchor="28.0" AnchorPane.rightAnchor="60.0">
@@ -72,7 +83,7 @@
         <Label alignment="CENTER" styleClass="footer-label" text="&#169; 2026 Car Rental System" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
 
         <!-- Terms -->
-        <Button fx:id="viewTermsButton" onAction="#handleViewTerms" prefHeight="38.0" prefWidth="220.0" styleClass="dashboard-btn terms-btn" text="  TERMS &amp; CONDITIONS" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="60.0">
+        <Button fx:id="viewTermsButton" onAction="#handleViewTerms" prefHeight="38.0" prefWidth="220.0" styleClass="terms-btn" text="  TERMS &amp; CONDITIONS" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="60.0">
             <graphic><ImageView fitWidth="18" fitHeight="18" preserveRatio="true"><image><Image url="@pics/icons/terms.png"/></image></ImageView></graphic></Button>
 
     </children>

@@ -17,9 +17,15 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class return_carController {
 
@@ -29,7 +35,7 @@ public class return_carController {
     @FXML private AnchorPane rootPane;
 
     private static final String CHECK_BOOKING_SQL = """
-        SELECT bookcarID
+        SELECT bookcarID, returndate
         FROM bookcar
         WHERE carID = ?
           AND customerID = ?
@@ -82,6 +88,7 @@ public class return_carController {
                         conn.rollback();
                         return;
                     }
+                    Date bookedReturnDate = rs.getDate("returndate");
 
                     // 2. Insert return record
                     String insertReturn = """
@@ -115,6 +122,8 @@ public class return_carController {
                     conn.commit();
 
                     showAlert(Alert.AlertType.INFORMATION, "Car returned successfully!\nCar is now available.");
+
+                    showReturnRiskAssessment(fuelLevel, condition, bookedReturnDate);
 
                     carIdField.clear();
                     fuelLevelField.clear();
@@ -166,6 +175,74 @@ public class return_carController {
             stage.centerOnScreen();
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Unable to load Dashboard.");
+        }
+    }
+
+    private void showReturnRiskAssessment(int fuelLevel, String condition, Date bookedReturnDate) {
+        RiskAssessment risk = assessReturnRisk(fuelLevel, condition, bookedReturnDate);
+        if (risk.score < 40) return;
+
+        StringBuilder msg = new StringBuilder("Return Risk Assessment: ")
+                .append(risk.level).append(" (").append(risk.score).append("/100)\n\n");
+        for (String reason : risk.reasons) {
+            msg.append("- ").append(reason).append("\n");
+        }
+        msg.append("\nAn inspection is recommended before releasing this car to the next customer.");
+
+        showAlert(risk.score >= 70 ? Alert.AlertType.WARNING : Alert.AlertType.INFORMATION, msg.toString());
+    }
+
+    private RiskAssessment assessReturnRisk(int fuelLevel, String condition, Date bookedReturnDate) {
+        int score = 0;
+        List<String> reasons = new ArrayList<>();
+
+        if (fuelLevel < 25) {
+            score += 30;
+            reasons.add("Fuel critically low (" + fuelLevel + "%) — +30");
+        } else if (fuelLevel < 50) {
+            score += 15;
+            reasons.add("Fuel low (" + fuelLevel + "%) — +15");
+        }
+
+        String cond = condition.toLowerCase(Locale.ROOT);
+        String[] damageKeywords = {"damage", "scratch", "dent", "broken", "crack", "fault",
+                "issue", "leak", "smoke", "burn", "not working", "failed", "stain"};
+        for (String kw : damageKeywords) {
+            if (cond.contains(kw)) {
+                score += 40;
+                reasons.add("Damage indicator found: \"" + kw + "\" — +40");
+                break;
+            }
+        }
+
+        if (bookedReturnDate != null) {
+            LocalDate actual = LocalDate.now();
+            if (actual.isAfter(bookedReturnDate.toLocalDate())) {
+                long daysLate = ChronoUnit.DAYS.between(bookedReturnDate.toLocalDate(), actual);
+                int penalty = (int) Math.min(20, daysLate * 5);
+                score += penalty;
+                reasons.add("Late return (" + daysLate + " day(s) overdue) — +" + penalty);
+            }
+        }
+
+        if (condition.trim().length() > 120) {
+            score += 10;
+            reasons.add("Unusually long condition note — +10");
+        }
+
+        String level = score >= 70 ? "HIGH" : score >= 40 ? "MEDIUM" : "LOW";
+        return new RiskAssessment(level, score, reasons);
+    }
+
+    private static class RiskAssessment {
+        final String level;
+        final int score;
+        final List<String> reasons;
+
+        RiskAssessment(String level, int score, List<String> reasons) {
+            this.level = level;
+            this.score = score;
+            this.reasons = reasons;
         }
     }
 
